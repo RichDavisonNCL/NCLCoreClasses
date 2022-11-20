@@ -7,8 +7,8 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #include "Maths.h"
-#include "../Common/Vector2.h"
-#include "../Common/Vector3.h"
+#include "Vector2.h"
+#include "Vector3.h"
 
 namespace NCL {
 	namespace Maths {
@@ -26,21 +26,24 @@ namespace NCL {
 			return (area >> 1);
 		}
 
-		float Areaof2DTri(const Vector3 &a, const Vector3 &b, const Vector3 & c) {
+		float FloatAreaOfTri(const Vector3 &a, const Vector3 &b, const Vector3 & c) {
 			float area = ((a.x * b.y) + (b.x * c.y) + (c.x * a.y)) -
 				((b.x * a.y) + (c.x * b.y) + (a.x * c.y));
 			return (area * 0.5f);
 		}
 
-		float AreaofTri3D(const Vector3 &a, const Vector3 &b, const Vector3 & c) {
+		float CrossAreaOfTri(const Vector3 &a, const Vector3 &b, const Vector3 & c) {
 			Vector3 area = Vector3::Cross(a - b, a - c);
 			return area.Length() * 0.5f;
 		}
+	
 
-		float RandomValue(float min, float max) {
-			float floatValue = rand() / (float)RAND_MAX;
-			float range = max - min;
-			return min + (range * floatValue);
+		Vector3 Clamp(const Vector3& a, const Vector3&mins, const Vector3& maxs) {
+			return Vector3(
+				Clamp(a.x, mins.x, maxs.x),
+				Clamp(a.y, mins.y, maxs.y),
+				Clamp(a.z, mins.z, maxs.z)
+			);
 		}
 	}
 }

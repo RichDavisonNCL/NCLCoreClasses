@@ -10,6 +10,8 @@ https://research.ncl.ac.uk/game/
 #include <vector>
 #include <string>
 
+#include "Vector3.h"
+
 using std::vector;
 
 namespace NCL {
@@ -60,6 +62,11 @@ namespace NCL {
 		int start = 0;
 		int count = 0;
 		int base  = 0;
+	};
+
+	struct SubMeshPoses { //New!
+		int start;
+		int count;
 	};
 
 	class MeshGeometry	{
@@ -201,7 +208,10 @@ namespace NCL {
 		vector<std::string>	jointNames;
 		vector<int>			jointParents;
 
-		vector<Matrix4>		bindPose;
-		vector<Matrix4>		inverseBindPose;
+		std::vector<Matrix4>		bindPose;
+		std::vector<Matrix4>		inverseBindPose;
+
+		std::vector<int>			bindPoseIndices; //New!
+		std::vector<SubMeshPoses>	bindPoseStates;  //New!
 	};
 }

@@ -10,6 +10,9 @@ https://research.ncl.ac.uk/game/
 #include <string>
 #include <vector>
 
+#include "Vector2.h"
+#include "Vector4.h"
+
 namespace NCL {
 	namespace Maths {
 		class Vector2;
@@ -21,14 +24,25 @@ namespace NCL {
 
 		class SimpleFont	{
 		public:
-			SimpleFont(const std::string&fontName, const std::string&texName);
+
+			SimpleFont(const std::string& fontName, const std::string& texName);
 			~SimpleFont();
 
-			int BuildVerticesForString(std::string &text, Maths::Vector2&startPos, Maths::Vector4&colour, float size, std::vector<Maths::Vector3>&positions, std::vector<Maths::Vector2>&texCoords, std::vector<Maths::Vector4>&colours);
+			struct InterleavedTextVertex {
+				NCL::Maths::Vector2 pos;
+				NCL::Maths::Vector2 texCoord;
+				NCL::Maths::Vector4 colour;
+			};
+
+			int GetVertexCountForString(const std::string& text);
+			void BuildVerticesForString(const std::string& text, const Maths::Vector2& startPos, const Maths::Vector4& colour, float size, std::vector<Maths::Vector3>&positions, std::vector<Maths::Vector2>&texCoords, std::vector<Maths::Vector4>&colours);
+			void BuildInterleavedVerticesForString(const std::string& text, const Maths::Vector2& startPos, const Maths::Vector4& colour, float size, std::vector<InterleavedTextVertex>&vertices);
 
 			const TextureBase* GetTexture() const {
 				return texture;
 			}
+
+
 
 		protected:
 			//matches stbtt_bakedchar

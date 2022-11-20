@@ -33,7 +33,9 @@ enum class GeometryChunkTypes {
 	BindPoseInv		= 1 << 12,
 	Material		= 1 << 13,
 	SubMeshes		= 1 << 14,
-	SubMeshNames	= 1 << 15
+	SubMeshNames	= 1 << 15,
+	BindPoseIndices = 1 << 16,
+	BindPoseStates	= 1 << 17,
 };
 
 enum class GeometryChunkData {
@@ -97,9 +99,6 @@ void ReadTextInts(std::ifstream& file, vector<Vector4i>& element, int numVertice
 	}
 }
 
-
-
-
 void ReadTextFloats(std::ifstream& file, vector<Vector2>& element, int numVertices) {
 	for (int i = 0; i < numVertices; ++i) {
 		Vector2 temp;
@@ -135,6 +134,28 @@ void ReadIndices(std::ifstream& file, vector<unsigned int>& elements, int numInd
 		unsigned int temp;
 		file >> temp;
 		elements.emplace_back(temp);
+	}
+}
+
+void ReadIntegerArray(std::ifstream& file, vector<int>& into) {//New!
+	int count = 0;
+	file >> count;
+	for (int i = 0; i < count; ++i) {
+		int r = 0;
+		file >> r;
+		into.push_back(r);
+	}
+}
+
+void ReadBindposes(std::ifstream& file, vector<SubMeshPoses>& bindPoses) {//New!
+	int poseCount = 0;
+	file >> poseCount;
+
+	for (int i = 0; i < poseCount; ++i) {
+		SubMeshPoses m;
+		file >> m.start;
+		file >> m.count;
+		bindPoses.emplace_back(m);
 	}
 }
 
@@ -190,6 +211,10 @@ MeshGeometry::MeshGeometry(const std::string&filename) {
 			case GeometryChunkTypes::BindPoseInv:		ReadRigPose(file, inverseBindPose);  break;
 			case GeometryChunkTypes::SubMeshes: 		ReadSubMeshes(file, numMeshes); break;
 			case GeometryChunkTypes::SubMeshNames: 		ReadSubMeshNames(file, numMeshes); break;
+
+			case GeometryChunkTypes::BindPoseIndices:	ReadIntegerArray(file, bindPoseIndices); break;//New!
+			case GeometryChunkTypes::BindPoseStates:	ReadBindposes(file, bindPoseStates); break;//New!
+
 		}
 	}
 }
