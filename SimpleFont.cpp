@@ -12,9 +12,9 @@ https://research.ncl.ac.uk/game/
 #include "Assets.h"
 #include <fstream>
 
-#include "../Common/Vector2.h"
-#include "../Common/Vector3.h"
-#include "../Common/Vector4.h"
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
 
 using namespace NCL;
 using namespace Rendering;
