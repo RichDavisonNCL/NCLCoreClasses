@@ -1,4 +1,4 @@
-set(PROJECT_NAME Common)
+set(PROJECT_NAME NCLCoreClasses)
 
 ################################################################################
 # Source groups
@@ -100,18 +100,19 @@ set(ALL_FILES
 ################################################################################
 add_library(${PROJECT_NAME} STATIC ${ALL_FILES})
 
-use_props(${PROJECT_NAME} "${CMAKE_CONFIGURATION_TYPES}" "${DEFAULT_CXX_PROPS}")
-set(ROOT_NAMESPACE Common)
-
 set_target_properties(${PROJECT_NAME} PROPERTIES
     INTERPROCEDURAL_OPTIMIZATION_RELEASE "TRUE"
 )
-################################################################################
-# Compile definitions
-################################################################################
-target_compile_definitions(${PROJECT_NAME} PRIVATE
-    "_CRT_SECURE_NO_WARNINGS;"
-    "_MBCS"
+target_precompile_headers(${PROJECT_NAME} PRIVATE
+    <memory>
+    <unordered_set>
+    <vector>
+    <string>
+    <fstream>
+    <iostream>
+    <string>
+    <iosfwd>
+    <set>
 )
 
 ################################################################################
@@ -119,26 +120,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 ################################################################################
 if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE
-        $<$<CONFIG:Debug>:
-            /Od
-        >
-        $<$<CONFIG:Release>:
-            /O2;
-            /Oi;
-            /Gy
-        >
-        /permissive-;
-        /std:c++latest;
-        /sdl;
-        /W3;
         ${DEFAULT_CXX_DEBUG_INFORMATION_FORMAT};
-        ${DEFAULT_CXX_EXCEPTION_HANDLING}
-    )
-    target_link_options(${PROJECT_NAME} PRIVATE
-        $<$<CONFIG:Release>:
-            /OPT:REF;
-            /OPT:ICF
-        >
+        ${DEFAULT_CXX_EXCEPTION_HANDLING};
     )
 endif()
-

@@ -22,8 +22,9 @@ https://research.ncl.ac.uk/game/
 #define HID_USAGE_GENERIC_KEYBOARD		((USHORT) 0x06)
 #endif
 
+#ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
-#define VC_EXTRALEAN
+#endif
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif

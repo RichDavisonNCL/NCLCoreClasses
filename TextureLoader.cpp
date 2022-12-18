@@ -59,9 +59,9 @@ void TextureLoader::RegisterTextureLoadFunction(TextureLoadFunction f, const std
 
 std::string TextureLoader::GetFileExtension(const std::string& fileExtension) {
 #ifdef WIN32
-	path p = path(fileExtension);
+	std::filesystem::path p = std::filesystem::path(fileExtension);
 
-	path ext = p.extension();
+	std::filesystem::path ext = p.extension();
 
 	return ext.string();
 #else
