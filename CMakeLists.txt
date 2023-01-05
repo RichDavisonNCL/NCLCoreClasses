@@ -113,6 +113,7 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE
     <string>
     <iosfwd>
     <set>
+	<assert.h>
 )
 
 ################################################################################

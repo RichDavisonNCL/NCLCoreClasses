@@ -27,6 +27,7 @@ namespace NCL::Rendering {
 		virtual void Update(float dt) {}
 
 		void Render() {
+			assert(HasInitialised());
 			BeginFrame();
 			RenderFrame();
 			EndFrame();
