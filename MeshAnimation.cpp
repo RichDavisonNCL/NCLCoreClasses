@@ -2,22 +2,19 @@
 #include "Matrix4.h"
 #include "Assets.h"
 
-#include <fstream>
-#include <string>
-
 using namespace NCL;
 using namespace NCL::Maths;
 
 MeshAnimation::MeshAnimation() {
 	jointCount	= 0;
 	frameCount	= 0;
-	frameRate	= 0.0f;
+	frameTime	= 0.0f;
 }
 
 MeshAnimation::MeshAnimation(unsigned int jointCount, unsigned int frameCount, float frameRate, std::vector<Matrix4>& frames) {
 	this->jointCount = jointCount;
 	this->frameCount = frameCount;
-	this->frameRate  = frameRate;
+	this->frameTime  = frameRate;
 	this->allJoints  = frames;
 }
 
@@ -36,7 +33,7 @@ MeshAnimation::MeshAnimation(const std::string& filename) : MeshAnimation() {
 	file >> fileVersion;
 	file >> frameCount;
 	file >> jointCount;
-	file >> frameRate;
+	file >> frameTime;
 
 	allJoints.reserve((size_t)frameCount * jointCount);
 

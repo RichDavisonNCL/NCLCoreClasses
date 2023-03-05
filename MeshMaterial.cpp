@@ -68,7 +68,7 @@ const MeshMaterialEntry* MeshMaterial::GetMaterialForLayer(int i) const {
 }
 
 void MeshMaterial::LoadTextures() {
-	for(auto & i : meshLayers) {
+	for(auto& i : meshLayers) {
 		i->LoadTextures();
 	}
 }

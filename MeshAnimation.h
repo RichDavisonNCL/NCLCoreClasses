@@ -32,8 +32,8 @@ namespace NCL {
 			return frameCount;
 		}
 
-		float GetFrameRate() const {
-			return frameRate;
+		float GetFrameTime() const {
+			return frameTime;
 		}
 
 		const Maths::Matrix4* GetJointData(unsigned int frame) const;
@@ -41,7 +41,7 @@ namespace NCL {
 	protected:
 		unsigned int	jointCount;
 		unsigned int	frameCount;
-		float			frameRate;
+		float			frameTime;
 
 		std::vector<Maths::Matrix4>		allJoints;
 	};
