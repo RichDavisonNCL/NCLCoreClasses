@@ -32,7 +32,8 @@ namespace NCL {
 		Triangles,
 		TriangleFan,
 		TriangleStrip,
-		Patches
+		Patches,
+		MAX_PRIM
 	};
 
 	enum VertexAttribute {
