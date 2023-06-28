@@ -8,6 +8,7 @@ https://research.ncl.ac.uk/game/
 */
 #pragma once
 #include "Vector2.h"
+#include "Vector2i.h"
 
 namespace NCL {
 	using namespace NCL::Maths;
@@ -41,7 +42,7 @@ namespace NCL {
 		//Get the window position of the mouse pointer
 		inline Vector2	GetAbsolutePosition() const { return absolutePosition; }
 
-		inline Vector2 GetWindowPosition() const {
+		inline Vector2i GetWindowPosition() const {
 			return windowPosition;
 		}
 
@@ -74,7 +75,7 @@ namespace NCL {
 
 		//Set the absolute screen bounds (<0 is always assumed dissallowed). Used
 		//by the window resize routine...
-		void	SetAbsolutePositionBounds(const Vector2& bounds);
+		void	SetAbsolutePositionBounds(const Vector2i& bounds);
 
 		void	UpdateFrameState(float msec);
 		void	Sleep();
@@ -83,11 +84,11 @@ namespace NCL {
 		bool		isAwake;		//Is the device awake...
 
 		//Screen position if windowing API provides it
-		Vector2		windowPosition;
+		Vector2i	windowPosition;
 		//Current mouse absolute position
 		Vector2		absolutePosition;
 		//Current mouse absolute position maximum bounds
-		Vector2		absolutePositionBounds;
+		Vector2i	absolutePositionBounds;
 		//How much as the mouse moved since the last raw packet?
 		Vector2		relativePosition;
 		//Current button down state for each button

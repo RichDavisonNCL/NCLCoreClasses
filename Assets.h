@@ -7,7 +7,6 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
-#include <string>
 
 namespace NCL::Assets {
 	const std::string ASSETROOT(ASSETROOTLOCATION);

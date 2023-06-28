@@ -7,16 +7,13 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
-
 #include "Keyboard.h"
 #include "Mouse.h"
-#include "GameTimer.h"
 
-#include "Vector2.h"
-
-#include <string>
+#include "Vector2i.h"
 
 namespace NCL {
+	class GameTimer;
 	namespace Rendering {
 		class RendererBase;
 	};
@@ -42,8 +39,8 @@ namespace NCL {
 			return size.x / size.y;
 		}
 
-		Vector2		GetScreenSize()		const { return size; }
-		Vector2		GetScreenPosition()	const { return position; }
+		Vector2i		GetScreenSize()		const { return size; }
+		Vector2i		GetScreenPosition()	const { return position; }
 
 		const std::string&  GetTitle()   const { return windowTitle; }
 		void				SetTitle(const std::string& title) {
@@ -78,9 +75,9 @@ namespace NCL {
 
 		bool				minimised;
 		bool				init;
-		Vector2				position;
-		Vector2				size;
-		Vector2				defaultSize;
+		Vector2i			position;
+		Vector2i			size;
+		Vector2i			defaultSize;
 
 		std::string			windowTitle;
 

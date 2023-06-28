@@ -7,7 +7,6 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
-#include <iostream>
 
 namespace NCL::Maths {
 	class Vector3;
@@ -48,11 +47,11 @@ namespace NCL::Maths {
 			}
 		}
 
-		float	Length() const {
+		inline float	Length() const {
 			return sqrt((x * x) + (y * y));
 		}
 
-		constexpr float	LengthSquared() const {
+		inline constexpr float	LengthSquared() const {
 			return ((x * x) + (y * y));
 		}
 
@@ -138,11 +137,11 @@ namespace NCL::Maths {
 			y /= f;
 		}
 
-		inline float operator[](int i) const {
+		inline constexpr float operator[](int i) const {
 			return array[i];
 		}
 
-		inline float& operator[](int i) {
+		inline constexpr float& operator[](int i) {
 			return array[i];
 		}
 
@@ -150,7 +149,7 @@ namespace NCL::Maths {
 		inline bool	operator!=(const Vector2& A)const { return (A.x == x && A.y == y) ? false : true; };
 
 		inline friend std::ostream& operator<<(std::ostream& o, const Vector2& v) {
-			o << "Vector2(" << v.x << "," << v.y << ")" << std::endl;
+			o << "Vector2(" << v.x << "," << v.y << ")\n";
 			return o;
 		}
 	};

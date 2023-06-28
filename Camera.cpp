@@ -1,6 +1,5 @@
 #include "Camera.h"
 #include "Window.h"
-#include <algorithm>
 
 using namespace NCL;
 
@@ -27,24 +26,24 @@ void Camera::UpdateCamera(float dt) {
 
 	float frameSpeed = 100 * dt;
 
-	if (Window::GetKeyboard()->KeyDown(KeyboardKeys::W)) {
+	if (Window::GetKeyboard()->KeyDown(KeyCodes::W)) {
 		position += Matrix4::Rotation(yaw, Vector3(0, 1, 0)) * Vector3(0, 0, -1) * frameSpeed;
 	}
-	if (Window::GetKeyboard()->KeyDown(KeyboardKeys::S)) {
+	if (Window::GetKeyboard()->KeyDown(KeyCodes::S)) {
 		position -= Matrix4::Rotation(yaw, Vector3(0, 1, 0)) * Vector3(0, 0, -1) * frameSpeed;
 	}
 
-	if (Window::GetKeyboard()->KeyDown(KeyboardKeys::A)) {
+	if (Window::GetKeyboard()->KeyDown(KeyCodes::A)) {
 		position += Matrix4::Rotation(yaw, Vector3(0, 1, 0)) * Vector3(-1, 0, 0) * frameSpeed;
 	}
-	if (Window::GetKeyboard()->KeyDown(KeyboardKeys::D)) {
+	if (Window::GetKeyboard()->KeyDown(KeyCodes::D)) {
 		position -= Matrix4::Rotation(yaw, Vector3(0, 1, 0)) * Vector3(-1, 0, 0) * frameSpeed;
 	}
 
-	if (Window::GetKeyboard()->KeyDown(KeyboardKeys::SHIFT)) {
+	if (Window::GetKeyboard()->KeyDown(KeyCodes::SHIFT)) {
 		position.y += frameSpeed;
 	}
-	if (Window::GetKeyboard()->KeyDown(KeyboardKeys::SPACE)) {
+	if (Window::GetKeyboard()->KeyDown(KeyCodes::SPACE)) {
 		position.y -= frameSpeed;
 	}
 }

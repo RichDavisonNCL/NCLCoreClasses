@@ -7,8 +7,6 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
-#include <vector>
-#include <string>
 
 using std::vector;
 
@@ -63,9 +61,9 @@ namespace NCL {
 		int base  = 0;
 	};
 
-	class MeshGeometry	{
+	class Mesh	{
 	public:		
-		virtual ~MeshGeometry();
+		virtual ~Mesh();
 
 		GeometryPrimitive GetPrimitiveType() const {
 			return primType;
@@ -184,11 +182,11 @@ namespace NCL {
 
 		virtual void UploadToGPU(Rendering::RendererBase* renderer = nullptr) = 0;
 
-		static MeshGeometry* GenerateTriangle(MeshGeometry* input);
+		static Mesh* GenerateTriangle(Mesh* input);
 
 	protected:
-		MeshGeometry();
-		MeshGeometry(const std::string&filename);
+		Mesh();
+		Mesh(const std::string&filename);
 
 		void ReadRigPose(std::ifstream& file, vector<Matrix4>& into);
 		void ReadJointParents(std::ifstream& file);

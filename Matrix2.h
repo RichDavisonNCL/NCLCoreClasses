@@ -8,7 +8,7 @@ https://research.ncl.ac.uk/game/
 */
 #pragma once
 #include "Vector2.h"
-#include <assert.h>
+
 namespace NCL::Maths {
 	class Matrix2 {
 	public: 
@@ -21,47 +21,16 @@ namespace NCL::Maths {
 
 		void ToZero();
 
-		Matrix2& SetRow(unsigned int row, const Vector2 &val) {
-			assert(row < 2);
-			array[0][row] = val.x;
-			array[1][row] = val.y;
-			return *this;
-		}
+		Matrix2& SetRow(unsigned int row, const Vector2& val);
+		Matrix2& SetColumn(unsigned int column, const Vector2& val);
 
-		Matrix2& SetColumn(unsigned int column, const Vector2 &val) {
-			assert(column < 2);
-			array[column][0] = val.x;
-			array[column][1] = val.y;
-			return *this;
-		}
+		Vector2 GetRow(unsigned int row) const;
+		Vector2 GetColumn(unsigned int column) const;
 
-		Vector2 GetRow(unsigned int row) const {
-			assert(row < 2);
-			return Vector2(array[0][row],array[1][row]);
-		}
+		Vector2 GetDiagonal() const;
+		void	SetDiagonal(const Vector2& in);
 
-		Vector2 GetColumn(unsigned int column) const {
-			assert(column < 2);
-			return Vector2(array[column][0], array[column][1]);
-		}
-
-		Vector2 GetDiagonal() const {
-			return Vector2(array[0][0], array[1][1]);
-		}
-
-		void	SetDiagonal(const Vector2 &in) {
-			array[0][0] = in.x;
-			array[1][1] = in.y;
-		}
-
-		inline Vector2 operator*(const Vector2 &v) const {
-			Vector2 vec;
-
-			vec.x = v.x*array[0][0] + v.y*array[1][0];
-			vec.y = v.x*array[0][1] + v.y*array[1][1];
-
-			return vec;
-		};
+		inline Vector2 operator*(const Vector2& v) const;
 
 		static Matrix2 Rotation(float degrees);
 

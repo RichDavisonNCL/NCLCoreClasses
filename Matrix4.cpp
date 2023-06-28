@@ -101,7 +101,7 @@ void	Matrix4::SetDiagonal(const Vector3 &in) {
 Matrix4 Matrix4::Perspective(float znear, float zfar, float aspect, float fov) {
 	Matrix4 m;
 
-	const float h = 1.0f / tan(fov*Maths::PI_OVER_360);
+	const float h = 1.0f / tan(Maths::DegreesToRadians(fov) / 2.0f);
 	float neg_depth = znear-zfar;
 
 	m.array[0][0]		= h / aspect;

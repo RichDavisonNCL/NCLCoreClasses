@@ -2,9 +2,6 @@
 #include "Assets.h"
 #include "TextureLoader.h"
 
-#include <fstream>
-#include <iostream>
-
 using namespace NCL;
 using namespace NCL::Rendering;
 using std::ifstream;
@@ -77,8 +74,8 @@ void MeshMaterialEntry::LoadTextures() {
 	for (auto& i : entries) {
 		string filename = Assets::TEXTUREDIR + i.second.first;
 
-		TextureBase* t = TextureLoader::LoadAPITexture(filename);
+		//Texture* t = TextureLoader::LoadAPITexture(filename);
 
-		i.second.second = t;
+		//i.second.second = t;
 	}
 }

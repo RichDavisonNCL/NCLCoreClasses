@@ -48,7 +48,6 @@ namespace NCL::Rendering {
 		virtual void SwapBuffers()	= 0;
 		Window& hostWindow;
 
-		int windowWidth;
-		int windowHeight;
+		Vector2i windowSize;
 	};
 }

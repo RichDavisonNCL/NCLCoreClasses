@@ -7,8 +7,6 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #include "TextureLoader.h"
-#include <iostream>
-#include <filesystem>
 #define STB_IMAGE_IMPLEMENTATION
 
 #include "./stb/stb_image.h"
@@ -76,10 +74,14 @@ void TextureLoader::RegisterAPILoadFunction(APILoadFunction f) {
 	apiFunction = f;
 }
 
-TextureBase* TextureLoader::LoadAPITexture(const std::string&filename) {
+Texture* TextureLoader::LoadAPITexture(const std::string&filename) {
 	if (apiFunction == nullptr) {
 		std::cout << __FUNCTION__ << " no API Function has been defined!\n";
 		return nullptr;
 	}
 	return apiFunction(filename);
+}
+
+static void DeleteTextureData(char* data) {
+	free(data);
 }
