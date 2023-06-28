@@ -9,16 +9,16 @@ https://research.ncl.ac.uk/game/
 #pragma once
 #include <map>
 #include <functional>
-#include <string>
+
 
 namespace NCL {
 	namespace Rendering {
-		class TextureBase;
+		class Texture;
 	}
 
 	typedef std::function<bool(const std::string& filename, char*& outData, int& width, int &height, int &channels, int&flags)> TextureLoadFunction;
 
-	typedef std::function<Rendering::TextureBase*(const std::string& filename)> APILoadFunction;
+	typedef std::function<Rendering::Texture*(const std::string& filename)> APILoadFunction;
 
 	class TextureLoader	{
 	public:
@@ -28,7 +28,9 @@ namespace NCL {
 
 		static void RegisterAPILoadFunction(APILoadFunction f);
 
-		static Rendering::TextureBase* LoadAPITexture(const std::string&filename);
+		static Rendering::Texture* LoadAPITexture(const std::string&filename);
+
+		static void DeleteTextureData(char* data);
 	protected:
 
 		static std::string GetFileExtension(const std::string& fileExtension);

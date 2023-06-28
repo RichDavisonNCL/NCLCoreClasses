@@ -10,7 +10,7 @@ https://research.ncl.ac.uk/game/
 
 namespace NCL {
 	//http://msdn.microsoft.com/en-us/library/ms645540(VS.85).aspx
-	enum class KeyboardKeys {
+	enum class KeyCodes {
 		LBUTTON = 0x01,  // Left mouse button  
 		RBUTTON = 0x02,  // Right mouse button  
 		CANCEL = 0x03,  // Control-break processing  
@@ -162,18 +162,18 @@ namespace NCL {
 		friend class Window;
 
 		//Is this key currently pressed down?
-		bool KeyDown(KeyboardKeys key) const {
+		bool KeyDown(KeyCodes key) const {
 			return keyStates[(int)key];
 		}
 		//Has this key been held down for multiple frames?
-		bool KeyHeld(KeyboardKeys key) const {
+		bool KeyHeld(KeyCodes key) const {
 			if (KeyDown(key) && holdStates[(int)key]) {
 				return true;
 			}
 			return false;
 		}
 		//Is this the first update the key has been pressed for?
-		bool KeyPressed(KeyboardKeys key) const {
+		bool KeyPressed(KeyCodes key) const {
 			return (KeyDown(key) && !KeyHeld(key));
 		}
 
@@ -187,7 +187,7 @@ namespace NCL {
 		void Wake();
 
 		bool isAwake;
-		bool keyStates[(int)KeyboardKeys::MAXVALUE];		//Is the key down?
-		bool holdStates[(int)KeyboardKeys::MAXVALUE];		//Has the key been down for multiple updates?
+		bool keyStates[(int)KeyCodes::MAXVALUE];		//Is the key down?
+		bool holdStates[(int)KeyCodes::MAXVALUE];		//Has the key been down for multiple updates?
 	};
 }

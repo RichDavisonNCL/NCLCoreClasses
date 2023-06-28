@@ -7,9 +7,6 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
-#include <cmath>
-#include <iostream>
-#include <algorithm>
 
 namespace NCL::Maths {
 	class Vector2;
@@ -84,19 +81,19 @@ namespace NCL::Maths {
 
 		static constexpr Vector3 Clamp(const Vector3& input, const Vector3& mins, const Vector3& maxs);
 
-		static constexpr float	Dot(const Vector3 &a, const Vector3 &b) {
+		static constexpr float	Dot(const Vector3& a, const Vector3& b) {
 			return (a.x*b.x) + (a.y*b.y) + (a.z*b.z);
 		}
 
-		static Vector3	Cross(const Vector3 &a, const Vector3 &b) {
+		static Vector3	Cross(const Vector3& a, const Vector3& b) {
 			return Vector3((a.y*b.z) - (a.z*b.y), (a.z*b.x) - (a.x*b.z), (a.x*b.y) - (a.y*b.x));
 		}
 
-		inline Vector3  operator+(const Vector3  &a) const {
+		inline Vector3  operator+(const Vector3& a) const {
 			return Vector3(x + a.x, y + a.y, z + a.z);
 		}
 
-		inline Vector3  operator-(const Vector3  &a) const {
+		inline Vector3  operator-(const Vector3& a) const {
 			return Vector3(x - a.x, y - a.y, z - a.z);
 		}
 
@@ -108,11 +105,11 @@ namespace NCL::Maths {
 			return Vector3(x * a, y * a, z * a);
 		}
 
-		inline Vector3  operator*(const Vector3  &a) const {
+		inline Vector3  operator*(const Vector3& a) const {
 			return Vector3(x * a.x, y * a.y, z * a.z);
 		}
 
-		inline Vector3  operator/(const Vector3  &a) const {
+		inline Vector3  operator/(const Vector3& a) const {
 			return Vector3(x / a.x, y / a.y, z / a.z);
 		};
 
@@ -120,26 +117,26 @@ namespace NCL::Maths {
 			return Vector3(x / v, y / v, z / v);
 		};
 
-		inline constexpr void operator+=(const Vector3  &a) {
+		inline constexpr void operator+=(const Vector3& a) {
 			x += a.x;
 			y += a.y;
 			z += a.z;
 		}
 
-		inline void operator-=(const Vector3  &a) {
+		inline void operator-=(const Vector3& a) {
 			x -= a.x;
 			y -= a.y;
 			z -= a.z;
 		}
 
 
-		inline void operator*=(const Vector3  &a) {
+		inline void operator*=(const Vector3& a) {
 			x *= a.x;
 			y *= a.y;
 			z *= a.z;
 		}
 
-		inline void operator/=(const Vector3  &a) {
+		inline void operator/=(const Vector3& a) {
 			x /= a.x;
 			y /= a.y;
 			z /= a.z;
@@ -165,11 +162,11 @@ namespace NCL::Maths {
 			return array[i];
 		}
 
-		inline bool	operator==(const Vector3 &A)const { return (A.x == x && A.y == y && A.z == z) ? true : false; };
-		inline bool	operator!=(const Vector3 &A)const { return (A.x == x && A.y == y && A.z == z) ? false : true; };
+		inline bool	operator==(const Vector3& A)const { return (A.x == x && A.y == y && A.z == z) ? true : false; };
+		inline bool	operator!=(const Vector3& A)const { return (A.x == x && A.y == y && A.z == z) ? false : true; };
 
 		inline friend std::ostream& operator<<(std::ostream& o, const Vector3& v) {
-			o << "Vector3(" << v.x << "," << v.y << "," << v.z << ")" << std::endl;
+			o << "Vector3(" << v.x << "," << v.y << "," << v.z << ")\n";
 			return o;
 		}
 	};

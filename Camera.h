@@ -30,7 +30,7 @@ namespace NCL {
 
 			fov			= 45.0f;
 			nearPlane	= 1.0f;
-			farPlane	= 100.0f;
+			farPlane	= 1000.0f;
 
 			camType		= CameraType::Perspective;
 		};
@@ -55,6 +55,11 @@ namespace NCL {
 			return fov;
 		}
 
+		Camera& SetFieldOfVision(float val) {
+			fov = val;
+			return *this;
+		}
+
 		float GetNearPlane() const {
 			return nearPlane;
 		}
@@ -72,6 +77,8 @@ namespace NCL {
 			farPlane = val;
 			return *this;
 		}
+
+
 
 		//Builds a view matrix for the current camera variables, suitable for sending straight
 		//to a vertex shader (i.e it's already an 'inverse camera matrix').

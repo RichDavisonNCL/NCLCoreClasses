@@ -7,7 +7,6 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
-#include <iostream>
 
 namespace NCL::Maths {
 	class Vector3;
@@ -179,7 +178,7 @@ namespace NCL::Maths {
 		inline bool	operator!=(const Vector4 &A)const { return (A.x == x && A.y == y && A.z == z && A.w == w) ? false : true; };
 
 		inline friend std::ostream& operator<<(std::ostream& o, const Vector4& v) {
-			o << "Vector4(" << v.x << "," << v.y << "," << v.z << "," << v.w << ")" << std::endl;
+			o << "Vector4(" << v.x << "," << v.y << "," << v.z << "," << v.w << ")\n";
 			return o;
 		}
 	};

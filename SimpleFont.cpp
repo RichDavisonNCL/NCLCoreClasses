@@ -7,10 +7,9 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #include "SimpleFont.h"
-#include "TextureBase.h"
+#include "Texture.h"
 #include "TextureLoader.h"
 #include "Assets.h"
-#include <fstream>
 
 #include "Vector2.h"
 #include "Vector3.h"
@@ -26,7 +25,7 @@ SimpleFont::SimpleFont(const std::string&filename, const std::string&texName)
 	numChars	= 0;
 	allCharData	= nullptr;
 
-	texture		= TextureLoader::LoadAPITexture(texName);
+	texture = TextureLoader::LoadAPITexture(texName);
 
 	std::ifstream fontFile(Assets::FONTSSDIR + filename);
 

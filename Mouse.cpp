@@ -1,5 +1,4 @@
 #include "Mouse.h"
-#include <string>
 
 using namespace NCL;
 
@@ -53,6 +52,6 @@ void	Mouse::SetAbsolutePosition(const Vector2& pos) {
 	absolutePosition = pos;
 }
 
-void	Mouse::SetAbsolutePositionBounds(const Vector2& bounds) {
+void	Mouse::SetAbsolutePositionBounds(const Vector2i& bounds) {
 	absolutePositionBounds = bounds;
 }

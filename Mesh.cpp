@@ -1,18 +1,21 @@
-#include "MeshGeometry.h"
+#include "Mesh.h"
 #include "Assets.h"
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
-#include "Matrix4.h"
-#include "Maths.h"
 
-#include <fstream>
-#include <string>
+#include "Vector2i.h"
+#include "Vector3i.h"
+#include "Vector4i.h"
+
+#include "Matrix4.h"
+
+#include "Maths.h"
 
 using namespace NCL;
 using namespace Maths;
 
-MeshGeometry::MeshGeometry()
+Mesh::Mesh()
 {
 	primType	= GeometryPrimitive::Triangles;
 }
@@ -138,7 +141,7 @@ void ReadIndices(std::ifstream& file, vector<unsigned int>& elements, int numInd
 	}
 }
 
-MeshGeometry::MeshGeometry(const std::string&filename) {
+Mesh::Mesh(const std::string&filename) {
 	primType = GeometryPrimitive::Triangles;
 	std::ifstream file(Assets::MESHDIR + filename);
 
@@ -147,15 +150,15 @@ MeshGeometry::MeshGeometry(const std::string&filename) {
 
 	file >> filetype;
 
-	if (filetype != "MeshGeometry") {
-		std::cout << __FUNCTION__ << " File is not a MeshGeometry file!\n";
+	if (filetype != "Mesh") {
+		std::cout << __FUNCTION__ << " File is not a Mesh file!\n";
 		return;
 	}
 
 	file >> fileVersion;
 
 	if (fileVersion != 1) {
-		std::cout << __FUNCTION__ << " MeshGeometry file has incompatible version!\n";
+		std::cout << __FUNCTION__ << " Mesh file has incompatible version!\n";
 		return;
 	}
 
@@ -194,11 +197,11 @@ MeshGeometry::MeshGeometry(const std::string&filename) {
 	}
 }
 
-MeshGeometry::~MeshGeometry()
+Mesh::~Mesh()
 {
 }
 
-bool MeshGeometry::HasTriangle(unsigned int i) const {
+bool Mesh::HasTriangle(unsigned int i) const {
 	int triCount = 0;
 	if (GetIndexCount() > 0) {
 		triCount = GetIndexCount() / 3;
@@ -210,7 +213,7 @@ bool MeshGeometry::HasTriangle(unsigned int i) const {
 }
 
 
-bool	MeshGeometry::GetVertexIndicesForTri(unsigned int i, unsigned int& a, unsigned int& b, unsigned int& c) const {
+bool	Mesh::GetVertexIndicesForTri(unsigned int i, unsigned int& a, unsigned int& b, unsigned int& c) const {
 	if (!HasTriangle(i)) {
 		return false;
 	}
@@ -227,7 +230,7 @@ bool	MeshGeometry::GetVertexIndicesForTri(unsigned int i, unsigned int& a, unsig
 	return true;
 }
 
-bool MeshGeometry::GetTriangle(unsigned int i, Vector3& va, Vector3& vb, Vector3& vc) const {
+bool Mesh::GetTriangle(unsigned int i, Vector3& va, Vector3& vb, Vector3& vc) const {
 	bool hasTri = false;
 	unsigned int a, b, c;
 	hasTri = GetVertexIndicesForTri(i, a, b, c);
@@ -241,7 +244,7 @@ bool MeshGeometry::GetTriangle(unsigned int i, Vector3& va, Vector3& vb, Vector3
 }
 
 
-bool MeshGeometry::GetNormalForTri(unsigned int i, Vector3& n) const {
+bool Mesh::GetNormalForTri(unsigned int i, Vector3& n) const {
 	Vector3 a, b, c;
 
 	bool hasTri = GetTriangle(i, a, b, c);
@@ -256,51 +259,51 @@ bool MeshGeometry::GetNormalForTri(unsigned int i, Vector3& n) const {
 	return true;
 }
 
-void	MeshGeometry::TransformVertices(const Matrix4& byMatrix) {
+void	Mesh::TransformVertices(const Matrix4& byMatrix) {
 
 }
 
-void	MeshGeometry::RecalculateNormals() {
+void	Mesh::RecalculateNormals() {
 
 }
 
-void	MeshGeometry::RecalculateTangents() {
+void	Mesh::RecalculateTangents() {
 
 }
 
-void MeshGeometry::SetVertexPositions(const vector<Vector3>& newVerts) {
+void Mesh::SetVertexPositions(const vector<Vector3>& newVerts) {
 	positions = newVerts;
 }
 
-void MeshGeometry::SetVertexTextureCoords(const vector<Vector2>& newTex) {
+void Mesh::SetVertexTextureCoords(const vector<Vector2>& newTex) {
 	texCoords = newTex;
 }
 
-void MeshGeometry::SetVertexColours(const vector<Vector4>& newColours) {
+void Mesh::SetVertexColours(const vector<Vector4>& newColours) {
 	colours = newColours;
 }
 
-void MeshGeometry::SetVertexNormals(const vector<Vector3>& newNorms) {
+void Mesh::SetVertexNormals(const vector<Vector3>& newNorms) {
 	normals = newNorms;
 }
 
-void MeshGeometry::SetVertexTangents(const vector<Vector4>& newTans) {
+void Mesh::SetVertexTangents(const vector<Vector4>& newTans) {
 	tangents = newTans;
 }
 
-void MeshGeometry::SetVertexIndices(const vector<unsigned int>& newIndices) {
+void Mesh::SetVertexIndices(const vector<unsigned int>& newIndices) {
 	indices = newIndices;
 }
 
-void MeshGeometry::SetVertexSkinWeights(const vector<Vector4>& newSkinWeights) {
+void Mesh::SetVertexSkinWeights(const vector<Vector4>& newSkinWeights) {
 	skinWeights = newSkinWeights;
 }
 
-void MeshGeometry::SetVertexSkinIndices(const vector<Vector4i>& newSkinIndices) {
+void Mesh::SetVertexSkinIndices(const vector<Vector4i>& newSkinIndices) {
 	skinIndices = newSkinIndices;
 }
 
-MeshGeometry* MeshGeometry::GenerateTriangle(MeshGeometry* input) {
+Mesh* Mesh::GenerateTriangle(Mesh* input) {
 	input->SetVertexPositions({Vector3(-1,-1,0), Vector3(1,-1,0), Vector3(0,1,0) });
 	input->SetVertexColours({ Vector4(1,0,0,1), Vector4(0,1,0,1), Vector4(0,0,1,1) });
 	input->SetVertexTextureCoords({ Vector2(0,0), Vector2(1,0), Vector2(0.5, 1) });
@@ -309,11 +312,11 @@ MeshGeometry* MeshGeometry::GenerateTriangle(MeshGeometry* input) {
 	return input;
 }
 
-void MeshGeometry::SetDebugName(const std::string& newName) {
+void Mesh::SetDebugName(const std::string& newName) {
 	debugName = newName;
 }
 
-int MeshGeometry::GetIndexForJoint(const std::string& name) const {
+int Mesh::GetIndexForJoint(const std::string& name) const {
 	for (int i = 0; i < jointNames.size(); ++i) {
 		if (jointNames[i] == name) {
 			return i;
@@ -322,23 +325,23 @@ int MeshGeometry::GetIndexForJoint(const std::string& name) const {
 	return -1;
 }
 
-void MeshGeometry::SetJointNames(std::vector < std::string >& newNames) {
+void Mesh::SetJointNames(std::vector < std::string >& newNames) {
 	jointNames = newNames;
 }
 
-void MeshGeometry::SetJointParents(std::vector<int>& newParents) {
+void Mesh::SetJointParents(std::vector<int>& newParents) {
 	jointParents = newParents;
 }
 
-void MeshGeometry::SetBindPose(std::vector<Matrix4>& newMats) {
+void Mesh::SetBindPose(std::vector<Matrix4>& newMats) {
 	bindPose = newMats;
 }
 
-void MeshGeometry::SetInverseBindPose(std::vector<Matrix4>& newMats) {
+void Mesh::SetInverseBindPose(std::vector<Matrix4>& newMats) {
 	inverseBindPose = newMats;
 }
 
-void MeshGeometry::CalculateInverseBindPose() {
+void Mesh::CalculateInverseBindPose() {
 	inverseBindPose.resize(bindPose.size());
 
 	for (int i = 0; i < bindPose.size(); ++i) {
@@ -346,7 +349,7 @@ void MeshGeometry::CalculateInverseBindPose() {
 	}
 }
 
-void MeshGeometry::ReadRigPose(std::ifstream& file, vector<Matrix4>& into) {
+void Mesh::ReadRigPose(std::ifstream& file, vector<Matrix4>& into) {
 	int matCount = 0;
 	file >> matCount;
 
@@ -363,7 +366,7 @@ void MeshGeometry::ReadRigPose(std::ifstream& file, vector<Matrix4>& into) {
 	}
 }
 
-void MeshGeometry::ReadJointParents(std::ifstream& file) {
+void Mesh::ReadJointParents(std::ifstream& file) {
 	int jointCount = 0;
 	file >> jointCount;
 
@@ -374,7 +377,7 @@ void MeshGeometry::ReadJointParents(std::ifstream& file) {
 	}
 }
 
-void MeshGeometry::ReadJointNames(std::ifstream& file) {
+void Mesh::ReadJointNames(std::ifstream& file) {
 	int jointCount = 0;
 	file >> jointCount;
 	std::string jointName;
@@ -387,7 +390,7 @@ void MeshGeometry::ReadJointNames(std::ifstream& file) {
 	}
 }
 
-void MeshGeometry::ReadSubMeshes(std::ifstream& file, int count) {
+void Mesh::ReadSubMeshes(std::ifstream& file, int count) {
 	for (int i = 0; i < count; ++i) {
 		SubMesh m;
 		file >> m.start;
@@ -396,7 +399,7 @@ void MeshGeometry::ReadSubMeshes(std::ifstream& file, int count) {
 	}
 }
 
-void MeshGeometry::ReadSubMeshNames(std::ifstream& file, int count) {
+void Mesh::ReadSubMeshNames(std::ifstream& file, int count) {
 	std::string scrap;
 	std::getline(file, scrap);
 
@@ -407,7 +410,7 @@ void MeshGeometry::ReadSubMeshNames(std::ifstream& file, int count) {
 	}
 }
 
-bool MeshGeometry::ValidateMeshData() {
+bool Mesh::ValidateMeshData() {
 	if (GetPositionData().empty()) {
 		std::cout << __FUNCTION__ << " mesh " << debugName << " does not have any vertex positions!\n";
 		return false;

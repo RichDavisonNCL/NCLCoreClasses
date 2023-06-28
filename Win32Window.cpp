@@ -19,7 +19,7 @@ Win32Window::Win32Window(const std::string& title, int sizeX, int sizeY, bool fu
 
 	this->fullScreen = fullScreen;
 
-	size = Vector2((float)sizeX, (float)sizeY);
+	size = Vector2i(sizeX, sizeY);
 
 	defaultSize = size;
 
@@ -270,7 +270,7 @@ LRESULT CALLBACK Win32Window::WindowProc(HWND hWnd, UINT message, WPARAM wParam,
 			if (mouse) {
 				Win32Mouse*realMouse = (Win32Mouse*)mouse;
 				realMouse->UpdateWindowPosition(
-					Vector2((float)GET_X_LPARAM(lParam), (float)GET_Y_LPARAM(lParam))
+					Vector2i(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam))
 				);
 			}
 

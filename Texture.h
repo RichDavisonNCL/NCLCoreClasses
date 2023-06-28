@@ -7,12 +7,21 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
+#include "Vector2i.h"
 
 namespace NCL::Rendering {
-	class TextureBase	{
+	using namespace Maths;
+	class Texture	{
 	public:
-		virtual ~TextureBase();
+		virtual ~Texture();
+
+		Vector2i GetDimensions() const {
+			return dimensions;
+		}
+
 	protected:
-		TextureBase();
+		Texture();
+
+		Vector2i dimensions;
 	};
 }

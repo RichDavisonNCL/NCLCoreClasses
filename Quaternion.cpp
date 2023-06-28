@@ -11,8 +11,6 @@ https://research.ncl.ac.uk/game/
 #include "Matrix3.h"
 #include "Vector3.h"
 #include "Maths.h"
-#include <algorithm>
-#include <cmath>
 
 using namespace NCL;
 using namespace NCL::Maths;

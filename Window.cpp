@@ -1,5 +1,4 @@
 #include "Window.h"
-#include <thread>
 
 #ifdef _WIN32
 #include "Win32Window.h"
@@ -10,6 +9,7 @@
 #endif
 
 #include "RendererBase.h"
+#include "GameTimer.h"
 
 using namespace NCL;
 using namespace Rendering;

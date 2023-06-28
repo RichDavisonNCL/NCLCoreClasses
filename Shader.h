@@ -7,8 +7,7 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
-#include <string>
-using std::string;
+
 namespace NCL::Rendering {
 	enum class ShaderStages {
 		Vertex,
@@ -24,16 +23,16 @@ namespace NCL::Rendering {
 		TessEval	= Hull,
 	};
 
-	class ShaderBase	{
+	class Shader	{
 	public:
-		ShaderBase() {
+		Shader() {
 		}
-		ShaderBase(const string& vertex, const string& fragment, const string& geometry = "", const string& domain = "", const string& hull = "");
-		virtual ~ShaderBase();
+		Shader(const std::string& vertex, const std::string& fragment, const std::string& geometry = "", const std::string& domain = "", const std::string& hull = "");
+		virtual ~Shader();
 
 		virtual void ReloadShader() = 0;
 	protected:
 
-		string shaderFiles[(int)ShaderStages::MAXSIZE];
+		std::string shaderFiles[(int)ShaderStages::MAXSIZE];
 	};
 }

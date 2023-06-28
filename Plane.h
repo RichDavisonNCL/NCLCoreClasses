@@ -7,7 +7,8 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
-#include "vector3.h"
+#include "Vector3.h"
+
 namespace NCL::Maths {
 	class Plane {
 	public:

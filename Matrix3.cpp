@@ -13,7 +13,6 @@ https://research.ncl.ac.uk/game/
 #include "Maths.h"
 #include "Vector3.h"
 #include "Quaternion.h"
-#include <assert.h>
 
 using namespace NCL;
 using namespace NCL::Maths;

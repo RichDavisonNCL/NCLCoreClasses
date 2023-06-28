@@ -17,7 +17,7 @@ namespace NCL {
 		class Vector4;
 	}
 	namespace Rendering {
-		class TextureBase;
+		class Texture;
 
 		class SimpleFont	{
 		public:
@@ -26,7 +26,7 @@ namespace NCL {
 
 			int BuildVerticesForString(std::string &text, Maths::Vector2&startPos, Maths::Vector4&colour, float size, std::vector<Maths::Vector3>&positions, std::vector<Maths::Vector2>&texCoords, std::vector<Maths::Vector4>&colours);
 
-			const TextureBase* GetTexture() const {
+			const Texture* GetTexture() const {
 				return texture;
 			}
 
@@ -43,7 +43,7 @@ namespace NCL {
 			};
 
 			FontChar*		allCharData;
-			TextureBase*	texture;
+			Texture*	texture;
 
 			int startChar;
 			int numChars;

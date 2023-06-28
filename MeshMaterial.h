@@ -7,9 +7,6 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
-#include <string>
-#include <vector>
-#include <map>
 
 using std::string;
 using std::vector;
@@ -17,7 +14,7 @@ using std::map;
 
 namespace NCL {
 	namespace Rendering {
-		class TextureBase;
+		class Texture;
 	}
 	class MeshMaterialEntry {
 		friend class MeshMaterial;
@@ -30,7 +27,7 @@ namespace NCL {
 			*output = &i->second.first;
 			return true;
 		}
-		Rendering::TextureBase* GetEntry(const string& name) const {
+		Rendering::Texture* GetEntry(const string& name) const {
 			auto i = entries.find(name);
 			if (i == entries.end()) {
 				return nullptr;
@@ -40,7 +37,7 @@ namespace NCL {
 		void LoadTextures();
 
 	protected:
-		std::map<string, std::pair<string, Rendering::TextureBase*>> entries;
+		std::map<string, std::pair<string, Rendering::Texture*>> entries;
 	};
 
 	class MeshMaterial	{

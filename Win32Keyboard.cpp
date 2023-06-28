@@ -1,4 +1,5 @@
 #include "Win32Keyboard.h"
+
 #ifdef _WIN32
 
 using namespace NCL;
@@ -23,7 +24,7 @@ void Win32Keyboard::UpdateRAW(RAWINPUT* raw)	{
 		DWORD key = (DWORD)raw->data.keyboard.VKey;
 
 		//We should do bounds checking!
-		if(key < 0 || key >(int)KeyboardKeys::MAXVALUE)	{
+		if(key < 0 || key >(int)KeyCodes::MAXVALUE)	{
 			return;
 		}
 

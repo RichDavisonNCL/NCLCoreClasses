@@ -45,16 +45,16 @@ source_group("Maths" FILES ${Maths})
 set(Rendering
     "MeshAnimation.cpp"
     "MeshAnimation.h"
-    "MeshGeometry.cpp"
-    "MeshGeometry.h"
+    "Mesh.cpp"
+    "Mesh.h"
     "MeshMaterial.cpp"
     "MeshMaterial.h"
     "RendererBase.cpp"
     "RendererBase.h"
-    "ShaderBase.cpp"
-    "ShaderBase.h"
-    "TextureBase.cpp"
-    "TextureBase.h"
+    "Shader.cpp"
+    "Shader.h"
+    "Texture.cpp"
+    "Texture.h"
 )
 source_group("Rendering" FILES ${Rendering})
 
@@ -109,11 +109,17 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE
     <vector>
     <string>
     <fstream>
+    <sstream>
     <iostream>
     <string>
     <iosfwd>
     <set>
-	<assert.h>
+    <map> 
+    <chrono>
+    <thread>
+    <filesystem>
+    <functional>
+	<assert.h>  
 )
 
 ################################################################################
