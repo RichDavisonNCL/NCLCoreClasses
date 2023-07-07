@@ -15,16 +15,10 @@ namespace NCL::Maths {
 	class Vector4i {
 
 	public:
-		union {
-			struct {
-				int x;
-				int y;
-				int z;
-				int w;
-			};
-			int array[4];
-		};
-
+		int x;
+		int y;
+		int z;
+		int w;
 	public:
 		constexpr Vector4i(void) : x(0), y(0), z(0), w(0) {}
 
@@ -35,31 +29,27 @@ namespace NCL::Maths {
 
 		~Vector4i(void) = default;
 
+		constexpr int		GetMinElement() const {
+			int v = x;
+			v = std::min(v, y);
+			v = std::min(v, z);
+			v = std::min(v, w);
+			return v;
+		}
+
 		constexpr int		GetMaxElement() const {
 			int v = x;
-			if (y > v) {
-				v = y;
-			}
-			if (z > v) {
-				v = z;
-			}
-			if (w > v) {
-				v = w;
-			}
+			v = std::max(v, y);
+			v = std::max(v, z);
+			v = std::max(v, w);
 			return v;
 		}
 
 		int		GetAbsMaxElement() const {
-			int v = abs(x);
-			if (abs(y) > v) {
-				v = abs(y);
-			}
-			if (abs(z) > v) {
-				v = abs(z);
-			}
-			if (abs(w) > v) {
-				v = abs(w);
-			}
+			int v = std::abs(x);
+			v = std::max(v, std::abs(y));
+			v = std::max(v, std::abs(z));
+			v = std::max(v, std::abs(w));
 			return v;
 		}
 
@@ -137,11 +127,11 @@ namespace NCL::Maths {
 		}
 
 		inline float operator[](int i) const {
-			return array[i];
+			return ((int*)this)[i];
 		}
 
 		inline int& operator[](int i) {
-			return array[i];
+			return ((int*)this)[i];
 		}
 
 		inline bool	operator==(const Vector4 &A)const { return (A.x == x && A.y == y && A.z == z && A.w == w) ? true : false; };

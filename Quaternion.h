@@ -15,15 +15,11 @@ namespace NCL::Maths {
 
 	class Quaternion {
 	public:
-		union {
-			struct {
-				float x;
-				float y;
-				float z;
-				float w;
-			};
-			float array[4];
-		};
+		float x;
+		float y;
+		float z;
+		float w;
+
 	public:
 		Quaternion(void);
 		Quaternion(float x, float y, float z, float w);
@@ -108,11 +104,11 @@ namespace NCL::Maths {
 		}
 
 		inline float operator[](int i) const {
-			return array[i];
+			return ((float*)this)[i];
 		}
 
 		inline float& operator[](int i) {
-			return array[i];
+			return ((float*)this)[i];
 		}
 
 		inline friend std::ostream& operator <<(std::ostream& o, const Quaternion& q);
