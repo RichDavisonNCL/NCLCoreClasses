@@ -14,14 +14,9 @@ namespace NCL::Maths {
 
 	class Vector3 {
 	public:
-		union {
-			struct {
-				float x;
-				float y;
-				float z;
-			};
-			float array[3];
-		};
+		float x;
+		float y;
+		float z;
 	public:
 		constexpr Vector3(void) : x(0.0f), y(0.0f), z(0.0f) {}
 
@@ -49,33 +44,32 @@ namespace NCL::Maths {
 			}
 		}
 
-		float	Length() const {
-			return sqrt((x*x) + (y*y) + (z*z));
+		inline  float	Length() const {
+			return std::sqrt(LengthSquared());
 		}
 
-		constexpr float	LengthSquared() const {
+		inline constexpr float	LengthSquared() const {
 			return ((x*x) + (y*y) + (z*z));
+		}
+
+		constexpr float		GetMinElement() const {
+			float v = x;
+			v = std::min(v, y);
+			v = std::min(v, z);
+			return v;
 		}
 
 		constexpr float		GetMaxElement() const {
 			float v = x;
-			if (y > v) {
-				v = y;
-			}
-			if (z > v) {
-				v = z;
-			}
+			v = std::max(v, y);
+			v = std::max(v, z);
 			return v;
 		}
 
 		float		GetAbsMaxElement() const {
-			float v = abs(x);
-			if (abs(y) > v) {
-				v = abs(y);
-			}
-			if (abs(z) > v) {
-				v = abs(z);
-			}
+			float v = std::abs(x);
+			v = std::max(v, std::abs(y));
+			v = std::max(v, std::abs(z));
 			return v;
 		}
 
@@ -129,7 +123,6 @@ namespace NCL::Maths {
 			z -= a.z;
 		}
 
-
 		inline void operator*=(const Vector3& a) {
 			x *= a.x;
 			y *= a.y;
@@ -155,18 +148,18 @@ namespace NCL::Maths {
 		}
 
 		inline float operator[](int i) const {
-			return array[i];
+			return ((float*)this)[i];
 		}
 
 		inline float& operator[](int i) {
-			return array[i];
+			return ((float*)this)[i];
 		}
 
-		inline bool	operator==(const Vector3& A)const { return (A.x == x && A.y == y && A.z == z) ? true : false; };
-		inline bool	operator!=(const Vector3& A)const { return (A.x == x && A.y == y && A.z == z) ? false : true; };
+		inline bool	operator==(const Vector3& vec)const { return (vec.x == x && vec.y == y && vec.z == z) ? true : false; };
+		inline bool	operator!=(const Vector3& vec)const { return (vec.x == x && vec.y == y && vec.z == z) ? false : true; };
 
-		inline friend std::ostream& operator<<(std::ostream& o, const Vector3& v) {
-			o << "Vector3(" << v.x << "," << v.y << "," << v.z << ")\n";
+		inline friend std::ostream& operator<<(std::ostream& o, const Vector3& vec) {
+			o << "Vector3(" << vec.x << "," << vec.y << "," << vec.z << ")\n";
 			return o;
 		}
 	};

@@ -73,8 +73,8 @@ void* ReadVertexData(GeometryChunkData dataType, GeometryChunkTypes chunkType, i
 void ReadTextInts(std::ifstream& file, vector<Vector2i>& element, int numVertices) {
 	for (int i = 0; i < numVertices; ++i) {
 		Vector2i temp;
-		file >> temp.array[0];
-		file >> temp.array[1];
+		file >> temp[0];
+		file >> temp[1];
 		element.emplace_back(temp);
 	}
 }
@@ -82,9 +82,9 @@ void ReadTextInts(std::ifstream& file, vector<Vector2i>& element, int numVertice
 void ReadTeReadTextIntsxtFloats(std::ifstream& file, vector<Vector3i>& element, int numVertices) {
 	for (int i = 0; i < numVertices; ++i) {
 		Vector3i temp;
-		file >> temp.array[0];
-		file >> temp.array[1];
-		file >> temp.array[2];
+		file >> temp[0];
+		file >> temp[1];
+		file >> temp[2];
 		element.emplace_back(temp);
 	}
 }
@@ -92,10 +92,10 @@ void ReadTeReadTextIntsxtFloats(std::ifstream& file, vector<Vector3i>& element, 
 void ReadTextInts(std::ifstream& file, vector<Vector4i>& element, int numVertices) {
 	for (int i = 0; i < numVertices; ++i) {
 		Vector4i temp;
-		file >> temp.array[0];
-		file >> temp.array[1];
-		file >> temp.array[2];
-		file >> temp.array[3];
+		file >> temp[0];
+		file >> temp[1];
+		file >> temp[2];
+		file >> temp[3];
 		element.emplace_back(temp);
 	}
 }

@@ -15,16 +15,10 @@ namespace NCL::Maths {
 	class Vector4 {
 
 	public:
-		union {
-			struct {
-				float x;
-				float y;
-				float z;
-				float w;
-			};
-			float array[4];
-		};
-
+		float x;
+		float y;
+		float z;
+		float w;
 	public:
 		constexpr Vector4(void) : x(0.0f), y(0.0f), z(0.0f), w(0.0f) {}
 
@@ -54,44 +48,40 @@ namespace NCL::Maths {
 		}
 
 		float	Length() const {
-			return sqrt((x*x) + (y*y) + (z*z) + (w * w));
+			return std::sqrt(LengthSquared());
 		}
 
 		constexpr float	LengthSquared() const {
 			return ((x*x) + (y*y) + (z*z) + (w * w));
 		}
 
+		constexpr float		GetMinElement() const {
+			float v = x;
+			v = std::min(v, y);
+			v = std::min(v, z);
+			v = std::min(v, w);
+			return v;
+		}
+
 		constexpr float		GetMaxElement() const {
 			float v = x;
-			if (y > v) {
-				v = y;
-			}
-			if (z > v) {
-				v = z;
-			}
-			if (w > v) {
-				v = w;
-			}
+			v = std::max(v, y);
+			v = std::max(v, z);
+			v = std::max(v, w);
 			return v;
 		}
 
 		float		GetAbsMaxElement() const {
-			float v = abs(x);
-			if (abs(y) > v) {
-				v = abs(y);
-			}
-			if (abs(z) > v) {
-				v = abs(z);
-			}
-			if (abs(w) > v) {
-				v = abs(w);
-			}
+			float v = std::abs(x);
+			v = std::max(v, std::abs(y));
+			v = std::max(v, std::abs(z));
+			v = std::max(v, std::abs(w));
 			return v;
 		}
 
 		static constexpr Vector4 Clamp(const Vector4& input, const Vector4& mins, const Vector4& maxs);
 
-		static float	Dot(const Vector4 &a, const Vector4 &b) {
+		static constexpr float	Dot(const Vector4 &a, const Vector4 &b) {
 			return (a.x*b.x) + (a.y*b.y) + (a.z*b.z) + (a.w*b.w);
 		}
 
@@ -137,7 +127,6 @@ namespace NCL::Maths {
 			w -= a.w;
 		}
 
-
 		inline void operator*=(const Vector4  &a) {
 			x *= a.x;
 			y *= a.y;
@@ -167,11 +156,11 @@ namespace NCL::Maths {
 		}
 
 		inline float operator[](int i) const {
-			return array[i];
+			return ((float*)this)[i];
 		}
 
 		inline float& operator[](int i) {
-			return array[i];
+			return ((float*)this)[i];
 		}
 
 		inline bool	operator==(const Vector4 &A)const { return (A.x == x && A.y == y && A.z == z && A.w == w) ? true : false; };

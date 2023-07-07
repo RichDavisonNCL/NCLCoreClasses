@@ -31,6 +31,8 @@ set(Maths
     "Matrix4.h"
     "Plane.cpp"
     "Plane.h"
+	"Frustum.cpp"
+    "Frustum.h"
     "Quaternion.cpp"
     "Quaternion.h"
     "Vector2.cpp"

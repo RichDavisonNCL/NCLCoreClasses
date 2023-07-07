@@ -13,16 +13,16 @@ https://research.ncl.ac.uk/game/
 using namespace NCL;
 using namespace Maths;
 
-Vector4::Vector4(const Vector3i& v3, int newW) : x(v3.x), y(v3.y), z(v3.z), w (newW)  {
+Vector4i::Vector4i(const Vector3i& v3, int newW) : x(v3.x), y(v3.y), z(v3.z), w (newW)  {
 
 }
 
-Vector4::Vector4(const Vector2i& v2, int newZ, int newW) : x(v2.x), y(v2.y), z(newZ), w(newW) {
+Vector4i::Vector4i(const Vector2i& v2, int newZ, int newW) : x(v2.x), y(v2.y), z(newZ), w(newW) {
 
 }
 
-constexpr Vector4 Vector4::Clamp(const Vector4& input, const Vector4& mins, const Vector4& maxs) {
-	return Vector4(
+constexpr Vector4i Vector4i::Clamp(const Vector4i& input, const Vector4i& mins, const Vector4i& maxs) {
+	return Vector4i(
 		std::clamp(input.x, mins.x, maxs.x),
 		std::clamp(input.y, mins.y, maxs.y),
 		std::clamp(input.z, mins.z, maxs.z),

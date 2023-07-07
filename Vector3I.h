@@ -14,14 +14,9 @@ namespace NCL::Maths {
 
 	class Vector3i {
 	public:
-		union {
-			struct {
-				int x;
-				int y;
-				int z;
-			};
-			int array[3];
-		};
+		int x;
+		int y;
+		int z;
 	public:
 		constexpr Vector3i(void) : x(0), y(0), z(0) {}
 
@@ -32,25 +27,24 @@ namespace NCL::Maths {
 
 		~Vector3i(void) = default;
 
+		constexpr int		GetMinElement() const {
+			int v = x;
+			v = std::min(v, y);
+			v = std::min(v, z);
+			return v;
+		}
+
 		constexpr int		GetMaxElement() const {
 			int v = x;
-			if (y > v) {
-				v = y;
-			}
-			if (z > v) {
-				v = z;
-			}
+			v = std::max(v, y);
+			v = std::max(v, z);
 			return v;
 		}
 
 		int		GetAbsMaxElement() const {
-			int v = abs(x);
-			if (abs(y) > v) {
-				v = abs(y);
-			}
-			if (abs(z) > v) {
-				v = abs(z);
-			}
+			int v = std::abs(x);
+			v = std::max(v, std::abs(y));
+			v = std::max(v, std::abs(z));
 			return v;
 		}
 
@@ -118,12 +112,12 @@ namespace NCL::Maths {
 			z /= f;
 		}
 
-		inline float operator[](int i) const {
-			return array[i];
+		inline int operator[](int i) const {
+			return ((int*)this)[i];
 		}
 
 		inline int& operator[](int i) {
-			return array[i];
+			return ((int*)this)[i];
 		}
 
 		inline bool	operator==(const Vector3i& A)const { return (A.x == x && A.y == y && A.z == z) ? true : false; };

@@ -13,14 +13,8 @@ namespace NCL::Maths {
 	class Vector4;
 	class Vector2 {
 	public:
-		union {
-			struct {
-				float x;
-				float y;
-			};
-			float array[2];
-		};
-
+		float x;
+		float y;
 	public:
 		constexpr Vector2(void) : x(0.0f), y(0.0f) {}
 
@@ -48,29 +42,23 @@ namespace NCL::Maths {
 		}
 
 		inline float	Length() const {
-			return sqrt((x * x) + (y * y));
+			return std::sqrt(LengthSquared());
 		}
 
 		inline constexpr float	LengthSquared() const {
 			return ((x * x) + (y * y));
 		}
 
+		constexpr float		GetMinElement() const {
+			return std::max(x, y);
+		}
+
 		constexpr float		GetMaxElement() const {
-			float v = x;
-			if (y > v) {
-				v = y;
-			}
-			return v;
+			return std::max(x,y);
 		}
 
 		float		GetAbsMaxElement() const {
-			float ax = abs(x);
-			float ay = abs(y);
-
-			if (ax > ay) {
-				return ax;
-			}
-			return ay;
+			return std::max(std::abs(x), std::abs(y));
 		}
 
 		static constexpr Vector2 Clamp(const Vector2& input, const Vector2& mins, const Vector2& maxs);
@@ -138,11 +126,11 @@ namespace NCL::Maths {
 		}
 
 		inline constexpr float operator[](int i) const {
-			return array[i];
+			return ((float*)this)[i];
 		}
 
 		inline constexpr float& operator[](int i) {
-			return array[i];
+			return ((float*)this)[i];
 		}
 
 		inline bool	operator==(const Vector2& A)const { return (A.x == x && A.y == y) ? true : false; };
