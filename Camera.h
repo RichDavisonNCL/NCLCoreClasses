@@ -12,27 +12,14 @@ https://research.ncl.ac.uk/game/
 
 namespace NCL {
 	using namespace NCL::Maths;
-	enum class CameraType {
-		Orthographic,
-		Perspective
-	};
-
 	class Camera {
 	public:
 		Camera(void) {
-			left	= 0;
-			right	= 0;
-			top		= 0;
-			bottom	= 0;
-
 			pitch		= 0.0f;
 			yaw			= 0.0f;
 
-			fov			= 45.0f;
 			nearPlane	= 1.0f;
 			farPlane	= 1000.0f;
-
-			camType		= CameraType::Perspective;
 		};
 
 		Camera(float pitch, float yaw, const Vector3& position) : Camera() {
@@ -40,25 +27,13 @@ namespace NCL {
 			this->yaw		= yaw;
 			this->position	= position;
 
-			this->fov		= 45.0f;
 			this->nearPlane = 1.0f;
 			this->farPlane	= 100.0f;
-
-			this->camType	= CameraType::Perspective;
 		}
 
 		~Camera(void) = default;
 
 		void UpdateCamera(float dt);
-
-		float GetFieldOfVision() const {
-			return fov;
-		}
-
-		Camera& SetFieldOfVision(float val) {
-			fov = val;
-			return *this;
-		}
 
 		float GetNearPlane() const {
 			return nearPlane;
@@ -78,13 +53,11 @@ namespace NCL {
 			return *this;
 		}
 
-
-
 		//Builds a view matrix for the current camera variables, suitable for sending straight
 		//to a vertex shader (i.e it's already an 'inverse camera matrix').
 		Matrix4 BuildViewMatrix() const;
 
-		Matrix4 BuildProjectionMatrix(float aspectRatio = 1.0f) const;
+		virtual Matrix4 BuildProjectionMatrix(float aspectRatio = 1.0f) const = 0;
 
 		//Gets position in world space
 		Vector3 GetPosition() const { return position; }
@@ -101,21 +74,53 @@ namespace NCL {
 		//Sets pitch, in degrees
 		Camera& SetPitch(float p) { pitch = p; return *this; }
 
-		static Camera BuildPerspectiveCamera(const Vector3& pos, float pitch, float yaw, float fov, float near, float far);
-		static Camera BuildOrthoCamera(const Vector3& pos, float pitch, float yaw, float left, float right, float top, float bottom, float near, float far);
 	protected:
-		CameraType camType;
-
 		float	nearPlane;
 		float	farPlane;
+
+		float	yaw;
+		float	pitch;
+		Vector3 position;
+	};
+
+	class OrhographicCamera : public Camera {
+	public:
+		OrhographicCamera() {
+			left	= 0;
+			right	= 0;
+			top		= 0;
+			bottom	= 0;
+		}
+		~OrhographicCamera() = default;
+
+		Matrix4 BuildProjectionMatrix(float aspectRatio = 1.0f) const override;
+
+	protected:
 		float	left;
 		float	right;
 		float	top;
 		float	bottom;
+	};
 
+	class PerspectiveCamera : public Camera {
+	public:
+		PerspectiveCamera() {
+			fov = 45.0f;
+		}
+		~PerspectiveCamera() = default;
+
+		float GetFieldOfVision() const {
+			return fov;
+		}
+
+		Camera& SetFieldOfVision(float val) {
+			fov = val;
+			return *this;
+		}
+
+		Matrix4 BuildProjectionMatrix(float aspectRatio = 1.0f) const override;
+
+	protected:
 		float	fov;
-		float	yaw;
-		float	pitch;
-		Vector3 position;
 	};
 }
