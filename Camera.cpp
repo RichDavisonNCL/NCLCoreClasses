@@ -60,41 +60,10 @@ Matrix4 Camera::BuildViewMatrix() const {
 		Matrix4::Translation(-position);
 };
 
-Matrix4 Camera::BuildProjectionMatrix(float currentAspect) const {
-	if (camType == CameraType::Orthographic) {
-		return Matrix4::Orthographic(left, right, bottom, top, nearPlane, farPlane);
-	}
-	//else if (camType == CameraType::Perspective) {
-		return Matrix4::Perspective(nearPlane, farPlane, currentAspect, fov);
-	//}
+Matrix4 PerspectiveCamera::BuildProjectionMatrix(float currentAspect) const {
+	return Matrix4::Perspective(nearPlane, farPlane, currentAspect, fov);
 }
 
-Camera Camera::BuildPerspectiveCamera(const Vector3& pos, float pitch, float yaw, float fov, float nearPlane, float farPlane) {
-	Camera c;
-	c.camType	= CameraType::Perspective;
-	c.position	= pos;
-	c.pitch		= pitch;
-	c.yaw		= yaw;
-	c.nearPlane = nearPlane;
-	c.farPlane  = farPlane;
-
-	c.fov		= fov;
-
-	return c;
-}
-Camera Camera::BuildOrthoCamera(const Vector3& pos, float pitch, float yaw, float left, float right, float top, float bottom, float nearPlane, float farPlane) {
-	Camera c;
-	c.camType	= CameraType::Orthographic;
-	c.position	= pos;
-	c.pitch		= pitch;
-	c.yaw		= yaw;
-	c.nearPlane = nearPlane;
-	c.farPlane	= farPlane;
-
-	c.left		= left;
-	c.right		= right;
-	c.top		= top;
-	c.bottom	= bottom;
-
-	return c;
+Matrix4 OrhographicCamera::BuildProjectionMatrix(float currentAspect) const {
+	return Matrix4::Orthographic(left, right, bottom, top, nearPlane, farPlane);
 }
