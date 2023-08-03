@@ -17,16 +17,16 @@ namespace NCL {
 	public:
 		MeshAnimation();
 
-		MeshAnimation(unsigned int jointCount, unsigned int frameCount, float frameRate, std::vector<Maths::Matrix4>& frames);
+		MeshAnimation(size_t jointCount, size_t frameCount, float frameRate, std::vector<Maths::Matrix4>& frames);
 
 		MeshAnimation(const std::string& filename);
 		virtual ~MeshAnimation();
 
-		unsigned int GetJointCount() const {
+		size_t GetJointCount() const {
 			return jointCount;
 		}
 
-		unsigned int GetFrameCount() const {
+		size_t GetFrameCount() const {
 			return frameCount;
 		}
 
@@ -34,11 +34,11 @@ namespace NCL {
 			return frameTime;
 		}
 
-		const Maths::Matrix4* GetJointData(unsigned int frame) const;
+		const Maths::Matrix4* GetJointData(size_t frame) const;
 
 	protected:
-		unsigned int	jointCount;
-		unsigned int	frameCount;
+		size_t	jointCount;
+		size_t	frameCount;
 		float			frameTime;
 
 		std::vector<Maths::Matrix4>		allJoints;

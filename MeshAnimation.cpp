@@ -11,7 +11,7 @@ MeshAnimation::MeshAnimation() {
 	frameTime	= 0.0f;
 }
 
-MeshAnimation::MeshAnimation(unsigned int jointCount, unsigned int frameCount, float frameRate, std::vector<Matrix4>& frames) {
+MeshAnimation::MeshAnimation(size_t jointCount, size_t frameCount, float frameRate, std::vector<Matrix4>& frames) {
 	this->jointCount = jointCount;
 	this->frameCount = frameCount;
 	this->frameTime  = frameRate;
@@ -54,7 +54,7 @@ MeshAnimation::~MeshAnimation() {
 
 }
 
-const Matrix4* MeshAnimation::GetJointData(unsigned int frame) const {
+const Matrix4* MeshAnimation::GetJointData(size_t frame) const {
 	if (frame >= frameCount) {
 		return nullptr;
 	}

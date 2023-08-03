@@ -90,20 +90,20 @@ namespace NCL {
 			return 0;
 		}
 
-		unsigned int GetVertexCount() const {
-			return (unsigned int)positions.size();
+		size_t GetVertexCount() const {
+			return positions.size();
 		}
 
-		unsigned int GetIndexCount()  const {
-			return (unsigned int)indices.size();
+		size_t GetIndexCount()  const {
+			return indices.size();
 		}
 
-		unsigned int GetJointCount() const {
-			return (unsigned int)jointNames.size();
+		size_t GetJointCount() const {
+			return jointNames.size();
 		}
 
-		unsigned int GetSubMeshCount() const {
-			return (unsigned int)subMeshes.size();
+		size_t GetSubMeshCount() const {
+			return subMeshes.size();
 		}
 
 		const SubMesh* GetSubMesh(unsigned int i) const {
