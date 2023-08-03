@@ -94,10 +94,10 @@ namespace NCL::Maths {
 		//Handy string output for the matrix. Can get a bit messy, but better than nothing!
 		inline friend std::ostream& operator<<(std::ostream& o, const Matrix4& m) {
 			o << "Mat4(";
-			o << "\t"   << m.array[0][0] << "," << m.array[0][1] << "," << m.array[0][2] << "," << m.array[0][3] << "\n";
-			o << "\t\t" << m.array[1][0] << "," << m.array[1][1] << "," << m.array[1][2] << "," << m.array[1][3] << "\n";
-			o << "\t\t" << m.array[2][0] << "," << m.array[2][1] << "," << m.array[2][2] << "," << m.array[2][3] << "\n";
-			o << "\t\t" << m.array[3][0] << "," << m.array[3][1] << "," << m.array[3][2] << "," << m.array[3][3] << " )\n";
+			//o << "\t"   << m.array[0][0] << "," << m.array[0][1] << "," << m.array[0][2] << "," << m.array[0][3] << "\n";
+			//o << "\t\t" << m.array[1][0] << "," << m.array[1][1] << "," << m.array[1][2] << "," << m.array[1][3] << "\n";
+			//o << "\t\t" << m.array[2][0] << "," << m.array[2][1] << "," << m.array[2][2] << "," << m.array[2][3] << "\n";
+			//o << "\t\t" << m.array[3][0] << "," << m.array[3][1] << "," << m.array[3][2] << "," << m.array[3][3] << " )\n";
 			return o;
 		}
 	};

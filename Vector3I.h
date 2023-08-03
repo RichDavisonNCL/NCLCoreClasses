@@ -48,6 +48,8 @@ namespace NCL::Maths {
 			return v;
 		}
 
+		static constexpr Vector3i Clamp(const Vector3i& input, const Vector3i& mins, const Vector3i& maxs);
+
 		inline Vector3i  operator+(const Vector3i& a) const {
 			return Vector3i(x + a.x, y + a.y, z + a.z);
 		}

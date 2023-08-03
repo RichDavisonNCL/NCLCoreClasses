@@ -113,7 +113,7 @@ namespace NCL {
 			return fov;
 		}
 
-		Camera& SetFieldOfVision(float val) {
+		PerspectiveCamera& SetFieldOfVision(float val) {
 			fov = val;
 			return *this;
 		}

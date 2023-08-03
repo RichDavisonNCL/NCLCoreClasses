@@ -41,6 +41,13 @@ set(Maths
     "Vector3.h"
     "Vector4.cpp"
     "Vector4.h"
+	
+	"Vector2i.cpp"
+    "Vector2i.h"
+    "Vector3i.cpp"
+    "Vector3i.h"
+    "Vector4i.cpp"
+    "Vector4i.h"
 )
 source_group("Maths" FILES ${Maths})
 

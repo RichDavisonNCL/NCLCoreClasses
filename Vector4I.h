@@ -9,8 +9,8 @@ https://research.ncl.ac.uk/game/
 #pragma once
 
 namespace NCL::Maths {
-	class Vector3;
-	class Vector2;
+	class Vector3i;
+	class Vector2i;
 
 	class Vector4i {
 
@@ -71,11 +71,11 @@ namespace NCL::Maths {
 			return Vector4i(x * a, y * a, z * a, w * a);
 		}
 
-		inline Vector4i  operator*(const Vector4  &a) const {
+		inline Vector4i  operator*(const Vector4i  &a) const {
 			return Vector4i(x * a.x, y * a.y, z * a.z, w * a.w);
 		}
 
-		inline Vector4i  operator/(const Vector4  &a) const {
+		inline Vector4i  operator/(const Vector4i  &a) const {
 			return Vector4i(x / a.x, y / a.y, z / a.z, w / a.w);
 		};
 
@@ -134,8 +134,8 @@ namespace NCL::Maths {
 			return ((int*)this)[i];
 		}
 
-		inline bool	operator==(const Vector4 &A)const { return (A.x == x && A.y == y && A.z == z && A.w == w) ? true : false; };
-		inline bool	operator!=(const Vector4 &A)const { return (A.x == x && A.y == y && A.z == z && A.w == w) ? false : true; };
+		inline bool	operator==(const Vector4i &A)const { return (A.x == x && A.y == y && A.z == z && A.w == w) ? true : false; };
+		inline bool	operator!=(const Vector4i &A)const { return (A.x == x && A.y == y && A.z == z && A.w == w) ? false : true; };
 
 		inline friend std::ostream& operator<<(std::ostream& o, const Vector4i& v) {
 			o << "Vector4i(" << v.x << "," << v.y << "," << v.z << "," << v.w << ")\n";
