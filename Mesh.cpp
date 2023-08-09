@@ -150,7 +150,7 @@ Mesh::Mesh(const std::string&filename) {
 
 	file >> filetype;
 
-	if (filetype != "Mesh") {
+	if (filetype != "MeshGeometry") {
 		std::cout << __FUNCTION__ << " File is not a Mesh file!\n";
 		return;
 	}

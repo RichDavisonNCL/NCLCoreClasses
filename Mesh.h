@@ -77,7 +77,7 @@ namespace NCL {
 			size_t vertCount	= GetVertexCount();
 			size_t indexCount	= GetIndexCount();
 
-			size_t entryCount	= std::max(vertCount, indexCount);
+			size_t entryCount = indexCount ? indexCount : vertCount;
 
 			switch(GetPrimitiveType()) {
 				case Points:		return entryCount;
