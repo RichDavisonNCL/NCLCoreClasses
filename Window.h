@@ -36,7 +36,7 @@ namespace NCL {
 		bool		HasInitialised()	const { return init; }
 
 		float		GetScreenAspect()	const {
-			return size.x / size.y;
+			return (float)size.x / (float)size.y;
 		}
 
 		Vector2i		GetScreenSize()		const { return size; }
