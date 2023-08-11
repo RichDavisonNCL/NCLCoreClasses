@@ -73,6 +73,24 @@ namespace NCL {
 			primType = type;
 		}
 
+		size_t GetPrimitiveCount(size_t subMesh) const {
+			if (subMesh >= subMeshes.size()) {
+				return 0;
+			}
+
+			size_t entryCount = subMeshes[subMesh].count;
+
+			switch (GetPrimitiveType()) {
+				case Points:		return entryCount;
+				case Lines:			return entryCount / 2;
+				case Triangles:		return entryCount / 3;
+				case TriangleFan:	return 0;
+				case TriangleStrip:	return 0;
+				case Patches:		return 0;
+			}
+			return 0;
+		}
+
 		size_t GetPrimitiveCount() const {
 			size_t vertCount	= GetVertexCount();
 			size_t indexCount	= GetIndexCount();
