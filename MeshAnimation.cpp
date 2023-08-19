@@ -3,7 +3,8 @@
 #include "Assets.h"
 
 using namespace NCL;
-using namespace NCL::Maths;
+using namespace Rendering;
+using namespace Maths;
 
 MeshAnimation::MeshAnimation() {
 	jointCount	= 0;

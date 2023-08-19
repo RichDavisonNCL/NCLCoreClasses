@@ -17,20 +17,17 @@ using namespace Rendering;
 Window*		Window::window		= nullptr;
 Keyboard*	Window::keyboard	= nullptr;
 Mouse*		Window::mouse		= nullptr;
-GameTimer*	Window::timer		= nullptr;
+GameTimer	Window::timer;
 
 Window::Window()	{
 	renderer	= nullptr;
 	window		= this;
-	timer		= new GameTimer();
 }
 
 Window::~Window()	{
 	delete keyboard;keyboard= nullptr;
 	delete mouse;	mouse	= nullptr;
-	delete timer;	timer	= nullptr;
 	window = nullptr;
-	delete timer;
 }
 
 Window* Window::CreateGameWindow(std::string title, int sizeX, int sizeY, bool fullScreen, int offsetX, int offsetY) {
@@ -58,13 +55,13 @@ void	Window::SetRenderer(RendererBase* r) {
 
 bool	Window::UpdateWindow() {
 	std::this_thread::yield();
-	timer->Tick();
+	timer.Tick();
 
 	if (mouse) {
-		mouse->UpdateFrameState(timer->GetTimeDeltaMSec());
+		mouse->UpdateFrameState(timer.GetTimeDeltaMSec());
 	}
 	if (keyboard) {
-		keyboard->UpdateFrameState(timer->GetTimeDeltaMSec());
+		keyboard->UpdateFrameState(timer.GetTimeDeltaMSec());
 	}
 
 	return InternalUpdate();

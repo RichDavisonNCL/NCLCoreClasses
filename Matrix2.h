@@ -17,6 +17,8 @@ namespace NCL::Maths {
 		Matrix2(void);
 		Matrix2(float elements[4]);
 
+		Matrix2(const Vector2& colA, const Vector2& colB);
+
 		~Matrix2(void) = default;
 
 		void ToZero();
@@ -33,6 +35,9 @@ namespace NCL::Maths {
 		inline Vector2 operator*(const Vector2& v) const;
 
 		static Matrix2 Rotation(float degrees);
+
+		void	Invert();
+		Matrix2 Inverse() const;
 
 		//Handy string output for the matrix. Can get a bit messy, but better than nothing!
 		inline friend std::ostream& operator<<(std::ostream& o, const Matrix2& m);

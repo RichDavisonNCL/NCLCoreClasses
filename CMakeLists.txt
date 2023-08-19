@@ -56,6 +56,10 @@ set(Rendering
     "MeshAnimation.h"
     "Mesh.cpp"
     "Mesh.h"
+	
+	"MshLoader.cpp"
+    "MshLoader.h"
+	
     "MeshMaterial.cpp"
     "MeshMaterial.h"
     "RendererBase.cpp"

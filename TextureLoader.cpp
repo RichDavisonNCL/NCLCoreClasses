@@ -17,7 +17,6 @@ using namespace NCL;
 using namespace Rendering;
 
 std::map<std::string, TextureLoadFunction> TextureLoader::fileHandlers;
-APILoadFunction TextureLoader::apiFunction = nullptr;
 
 bool TextureLoader::LoadTexture(const std::string& filename, char*& outData, int& width, int &height, int &channels, int&flags) {
 	if (filename.empty()) {
@@ -56,30 +55,11 @@ void TextureLoader::RegisterTextureLoadFunction(TextureLoadFunction f, const std
 }
 
 std::string TextureLoader::GetFileExtension(const std::string& fileExtension) {
-#ifdef WIN32
 	std::filesystem::path p = std::filesystem::path(fileExtension);
 
 	std::filesystem::path ext = p.extension();
 
 	return ext.string();
-#else
-	return std::string();
-#endif
-}
-
-void TextureLoader::RegisterAPILoadFunction(APILoadFunction f) {
-	if (apiFunction) {
-		std::cout << __FUNCTION__ << " replacing previously defined API function.\n";
-	}
-	apiFunction = f;
-}
-
-Texture* TextureLoader::LoadAPITexture(const std::string&filename) {
-	if (apiFunction == nullptr) {
-		std::cout << __FUNCTION__ << " no API Function has been defined!\n";
-		return nullptr;
-	}
-	return apiFunction(filename);
 }
 
 static void DeleteTextureData(char* data) {
