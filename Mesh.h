@@ -88,6 +88,7 @@ namespace NCL::Rendering {
 				case TriangleFan:	return 0;
 				case TriangleStrip:	return 0;
 				case Patches:		return 0;
+				//case MAX_PRIM:	assert(true);
 			}
 			return 0;
 		}

@@ -41,5 +41,5 @@ bool	Assets::ReadBinaryFile(const std::string& filename, char** into, size_t& si
 	*into = data;
 	size = filesize;
 
-	return data == NULL ? true : false;
+	return data != NULL ? true : false;
 }
