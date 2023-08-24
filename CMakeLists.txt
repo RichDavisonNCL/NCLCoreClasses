@@ -85,6 +85,10 @@ set(Windowing_and_Input
     "Mouse.h"
     "Window.cpp"
     "Window.h"
+	"Controller.cpp"
+    "Controller.h"
+	"KeyboardMouseController.cpp"
+    "KeyboardMouseController.h"
 )
 source_group("Windowing and Input" FILES ${Windowing_and_Input})
 
