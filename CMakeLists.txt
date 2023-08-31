@@ -35,6 +35,7 @@ set(Maths
     "Frustum.h"
     "Quaternion.cpp"
     "Quaternion.h"
+	"NewVector.h"
     "Vector2.cpp"
     "Vector2.h"
     "Vector3.cpp"
@@ -132,6 +133,7 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE
     <thread>
     <filesystem>
     <functional>
+	<algorithm>
 	<assert.h>  
 )
 
