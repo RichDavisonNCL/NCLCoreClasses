@@ -24,25 +24,29 @@ namespace NCL {
 	}
 	using namespace Maths;
 
-	enum GeometryPrimitive {
-		Points,
-		Lines,
-		Triangles,
-		TriangleFan,
-		TriangleStrip,
-		Patches,
-		MAX_PRIM
+	struct  GeometryPrimitive {
+		enum Type : uint32_t {
+			Points,
+			Lines,
+			Triangles,
+			TriangleFan,
+			TriangleStrip,
+			Patches,
+			MAX_PRIM
+		};
 	};
 
-	enum VertexAttribute {
-		Positions,
-		Colours,
-		TextureCoords,
-		Normals,
-		Tangents,
-		JointWeights,
-		JointIndices,
-		MAX_ATTRIBUTES
+	struct VertexAttribute {
+		enum Type : uint32_t {
+			Positions,
+			Colours,
+			TextureCoords,
+			Normals,
+			Tangents,
+			JointWeights,
+			JointIndices,
+			MAX_ATTRIBUTES
+		};
 	};
 
 	const std::string VertexAttributeNames[] = {
@@ -65,11 +69,11 @@ namespace NCL {
 	public:		
 		virtual ~Mesh();
 
-		GeometryPrimitive GetPrimitiveType() const {
+		GeometryPrimitive::Type GetPrimitiveType() const {
 			return primType;
 		}
 
-		void SetPrimitiveType(GeometryPrimitive type) {
+		void SetPrimitiveType(GeometryPrimitive::Type type) {
 			primType = type;
 		}
 
@@ -81,12 +85,12 @@ namespace NCL {
 			size_t entryCount = subMeshes[subMesh].count;
 
 			switch (GetPrimitiveType()) {
-				case Points:		return entryCount;
-				case Lines:			return entryCount / 2;
-				case Triangles:		return entryCount / 3;
-				case TriangleFan:	return 0;
-				case TriangleStrip:	return 0;
-				case Patches:		return 0;
+				case GeometryPrimitive::Points:		return entryCount;
+				case GeometryPrimitive::Lines:			return entryCount / 2;
+				case GeometryPrimitive::Triangles:		return entryCount / 3;
+				case GeometryPrimitive::TriangleFan:	return 0;
+				case GeometryPrimitive::TriangleStrip:	return 0;
+				case GeometryPrimitive::Patches:		return 0;
 			}
 			return 0;
 		}
@@ -98,12 +102,12 @@ namespace NCL {
 			size_t entryCount = indexCount ? indexCount : vertCount;
 
 			switch(GetPrimitiveType()) {
-				case Points:		return entryCount;
-				case Lines:			return entryCount / 2;
-				case Triangles:		return entryCount / 3;
-				case TriangleFan:	return 0;
-				case TriangleStrip:	return 0;
-				case Patches:		return 0;
+				case GeometryPrimitive::Points:			return entryCount;
+				case GeometryPrimitive::Lines:			return entryCount / 2;
+				case GeometryPrimitive::Triangles:		return entryCount / 3;
+				case GeometryPrimitive::TriangleFan:	return 0;
+				case GeometryPrimitive::TriangleStrip:	return 0;
+				case GeometryPrimitive::Patches:		return 0;
 			}
 			return 0;
 		}
@@ -216,9 +220,9 @@ namespace NCL {
 
 		virtual bool ValidateMeshData();
 
-		std::string			debugName; //used when an API allows setting debug tags
-		GeometryPrimitive	primType;
-		vector<Vector3>		positions;
+		std::string				debugName; //used when an API allows setting debug tags
+		GeometryPrimitive::Type	primType;
+		vector<Vector3>			positions;
 
 		vector<Vector2>			texCoords;
 		vector<Vector4>			colours;

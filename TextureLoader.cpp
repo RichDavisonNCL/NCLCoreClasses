@@ -82,6 +82,6 @@ Texture* TextureLoader::LoadAPITexture(const std::string&filename) {
 	return apiFunction(filename);
 }
 
-static void DeleteTextureData(char* data) {
+void TextureLoader::DeleteTextureData(char* data) {
 	free(data);
 }

@@ -12,29 +12,31 @@ https://research.ncl.ac.uk/game/
 
 namespace NCL {
 	using namespace NCL::Maths;
-	enum class MouseButtons {
-		LEFT		= 0,
-		RIGHT		= 1,
-		MIDDLE		= 2,
-		FOUR		= 3,
-		FIVE		= 4,
-		MAXVAL		= 5
+	struct MouseButtons {
+		enum Type : uint32_t	{
+			Left = 0,
+			Right = 1,
+			Middle = 2,
+			Four = 3,
+			Five = 4,
+			MAX_VAL = 5
+		};
 	};
 
 	class Mouse {
 	public:
 		friend class Window;
-		inline bool ButtonPressed(MouseButtons button) const {
-			return buttons[(int)button] && !holdButtons[(int)button];
+		inline bool ButtonPressed(MouseButtons::Type button) const {
+			return buttons[button] && !holdButtons[button];
 		}
 
 		//Is this mouse button currently pressed down?
-		inline bool	ButtonDown(MouseButtons button) const { return buttons[(int)button]; }
+		inline bool	ButtonDown(MouseButtons::Type button) const { return buttons[button]; }
 		//Has this mouse button been held down for multiple frames?
-		inline bool	ButtonHeld(MouseButtons button) const { return buttons[(int)button] && holdButtons[(int)button]; }
+		inline bool	ButtonHeld(MouseButtons::Type button) const { return buttons[button] && holdButtons[button]; }
 		//Has this mouse button been double clicked?
-		inline bool	DoubleClicked(MouseButtons button) const {
-			return (buttons[(int)button] && doubleClicks[(int)button]);
+		inline bool	DoubleClicked(MouseButtons::Type button) const {
+			return (buttons[button] && doubleClicks[button]);
 		}
 
 		//Get how much this mouse has moved since last frame
@@ -50,7 +52,7 @@ namespace NCL {
 		inline bool	WheelMoved() const { return frameWheel != 0; }
 		//Get the mousewheel movement. Positive means scroll up,
 		//negative means scroll down, 0 means no movement.
-		inline int	GetWheelMovement() const { return (int)frameWheel; }
+		inline int	GetWheelMovement() const { return frameWheel; }
 
 		//Sets the mouse sensitivity. Currently only affects the 'relative'
 		//(i.e FPS-style) mouse movement. Students! Maybe you'd like to
@@ -92,13 +94,13 @@ namespace NCL {
 		//How much as the mouse moved since the last raw packet?
 		Vector2		relativePosition;
 		//Current button down state for each button
-		bool		buttons[(int)MouseButtons::MAXVAL];
+		bool		buttons[MouseButtons::MAX_VAL];
 		//Current button held state for each button
-		bool		holdButtons[(int)MouseButtons::MAXVAL];
+		bool		holdButtons[MouseButtons::MAX_VAL];
 		//Current doubleClick counter for each button
-		bool		doubleClicks[(int)MouseButtons::MAXVAL];
+		bool		doubleClicks[MouseButtons::MAX_VAL];
 		//Counter to remember when last mouse click occured
-		float		lastClickTime[(int)MouseButtons::MAXVAL];
+		float		lastClickTime[MouseButtons::MAX_VAL];
 
 		//last mousewheel updated position
 		int			lastWheel;

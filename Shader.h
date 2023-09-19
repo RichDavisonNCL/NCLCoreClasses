@@ -9,18 +9,20 @@ https://research.ncl.ac.uk/game/
 #pragma once
 
 namespace NCL::Rendering {
-	enum class ShaderStages {
-		Vertex,
-		Fragment,
-		Geometry,
-		Domain,
-		Hull,
-		Mesh,
-		Task,
-		MAXSIZE,
-		//Aliases
-		TessControl = Domain,
-		TessEval	= Hull,
+	struct ShaderStages {
+		enum Type : uint32_t {
+			Vertex,
+			Fragment,
+			Geometry,
+			Domain,
+			Hull,
+			Mesh,
+			Task,
+			MAX_SIZE,
+			//Aliases
+			TessControl = Domain,
+			TessEval = Hull,
+		};
 	};
 
 	class Shader	{
@@ -33,6 +35,6 @@ namespace NCL::Rendering {
 		virtual void ReloadShader() = 0;
 	protected:
 
-		std::string shaderFiles[(int)ShaderStages::MAXSIZE];
+		std::string shaderFiles[ShaderStages::MAX_SIZE];
 	};
 }

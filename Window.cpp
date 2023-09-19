@@ -52,7 +52,7 @@ void	Window::SetRenderer(RendererBase* r) {
 	renderer = r;
 
 	if (r) {
-		renderer->OnWindowResize((int)size.x, (int)size.y);
+		renderer->OnWindowResize(size.x, size.y);
 	}
 }
 
