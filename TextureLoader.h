@@ -26,18 +26,12 @@ namespace NCL {
 
 		static void RegisterTextureLoadFunction(TextureLoadFunction f, const std::string&fileExtension);
 
-		static void RegisterAPILoadFunction(APILoadFunction f);
-
-		static Rendering::Texture* LoadAPITexture(const std::string&filename);
-
 		static void DeleteTextureData(char* data);
 	protected:
 
 		static std::string GetFileExtension(const std::string& fileExtension);
 
 		static std::map<std::string, TextureLoadFunction> fileHandlers;
-
-		static APILoadFunction apiFunction;
 	};
 }
 

@@ -10,19 +10,21 @@ https://research.ncl.ac.uk/game/
 
 using std::vector;
 
-namespace NCL {
-	namespace Maths {
-		class Vector2;
-		class Vector3;
-		class Vector4;
-		class Matrix4;
 
-		class Vector4i;
-	}
-	namespace Rendering {
-		class RendererBase;
-	}
-	using namespace Maths;
+namespace NCL::Maths {
+	class Vector2;
+	class Vector3;
+	class Vector4;
+	class Matrix4;
+	class Vector4i;
+}
+
+
+namespace NCL::Rendering {
+	class RendererBase;
+	
+	using namespace NCL::Maths;
+
 
 	struct  GeometryPrimitive {
 		enum Type : uint32_t {
@@ -36,6 +38,7 @@ namespace NCL {
 		};
 	};
 
+
 	struct VertexAttribute {
 		enum Type : uint32_t {
 			Positions,
@@ -47,7 +50,6 @@ namespace NCL {
 			JointIndices,
 			MAX_ATTRIBUTES
 		};
-	};
 
 	const std::string VertexAttributeNames[] = {
 		std::string("Positions"),
@@ -64,6 +66,9 @@ namespace NCL {
 		int count = 0;
 		int base  = 0;
 	};
+
+	using UniqueMesh = std::unique_ptr<class Mesh>;
+	using SharedMesh = std::shared_ptr<class Mesh>;
 
 	class Mesh	{
 	public:		
@@ -102,12 +107,14 @@ namespace NCL {
 			size_t entryCount = indexCount ? indexCount : vertCount;
 
 			switch(GetPrimitiveType()) {
+
 				case GeometryPrimitive::Points:			return entryCount;
 				case GeometryPrimitive::Lines:			return entryCount / 2;
 				case GeometryPrimitive::Triangles:		return entryCount / 3;
 				case GeometryPrimitive::TriangleFan:	return 0;
 				case GeometryPrimitive::TriangleStrip:	return 0;
 				case GeometryPrimitive::Patches:		return 0;
+				//case MAX_PRIM:	assert(true);
 			}
 			return 0;
 		}
@@ -135,13 +142,14 @@ namespace NCL {
 			return &subMeshes[i];
 		}
 
-		void AddSubMesh(int startIndex, int indexCount, int baseVertex) {
+		void AddSubMesh(int startIndex, int indexCount, int baseVertex, const std::string& newName = "") {
 			SubMesh m;
 			m.base = baseVertex;
 			m.count = indexCount;
 			m.start = startIndex;
 
 			subMeshes.push_back(m);
+			subMeshNames.push_back(newName);
 		}
 
 		int GetIndexForJoint(const std::string &name) const;
@@ -152,36 +160,34 @@ namespace NCL {
 		const vector<Matrix4>& GetInverseBindPose() const {
 			return inverseBindPose;
 		}
+		void SetSubMeshes(const std::vector < SubMesh>& meshes);
+		void SetSubMeshNames(const std::vector < std::string>& newnames);
 
-		void SetJointNames(std::vector < std::string > & newnames);
-		void SetJointParents(std::vector<int>& newParents);
-		void SetBindPose(std::vector<Matrix4>& newMats);
-		void SetInverseBindPose(std::vector<Matrix4>& newMats);
+
+		void SetJointNames(const std::vector < std::string > & newnames);
+		void SetJointParents(const std::vector<int>& newParents);
+		void SetBindPose(const std::vector<Matrix4>& newMats);
+		void SetInverseBindPose(const std::vector<Matrix4>& newMats);
 		void CalculateInverseBindPose();
 
-
-
-		bool GetTriangle(unsigned int i, Vector3& a, Vector3& b, Vector3& c) const;
-		bool GetNormalForTri(unsigned int i, Vector3& n) const;
-		bool HasTriangle(unsigned int i) const;
+		bool	GetVertexIndicesForTri(unsigned int i, unsigned int& a, unsigned int& b, unsigned int& c) const;
+		bool	GetTriangle(unsigned int i, Vector3& a, Vector3& b, Vector3& c) const;
+		bool	GetNormalForTri(unsigned int i, Vector3& n) const;
+		bool	HasTriangle(unsigned int i) const;
 
 		const vector<Vector3>&		GetPositionData()		const { return positions;	}
 		const vector<Vector2>&		GetTextureCoordData()	const { return texCoords;	}
 		const vector<Vector4>&		GetColourData()			const { return colours;		}
 		const vector<Vector3>&		GetNormalData()			const { return normals;		}
 		const vector<Vector4>&		GetTangentData()		const { return tangents;	}
-
-
-		const vector<Vector4>& GetSkinWeightData()		const { return skinWeights; }
-		const vector<Vector4i>& GetSkinIndexData()		const { return skinIndices; }
+		const vector<Vector4>&		GetSkinWeightData()		const { return skinWeights; }
+		const vector<Vector4i>&		GetSkinIndexData()		const { return skinIndices; }
 
 		const vector<int>& GetJointParents()	const {
 			return jointParents;
 		}
 
-
 		const vector<unsigned int>& GetIndexData()			const { return indices;		}
-
 
 		void SetVertexPositions(const vector<Vector3>& newVerts);
 		void SetVertexTextureCoords(const vector<Vector2>& newTex);
@@ -194,52 +200,31 @@ namespace NCL {
 		void SetVertexSkinWeights(const vector<Vector4>& newSkinWeights);
 		void SetVertexSkinIndices(const vector<Vector4i>& newSkinIndices);
 
-
-		void	TransformVertices(const Matrix4& byMatrix);
-
-		void RecalculateNormals();
-		void RecalculateTangents();
-
 		void SetDebugName(const std::string& debugName);
 
 		virtual void UploadToGPU(Rendering::RendererBase* renderer = nullptr) = 0;
 
-		static Mesh* GenerateTriangle(Mesh* input);
-
 	protected:
 		Mesh();
-		Mesh(const std::string&filename);
-
-		void ReadRigPose(std::ifstream& file, vector<Matrix4>& into);
-		void ReadJointParents(std::ifstream& file);
-		void ReadJointNames(std::ifstream& file);
-		void ReadSubMeshes(std::ifstream& file, int count);
-		void ReadSubMeshNames(std::ifstream& file, int count);
-
-		bool	GetVertexIndicesForTri(unsigned int i, unsigned int& a, unsigned int& b, unsigned int& c) const;
 
 		virtual bool ValidateMeshData();
 
-		std::string				debugName; //used when an API allows setting debug tags
-		GeometryPrimitive::Type	primType;
-		vector<Vector3>			positions;
 
+		vector<Vector3>			positions;
 		vector<Vector2>			texCoords;
 		vector<Vector4>			colours;
 		vector<Vector3>			normals;
 		vector<Vector4>			tangents;
 		vector<unsigned int>	indices;
-
 		vector<SubMesh>			subMeshes;
 		vector<std::string>		subMeshNames;
 
-		//Allows us to have 4 weight skinning 
-		vector<Vector4>		skinWeights;
-		vector<Vector4i>	skinIndices;
-		vector<std::string>	jointNames;
-		vector<int>			jointParents;
-
-		vector<Matrix4>		bindPose;
-		vector<Matrix4>		inverseBindPose;
+	
+		vector<Vector4>			skinWeights;	//Allows us to have 4 weight skinning 
+		vector<Vector4i>		skinIndices;
+		vector<std::string>		jointNames;
+		vector<int>				jointParents;
+		vector<Matrix4>			bindPose;
+		vector<Matrix4>			inverseBindPose;
 	};
 }

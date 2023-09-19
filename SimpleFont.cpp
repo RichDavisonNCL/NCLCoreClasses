@@ -19,13 +19,12 @@ using namespace NCL;
 using namespace Rendering;
 using namespace Maths;
 
-SimpleFont::SimpleFont(const std::string&filename, const std::string&texName)
-{
+SimpleFont::SimpleFont(const std::string&filename, const std::string&texName, TextureConstructionFunction texFunc)	{
 	startChar	= 0;
 	numChars	= 0;
 	allCharData	= nullptr;
 
-	texture = TextureLoader::LoadAPITexture(texName);
+	texture = texFunc(texName);
 
 	std::ifstream fontFile(Assets::FONTSSDIR + filename);
 
@@ -51,8 +50,7 @@ SimpleFont::SimpleFont(const std::string&filename, const std::string&texName)
 }
 
 
-SimpleFont::~SimpleFont()
-{
+SimpleFont::~SimpleFont()	{
 	delete[]	allCharData;
 	delete		texture;
 }

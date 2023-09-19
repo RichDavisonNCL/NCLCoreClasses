@@ -11,6 +11,10 @@ https://research.ncl.ac.uk/game/
 
 namespace NCL::Rendering {
 	using namespace Maths;
+
+	using UniqueTexture = std::unique_ptr<class Texture>;
+	using SharedTexture = std::shared_ptr<class Texture>;
+
 	class Texture	{
 	public:
 		virtual ~Texture();

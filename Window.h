@@ -48,8 +48,8 @@ namespace NCL {
 			UpdateTitle();
 		};
 
-		virtual void	LockMouseToWindow(bool lock) = 0;
-		virtual void	ShowOSPointer(bool show) = 0;
+		virtual void	LockMouseToWindow(bool lock) {};
+		virtual void	ShowOSPointer(bool show) {};
 
 		virtual void	SetWindowPosition(int x, int y) {};
 		virtual void	SetFullScreen(bool state) {};
@@ -58,7 +58,7 @@ namespace NCL {
 
 		static const Keyboard*	 GetKeyboard() { return keyboard; }
 		static const Mouse*		 GetMouse() { return mouse; }
-		static const GameTimer*	 GetTimer() { return timer; }
+		static const GameTimer&	 GetTimer() { return timer; }
 
 		static Window*	const GetWindow() { return window; }
 	protected:
@@ -84,6 +84,7 @@ namespace NCL {
 		static Window*		window;
 		static Keyboard*	keyboard;
 		static Mouse*		mouse;
-		static GameTimer*	timer;
+
+		static GameTimer	timer;
 	};
 }
