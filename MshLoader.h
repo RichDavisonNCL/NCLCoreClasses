@@ -53,23 +53,25 @@ namespace NCL::Rendering {
 	};
 
 	public:		
-		MshLoader(const std::string& filename, Mesh& destinationMesh);
-		~MshLoader() {}
+		static bool LoadMesh(const std::string& filename, Mesh& destinationMesh);
 
 	protected:
-		void* ReadVertexData(GeometryChunkData dataType, GeometryChunkTypes chunkType, int numVertices);
-		void ReadTextInts(std::ifstream& file, vector<Maths::Vector2i>& element, int numVertices);
-		void ReadTeReadTextIntsxtFloats(std::ifstream& file, vector<Maths::Vector3i>& element, int numVertices);
-		void ReadTextInts(std::ifstream& file, vector<Maths::Vector4i>& element, int numVertices);
-		void ReadTextFloats(std::ifstream& file, vector<Maths::Vector2>& element, int numVertices);
-		void ReadTextFloats(std::ifstream& file, vector<Maths::Vector3>& element, int numVertices);
-		void ReadTextFloats(std::ifstream& file, vector<Maths::Vector4>& element, int numVertices);
-		void ReadIntegers(std::ifstream& file, vector<unsigned int>& elements, int intCount);
+		static void* ReadVertexData(GeometryChunkData dataType, GeometryChunkTypes chunkType, int numVertices);
+		static void ReadTextInts(std::ifstream& file, vector<Maths::Vector2i>& element, int numVertices);
+		static void ReadTeReadTextIntsxtFloats(std::ifstream& file, vector<Maths::Vector3i>& element, int numVertices);
+		static void ReadTextInts(std::ifstream& file, vector<Maths::Vector4i>& element, int numVertices);
+		static void ReadTextFloats(std::ifstream& file, vector<Maths::Vector2>& element, int numVertices);
+		static void ReadTextFloats(std::ifstream& file, vector<Maths::Vector3>& element, int numVertices);
+		static void ReadTextFloats(std::ifstream& file, vector<Maths::Vector4>& element, int numVertices);
+		static void ReadIntegers(std::ifstream& file, vector<unsigned int>& elements, int intCount);
 
-		void ReadRigPose(std::ifstream& file, vector<Maths::Matrix4>& into);
-		void ReadJointParents(std::ifstream& file, std::vector<int>& parentIDs);
-		void ReadJointNames(std::ifstream& file, std::vector<std::string>& names);
-		void ReadSubMeshes(std::ifstream& file, int count, std::vector<struct SubMesh>& subMeshes);
-		void ReadSubMeshNames(std::ifstream& file, int count, std::vector<std::string>& names);
+		static void ReadRigPose(std::ifstream& file, vector<Maths::Matrix4>& into);
+		static void ReadJointParents(std::ifstream& file, std::vector<int>& parentIDs);
+		static void ReadJointNames(std::ifstream& file, std::vector<std::string>& names);
+		static void ReadSubMeshes(std::ifstream& file, int count, std::vector<struct SubMesh>& subMeshes);
+		static void ReadSubMeshNames(std::ifstream& file, int count, std::vector<std::string>& names);
+
+		MshLoader() {}
+		~MshLoader() {}
 	};
 }

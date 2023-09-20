@@ -18,7 +18,7 @@ using namespace NCL;
 using namespace Rendering;
 using namespace Maths;
 
-MshLoader::MshLoader(const std::string&filename, Mesh& destinationMesh) {
+bool MshLoader::LoadMesh(const std::string& filename, Mesh& destinationMesh) {
 	std::ifstream file(Assets::MESHDIR + filename);
 
 	std::string filetype;
@@ -28,26 +28,26 @@ MshLoader::MshLoader(const std::string&filename, Mesh& destinationMesh) {
 
 	if (filetype != "MeshGeometry") {
 		std::cout << __FUNCTION__ << " File is not a Mesh file!\n";
-		return;
+		return false;
 	}
 
 	file >> fileVersion;
 
 	if (fileVersion != 1) {
 		std::cout << __FUNCTION__ << " Mesh file has incompatible version!\n";
-		return;
+		return false;
 	}
 
-	int numMeshes	= 0; //read
+	int numMeshes = 0; //read
 	int numVertices = 0; //read
-	int numIndices	= 0; //read
-	int numChunks   = 0; //read
+	int numIndices = 0; //read
+	int numChunks = 0; //read
 
 	file >> numMeshes;
 	file >> numVertices;
 	file >> numIndices;
 	file >> numChunks;
-	
+
 	for (int i = 0; i < numChunks; ++i) {
 		int chunkType = (int)GeometryChunkTypes::VPositions;
 
@@ -132,6 +132,8 @@ MshLoader::MshLoader(const std::string&filename, Mesh& destinationMesh) {
 	}
 
 	destinationMesh.SetPrimitiveType(GeometryPrimitive::Triangles);
+
+	return true;
 }
 
 void MshLoader::ReadRigPose(std::ifstream& file, vector<Matrix4>& into) {

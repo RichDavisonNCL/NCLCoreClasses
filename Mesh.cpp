@@ -88,35 +88,35 @@ int Mesh::GetIndexForJoint(const std::string& name) const {
 	return -1;
 }
 
-void Mesh::SetVertexPositions(const vector<Vector3>& newVerts) {
+void Mesh::SetVertexPositions(const std::vector<Vector3>& newVerts) {
 	positions = newVerts;
 }
 
-void Mesh::SetVertexTextureCoords(const vector<Vector2>& newTex) {
+void Mesh::SetVertexTextureCoords(const std::vector<Vector2>& newTex) {
 	texCoords = newTex;
 }
 
-void Mesh::SetVertexColours(const vector<Vector4>& newColours) {
+void Mesh::SetVertexColours(const std::vector<Vector4>& newColours) {
 	colours = newColours;
 }
 
-void Mesh::SetVertexNormals(const vector<Vector3>& newNorms) {
+void Mesh::SetVertexNormals(const std::vector<Vector3>& newNorms) {
 	normals = newNorms;
 }
 
-void Mesh::SetVertexTangents(const vector<Vector4>& newTans) {
+void Mesh::SetVertexTangents(const std::vector<Vector4>& newTans) {
 	tangents = newTans;
 }
 
-void Mesh::SetVertexIndices(const vector<unsigned int>& newIndices) {
+void Mesh::SetVertexIndices(const std::vector<unsigned int>& newIndices) {
 	indices = newIndices;
 }
 
-void Mesh::SetVertexSkinWeights(const vector<Vector4>& newSkinWeights) {
+void Mesh::SetVertexSkinWeights(const std::vector<Vector4>& newSkinWeights) {
 	skinWeights = newSkinWeights;
 }
 
-void Mesh::SetVertexSkinIndices(const vector<Vector4i>& newSkinIndices) {
+void Mesh::SetVertexSkinIndices(const std::vector<Vector4i>& newSkinIndices) {
 	skinIndices = newSkinIndices;
 }
 

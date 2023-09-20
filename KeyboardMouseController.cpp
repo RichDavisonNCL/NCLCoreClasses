@@ -46,10 +46,10 @@ float	KeyboardMouseController::GetButtonAnalogue(uint32_t button) {
 
 bool	KeyboardMouseController::GetButton(uint32_t button)  {
 	if (button == LeftMouseButton) {
-		return mouse->ButtonDown(NCL::MouseButtons::LEFT);
+		return mouse->ButtonDown(NCL::MouseButtons::Left);
 	}
 	if (button == RightMouseButton) {
-		return mouse->ButtonDown(NCL::MouseButtons::RIGHT);
+		return mouse->ButtonDown(NCL::MouseButtons::Right);
 	}
 	return 0.0f;
 }

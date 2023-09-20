@@ -8,9 +8,6 @@ https://research.ncl.ac.uk/game/
 */
 #pragma once
 
-using std::vector;
-
-
 namespace NCL::Maths {
 	class Vector2;
 	class Vector3;
@@ -19,12 +16,10 @@ namespace NCL::Maths {
 	class Vector4i;
 }
 
-
 namespace NCL::Rendering {
 	class RendererBase;
 	
 	using namespace NCL::Maths;
-
 
 	struct  GeometryPrimitive {
 		enum Type : uint32_t {
@@ -38,7 +33,6 @@ namespace NCL::Rendering {
 		};
 	};
 
-
 	struct VertexAttribute {
 		enum Type : uint32_t {
 			Positions,
@@ -50,8 +44,9 @@ namespace NCL::Rendering {
 			JointIndices,
 			MAX_ATTRIBUTES
 		};
+	};
 
-	const std::string VertexAttributeNames[] = {
+	const std::string VertexAttributeNames[VertexAttribute::MAX_ATTRIBUTES] = {
 		std::string("Positions"),
 		std::string("Colours"),
 		std::string("Tex Coords"),
@@ -66,9 +61,6 @@ namespace NCL::Rendering {
 		int count = 0;
 		int base  = 0;
 	};
-
-	using UniqueMesh = std::unique_ptr<class Mesh>;
-	using SharedMesh = std::shared_ptr<class Mesh>;
 
 	class Mesh	{
 	public:		
@@ -154,10 +146,10 @@ namespace NCL::Rendering {
 
 		int GetIndexForJoint(const std::string &name) const;
 
-		const vector<Matrix4>& GetBindPose() const {
+		const std::vector<Matrix4>& GetBindPose() const {
 			return bindPose;
 		}
-		const vector<Matrix4>& GetInverseBindPose() const {
+		const std::vector<Matrix4>& GetInverseBindPose() const {
 			return inverseBindPose;
 		}
 		void SetSubMeshes(const std::vector < SubMesh>& meshes);
@@ -175,30 +167,30 @@ namespace NCL::Rendering {
 		bool	GetNormalForTri(unsigned int i, Vector3& n) const;
 		bool	HasTriangle(unsigned int i) const;
 
-		const vector<Vector3>&		GetPositionData()		const { return positions;	}
-		const vector<Vector2>&		GetTextureCoordData()	const { return texCoords;	}
-		const vector<Vector4>&		GetColourData()			const { return colours;		}
-		const vector<Vector3>&		GetNormalData()			const { return normals;		}
-		const vector<Vector4>&		GetTangentData()		const { return tangents;	}
-		const vector<Vector4>&		GetSkinWeightData()		const { return skinWeights; }
-		const vector<Vector4i>&		GetSkinIndexData()		const { return skinIndices; }
+		const std::vector<Vector3>&		GetPositionData()		const { return positions;	}
+		const std::vector<Vector2>&		GetTextureCoordData()	const { return texCoords;	}
+		const std::vector<Vector4>&		GetColourData()			const { return colours;		}
+		const std::vector<Vector3>&		GetNormalData()			const { return normals;		}
+		const std::vector<Vector4>&		GetTangentData()		const { return tangents;	}
+		const std::vector<Vector4>&		GetSkinWeightData()		const { return skinWeights; }
+		const std::vector<Vector4i>&		GetSkinIndexData()		const { return skinIndices; }
 
-		const vector<int>& GetJointParents()	const {
+		const std::vector<int>& GetJointParents()	const {
 			return jointParents;
 		}
 
-		const vector<unsigned int>& GetIndexData()			const { return indices;		}
+		const std::vector<unsigned int>& GetIndexData()			const { return indices;		}
 
-		void SetVertexPositions(const vector<Vector3>& newVerts);
-		void SetVertexTextureCoords(const vector<Vector2>& newTex);
+		void SetVertexPositions(const std::vector<Vector3>& newVerts);
+		void SetVertexTextureCoords(const std::vector<Vector2>& newTex);
 
-		void SetVertexColours(const vector<Vector4>& newColours);
-		void SetVertexNormals(const vector<Vector3>& newNorms);
-		void SetVertexTangents(const vector<Vector4>& newTans);
-		void SetVertexIndices(const vector<unsigned int>& newIndices);
+		void SetVertexColours(const std::vector<Vector4>& newColours);
+		void SetVertexNormals(const std::vector<Vector3>& newNorms);
+		void SetVertexTangents(const std::vector<Vector4>& newTans);
+		void SetVertexIndices(const std::vector<unsigned int>& newIndices);
 
-		void SetVertexSkinWeights(const vector<Vector4>& newSkinWeights);
-		void SetVertexSkinIndices(const vector<Vector4i>& newSkinIndices);
+		void SetVertexSkinWeights(const std::vector<Vector4>& newSkinWeights);
+		void SetVertexSkinIndices(const std::vector<Vector4i>& newSkinIndices);
 
 		void SetDebugName(const std::string& debugName);
 
@@ -209,22 +201,26 @@ namespace NCL::Rendering {
 
 		virtual bool ValidateMeshData();
 
+		GeometryPrimitive::Type		primType;
+		std::string					debugName;
 
-		vector<Vector3>			positions;
-		vector<Vector2>			texCoords;
-		vector<Vector4>			colours;
-		vector<Vector3>			normals;
-		vector<Vector4>			tangents;
-		vector<unsigned int>	indices;
-		vector<SubMesh>			subMeshes;
-		vector<std::string>		subMeshNames;
+		std::vector<Vector3>		positions;
+		std::vector<Vector2>		texCoords;
+		std::vector<Vector4>		colours;
+		std::vector<Vector3>		normals;
+		std::vector<Vector4>		tangents;
+		std::vector<unsigned int>	indices;
+		std::vector<SubMesh>		subMeshes;
+		std::vector<std::string>	subMeshNames;
 
-	
-		vector<Vector4>			skinWeights;	//Allows us to have 4 weight skinning 
-		vector<Vector4i>		skinIndices;
-		vector<std::string>		jointNames;
-		vector<int>				jointParents;
-		vector<Matrix4>			bindPose;
-		vector<Matrix4>			inverseBindPose;
+		std::vector<Vector4>		skinWeights;	//Allows us to have 4 weight skinning 
+		std::vector<Vector4i>		skinIndices;
+		std::vector<std::string>	jointNames;
+		std::vector<int>			jointParents;
+		std::vector<Matrix4>		bindPose;
+		std::vector<Matrix4>		inverseBindPose;
 	};
-}
+
+	using UniqueMesh = std::unique_ptr<Mesh>;
+	using SharedMesh = std::shared_ptr<Mesh>;
+};
