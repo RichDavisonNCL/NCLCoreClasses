@@ -9,9 +9,13 @@ Should be done once per frame! Pass it the msec since
 last frame (default value is for simplicities sake...)
 */
 void Camera::UpdateCamera(float dt) {
+	if (!activeController) {
+		return;
+	}
+
 	//Update the mouse by how much
-	pitch	-= (Window::GetMouse()->GetRelativePosition().y);
-	yaw		-= (Window::GetMouse()->GetRelativePosition().x);
+	pitch	-= activeController->GetNamedAxis("YAxis");
+	yaw		-= activeController->GetNamedAxis("XAxis");
 
 	//Bounds check the pitch, to be between straight up and straight down ;)
 	pitch = std::min(pitch, 90.0f);
@@ -26,26 +30,13 @@ void Camera::UpdateCamera(float dt) {
 
 	float frameSpeed = 100 * dt;
 
-	if (Window::GetKeyboard()->KeyDown(KeyCodes::W)) {
-		position += Matrix4::Rotation(yaw, Vector3(0, 1, 0)) * Vector3(0, 0, -1) * frameSpeed;
-	}
-	if (Window::GetKeyboard()->KeyDown(KeyCodes::S)) {
-		position -= Matrix4::Rotation(yaw, Vector3(0, 1, 0)) * Vector3(0, 0, -1) * frameSpeed;
-	}
+	Matrix4 yawRotation = Matrix4::Rotation(yaw, Vector3(0, 1, 0));
 
-	if (Window::GetKeyboard()->KeyDown(KeyCodes::A)) {
-		position += Matrix4::Rotation(yaw, Vector3(0, 1, 0)) * Vector3(-1, 0, 0) * frameSpeed;
-	}
-	if (Window::GetKeyboard()->KeyDown(KeyCodes::D)) {
-		position -= Matrix4::Rotation(yaw, Vector3(0, 1, 0)) * Vector3(-1, 0, 0) * frameSpeed;
-	}
+	position += yawRotation * Vector3(0, 0, activeController->GetNamedAxis("Forward")) * frameSpeed;
+	position += yawRotation * Vector3(activeController->GetNamedAxis("Sidestep"), 0, 0) * frameSpeed;
 
-	if (Window::GetKeyboard()->KeyDown(KeyCodes::SHIFT)) {
-		position.y += frameSpeed;
-	}
-	if (Window::GetKeyboard()->KeyDown(KeyCodes::SPACE)) {
-		position.y -= frameSpeed;
-	}
+	position.y += activeController->GetNamedButton("Up") * frameSpeed;
+	position.y -= activeController->GetNamedButton("Down") * frameSpeed;
 }
 
 /*

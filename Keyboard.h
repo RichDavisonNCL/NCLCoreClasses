@@ -192,4 +192,14 @@ namespace NCL {
 		bool keyStates[KeyCodes::MAXVALUE];		//Is the key down?
 		bool holdStates[KeyCodes::MAXVALUE];		//Has the key been down for multiple updates?
 	};
+
+	class DummyKeyboard : public Keyboard {
+	public:
+		DummyKeyboard() {
+
+		}
+		~DummyKeyboard() {
+
+		}
+	};
 }

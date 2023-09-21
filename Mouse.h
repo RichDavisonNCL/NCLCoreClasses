@@ -114,4 +114,14 @@ namespace NCL {
 		//Mouse pointer sensitivity. Set this negative to get a headache!
 		float		sensitivity;
 	};
+
+	class DummyMouse : public Mouse {
+	public:
+		DummyMouse() {
+
+		}
+		~DummyMouse() {
+
+		}
+	};
 }

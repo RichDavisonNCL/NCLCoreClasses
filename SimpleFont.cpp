@@ -19,12 +19,10 @@ using namespace NCL;
 using namespace Rendering;
 using namespace Maths;
 
-SimpleFont::SimpleFont(const std::string&filename, const std::string&texName, TextureConstructionFunction texFunc)	{
+SimpleFont::SimpleFont(const std::string&filename, const std::string&texName, Texture* tex) : texture(tex)	{
 	startChar	= 0;
 	numChars	= 0;
 	allCharData	= nullptr;
-
-	texture = texFunc(texName);
 
 	std::ifstream fontFile(Assets::FONTSSDIR + filename);
 
@@ -52,12 +50,13 @@ SimpleFont::SimpleFont(const std::string&filename, const std::string&texName, Te
 
 SimpleFont::~SimpleFont()	{
 	delete[]	allCharData;
-	delete		texture;
 }
 
-int SimpleFont::BuildVerticesForString(std::string &text, Vector2&startPos, Vector4&colour, float size, std::vector<Vector3>&positions, std::vector<Vector2>&texCoords, std::vector<Vector4>&colours) {
-	int vertsWritten = 0;
+int SimpleFont::GetVertexCountForString(const std::string& text) {
+	return 6 * text.size();
+}
 
+void SimpleFont::BuildVerticesForString(const std::string& text, const Vector2& startPos, const Vector4& colour, float size, std::vector<Vector3>& positions, std::vector<Vector2>& texCoords, std::vector<Vector4>& colours) {
 	int endChar = startChar + numChars;
 
 	float currentX = 0.0f;
@@ -80,13 +79,13 @@ int SimpleFont::BuildVerticesForString(std::string &text, Vector2&startPos, Vect
 		float scale = size;
 		//For basic vertex buffers, we're assuming we should add 6 vertices
 
-		float charWidth  = (float)((charData.x1 - charData.x0)/ texWidth) * scale;
+		float charWidth = (float)((charData.x1 - charData.x0) / texWidth) * scale;
 		float charHeight = (float)(charData.y1 - charData.y0);
 
-		float xStart	= ((charData.xOff + currentX) * texWidthRecip) * scale;
-		float yStart	= startPos.y;
-		float yHeight	= (charHeight * texHeightRecip) * scale;
-		float yOff		= ((charHeight + charData.yOff) * texHeightRecip) * scale;
+		float xStart = ((charData.xOff + currentX) * texWidthRecip) * scale;
+		float yStart = startPos.y;
+		float yHeight = (charHeight * texHeightRecip) * scale;
+		float yOff = ((charHeight + charData.yOff) * texHeightRecip) * scale;
 
 		positions.emplace_back(Vector3(startPos.x + xStart, yStart + yOff, 0));
 		positions.emplace_back(Vector3(startPos.x + xStart, yStart + yOff - yHeight, 0));
@@ -114,6 +113,71 @@ int SimpleFont::BuildVerticesForString(std::string &text, Vector2&startPos, Vect
 
 		currentX += charData.xAdvance;
 	}
+}
 
-	return vertsWritten;
+void SimpleFont::BuildInterleavedVerticesForString(const std::string& text, const Maths::Vector2& startPos, const Maths::Vector4& colour, float size, std::vector<InterleavedTextVertex>& vertices) {
+	int endChar = startChar + numChars;
+
+	float currentX = 0.0f;
+
+	vertices.reserve(text.length() * 6);
+
+	InterleavedTextVertex verts[6];
+
+	for (size_t i = 0; i < text.length(); ++i) {
+		int charIndex = (int)text[i];
+
+		if (charIndex < startChar) {
+			continue;
+		}
+		if (charIndex > endChar) {
+			continue;
+		}
+		FontChar& charData = allCharData[charIndex - startChar];
+
+		float scale = size;
+		//For basic vertex buffers, we're assuming we should add 6 vertices
+
+		float charWidth = (float)((charData.x1 - charData.x0) / texWidth) * scale;
+		float charHeight = (float)(charData.y1 - charData.y0);
+
+		float xStart = ((charData.xOff + currentX) * texWidthRecip) * scale;
+		float yStart = startPos.y;
+		float yHeight = (charHeight * texHeightRecip) * scale;
+		float yOff = ((charHeight + charData.yOff) * texHeightRecip) * scale;
+
+		verts[0].pos = Vector3(startPos.x + xStart, yStart + yOff, 0);
+		verts[1].pos = Vector3(startPos.x + xStart, yStart + yOff - yHeight, 0);
+		verts[2].pos = Vector3(startPos.x + xStart + charWidth, yStart + yOff - yHeight, 0);
+
+		verts[3].pos = (Vector3(startPos.x + xStart + charWidth, yStart + yOff - yHeight, 0));
+		verts[4].pos = Vector3(startPos.x + xStart + charWidth, yStart + yOff, 0);
+		verts[5].pos = Vector3(startPos.x + xStart, yStart + yOff, 0);
+
+		verts[0].colour = colour;
+		verts[1].colour = colour;
+		verts[2].colour = colour;
+
+		verts[3].colour = colour;
+		verts[4].colour = colour;
+		verts[5].colour = colour;
+
+		verts[0].texCoord = Vector2(charData.x0 * texWidthRecip, charData.y1 * texHeightRecip);
+		verts[1].texCoord = Vector2(charData.x0 * texWidthRecip, charData.y0 * texHeightRecip);
+		verts[2].texCoord = Vector2(charData.x1 * texWidthRecip, charData.y0 * texHeightRecip);
+
+		verts[3].texCoord = Vector2(charData.x1 * texWidthRecip, charData.y0 * texHeightRecip);
+		verts[4].texCoord = Vector2(charData.x1 * texWidthRecip, charData.y1 * texHeightRecip);
+		verts[5].texCoord = Vector2(charData.x0 * texWidthRecip, charData.y1 * texHeightRecip);
+
+		vertices.emplace_back(verts[0]);
+		vertices.emplace_back(verts[1]);
+		vertices.emplace_back(verts[2]);
+
+		vertices.emplace_back(verts[3]);
+		vertices.emplace_back(verts[4]);
+		vertices.emplace_back(verts[5]);
+
+		currentX += charData.xAdvance;
+	}
 }

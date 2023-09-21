@@ -11,7 +11,7 @@ https://research.ncl.ac.uk/game/
 #include "Keyboard.h"
 
 using namespace NCL;
-float	KeyboardMouseController::GetAxis(uint32_t axis)  {
+float	KeyboardMouseController::GetAxis(uint32_t axis) const {
 	if (axis == XAxis) {
 		if (keyboard->KeyPressed(NCL::KeyCodes::A)) {
 			return -1.0f;
@@ -40,11 +40,11 @@ float	KeyboardMouseController::GetAxis(uint32_t axis)  {
 	return 0.0f;
 }
 
-float	KeyboardMouseController::GetButtonAnalogue(uint32_t button) {
-	return 0.0f;
+float	KeyboardMouseController::GetButtonAnalogue(uint32_t button) const {
+	return GetButton(button);
 }
 
-bool	KeyboardMouseController::GetButton(uint32_t button)  {
+bool	KeyboardMouseController::GetButton(uint32_t button)  const {
 	if (button == LeftMouseButton) {
 		return mouse->ButtonDown(NCL::MouseButtons::Left);
 	}

@@ -9,6 +9,7 @@ https://research.ncl.ac.uk/game/
 #pragma once
 #include "Matrix4.h"
 #include "Vector3.h"
+#include "Controller.h"
 
 namespace NCL {
 	using namespace NCL::Maths;
@@ -53,6 +54,11 @@ namespace NCL {
 			return *this;
 		}
 
+		Camera& SetController(const Controller& c) {
+			activeController = &c;
+			return *this;
+		}
+
 		//Builds a view matrix for the current camera variables, suitable for sending straight
 		//to a vertex shader (i.e it's already an 'inverse camera matrix').
 		Matrix4 BuildViewMatrix() const;
@@ -81,6 +87,8 @@ namespace NCL {
 		float	yaw;
 		float	pitch;
 		Vector3 position;
+
+		const Controller* activeController = nullptr;
 	};
 
 	class OrhographicCamera : public Camera {

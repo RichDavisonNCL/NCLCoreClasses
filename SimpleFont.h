@@ -7,7 +7,8 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
-#include <functional>
+#include "Vector2.h"
+#include "Vector4.h"
 
 namespace NCL {
 	namespace Maths {
@@ -18,15 +19,21 @@ namespace NCL {
 	namespace Rendering {
 		class Texture;
 
-		typedef std::function<NCL::Rendering::Texture* (const std::string&)>	TextureConstructionFunction;
-
 		class SimpleFont	{
 		public:
-			SimpleFont(const std::string&fontName, const std::string&texName, TextureConstructionFunction texFunc);
+			SimpleFont(const std::string&fontName, const std::string&texName, Texture* tex);
 			~SimpleFont();
 
-			int BuildVerticesForString(std::string &text, Maths::Vector2&startPos, Maths::Vector4&colour, float size, std::vector<Maths::Vector3>&positions, std::vector<Maths::Vector2>&texCoords, std::vector<Maths::Vector4>&colours);
+			struct InterleavedTextVertex {
+				NCL::Maths::Vector2 pos;
+				NCL::Maths::Vector2 texCoord;
+				NCL::Maths::Vector4 colour;
+			};
 
+			int  GetVertexCountForString(const std::string& text);
+			void BuildVerticesForString(const std::string& text, const Maths::Vector2& startPos, const Maths::Vector4& colour, float size, std::vector<Maths::Vector3>& positions, std::vector<Maths::Vector2>& texCoords, std::vector<Maths::Vector4>& colours);
+			void BuildInterleavedVerticesForString(const std::string& text, const Maths::Vector2& startPos, const Maths::Vector4& colour, float size, std::vector<InterleavedTextVertex>& vertices);
+			
 			const Texture* GetTexture() const {
 				return texture;
 			}
@@ -43,7 +50,7 @@ namespace NCL {
 				float xAdvance;
 			};
 
-			FontChar*		allCharData;
+			FontChar*	allCharData;
 			Texture*	texture;
 
 			int startChar;

@@ -28,9 +28,9 @@ namespace NCL {
 		virtual ~KeyboardMouseController() {
 		}
 
-		float	GetAxis(uint32_t axis) override;
-		float	GetButtonAnalogue(uint32_t button) override;
-		bool	GetButton(uint32_t button) override;
+		float	GetAxis(uint32_t axis) const override;
+		float	GetButtonAnalogue(uint32_t button) const override;
+		bool	GetButton(uint32_t button) const override;
 
 	protected:
 		Keyboard*	keyboard;

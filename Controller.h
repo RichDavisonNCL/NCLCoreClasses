@@ -8,7 +8,6 @@ https://research.ncl.ac.uk/game/
 */
 #pragma once
 
-
 class Controller	{
 public:
 	Controller() {
@@ -18,15 +17,14 @@ public:
 
 	}
 
-	virtual float	GetAxis(uint32_t axis) = 0;
-	virtual float	GetButtonAnalogue(uint32_t button) = 0;
-	virtual bool	GetButton(uint32_t button) = 0;
+	virtual float	GetAxis(uint32_t axis) const = 0;
+	virtual float	GetButtonAnalogue(uint32_t button) const = 0;
+	virtual bool	GetButton(uint32_t button) const = 0;
 
 
-	virtual float	GetAxis(const std::string& axis);
-	virtual float	GetButtonAnalogue(const std::string& button);
-	virtual bool	GetButton(const std::string& button);
-
+	virtual float	GetNamedAxis(const std::string& axis) const;
+	virtual float	GetNamedButtonAnalogue(const std::string& button) const;
+	virtual bool	GetNamedButton(const std::string& button) const;
 
 	void MapAxis(uint32_t axis, const std::string& name);
 	void MapButton(uint32_t axis, const std::string& name);

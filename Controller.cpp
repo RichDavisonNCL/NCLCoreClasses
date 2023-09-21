@@ -8,9 +8,7 @@ https://research.ncl.ac.uk/game/
 */
 #include "Controller.h"
 
-
-
-void Controller::MapAxis(uint32_t axis, const std::string& name) {
+void Controller::MapAxis(uint32_t axis, const std::string& name)  {
 	axisMappings.insert({name, axis});
 }
 
@@ -22,7 +20,7 @@ void Controller::MapButtonAnalogue(uint32_t axis, const std::string& name) {
 	analogueMappings.insert({ name, axis });
 }
 
-float	Controller::GetAxis(const std::string& axis) {
+float	Controller::GetNamedAxis(const std::string& axis) const {
 	auto a = axisMappings.find(axis);
 	if (a != axisMappings.end()) {
 		return GetAxis(a->second);
@@ -30,7 +28,7 @@ float	Controller::GetAxis(const std::string& axis) {
 	return 0.0f;
 }
 
-float	Controller::GetButtonAnalogue(const std::string& button) {
+float	Controller::GetNamedButtonAnalogue(const std::string& button) const {
 	auto a = analogueMappings.find(button);
 	if (a != analogueMappings.end()) {
 		return GetButtonAnalogue(a->second);
@@ -38,7 +36,7 @@ float	Controller::GetButtonAnalogue(const std::string& button) {
 	return 0.0f;
 }
 
-bool	Controller::GetButton(const std::string& button) {
+bool	Controller::GetNamedButton(const std::string& button) const {
 	auto a = buttonMappings.find(button);
 	if (a != buttonMappings.end()) {
 		return GetButton(a->second);
