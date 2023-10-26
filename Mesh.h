@@ -7,6 +7,8 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
+#include <cstdint>
+
 
 namespace NCL::Maths {
 	class Vector2;
@@ -21,7 +23,7 @@ namespace NCL::Rendering {
 	
 	using namespace NCL::Maths;
 
-	struct  GeometryPrimitive {
+	namespace GeometryPrimitive {
 		enum Type : uint32_t {
 			Points,
 			Lines,
@@ -33,7 +35,7 @@ namespace NCL::Rendering {
 		};
 	};
 
-	struct VertexAttribute {
+	namespace VertexAttribute {
 		enum Type : uint32_t {
 			Positions,
 			Colours,
@@ -43,18 +45,20 @@ namespace NCL::Rendering {
 			JointWeights,
 			JointIndices,
 			MAX_ATTRIBUTES
+		};	
+		
+		const std::string Names[VertexAttribute::MAX_ATTRIBUTES] = {
+			std::string("Positions"),
+			std::string("Colours"),
+			std::string("Tex Coords"),
+			std::string("Normals"),
+			std::string("Tangents"),
+			std::string("Joint Weights"),
+			std::string("Joint Indices")
 		};
 	};
 
-	const std::string VertexAttributeNames[VertexAttribute::MAX_ATTRIBUTES] = {
-		std::string("Positions"),
-		std::string("Colours"),
-		std::string("Tex Coords"),
-		std::string("Normals"),
-		std::string("Tangents"),
-		std::string("Joint Weights"),
-		std::string("Joint Indices")
-	};
+
 
 	struct SubMesh {
 		int start = 0;
@@ -223,4 +227,5 @@ namespace NCL::Rendering {
 
 	using UniqueMesh = std::unique_ptr<Mesh>;
 	using SharedMesh = std::shared_ptr<Mesh>;
+
 };

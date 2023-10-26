@@ -9,7 +9,7 @@ https://research.ncl.ac.uk/game/
 #pragma once
 
 namespace NCL::Rendering {
-	struct ShaderStages {
+	namespace ShaderStages {
 		enum Type : uint32_t {
 			Vertex,
 			Fragment,

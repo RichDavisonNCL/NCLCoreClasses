@@ -16,15 +16,16 @@ namespace NCL {
 		const uint32_t LeftMouseButton	= 0;
 		const uint32_t RightMouseButton = 0;
 
-		const uint32_t XAxis = 0;
-		const uint32_t ZAxis = 1;
-		const uint32_t YAxis = 2;
+		const uint32_t XAxis = 0;		
+		const uint32_t YAxis = 1;
+		const uint32_t ZAxis = 2;
 
+		const uint32_t XAxisMouse = 3;
+		const uint32_t YAxisMouse = 4;
 	public:
-		KeyboardMouseController(Keyboard* k, Mouse* m) {
-			keyboard	= k;
-			mouse		= m;
+		KeyboardMouseController(const Keyboard& k, const Mouse& m) : keyboard(k), mouse(m) {
 		}
+
 		virtual ~KeyboardMouseController() {
 		}
 
@@ -33,7 +34,7 @@ namespace NCL {
 		bool	GetButton(uint32_t button) const override;
 
 	protected:
-		Keyboard*	keyboard;
-		Mouse*		mouse;
+		const Keyboard&		keyboard;
+		const Mouse&		mouse;
 	};
 }
