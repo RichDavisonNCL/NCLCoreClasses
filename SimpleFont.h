@@ -21,7 +21,7 @@ namespace NCL {
 
 		class SimpleFont	{
 		public:
-			SimpleFont(const std::string&fontName, const std::string&texName, Texture* tex);
+			SimpleFont(const std::string&fontName, Texture& tex);
 			~SimpleFont();
 
 			struct InterleavedTextVertex {
@@ -35,7 +35,7 @@ namespace NCL {
 			void BuildInterleavedVerticesForString(const std::string& text, const Maths::Vector2& startPos, const Maths::Vector4& colour, float size, std::vector<InterleavedTextVertex>& vertices);
 			
 			const Texture* GetTexture() const {
-				return texture;
+				return &texture;
 			}
 
 		protected:
@@ -51,7 +51,7 @@ namespace NCL {
 			};
 
 			FontChar*	allCharData;
-			Texture*	texture;
+			Texture&	texture;
 
 			int startChar;
 			int numChars;

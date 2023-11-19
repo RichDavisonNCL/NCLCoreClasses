@@ -79,7 +79,7 @@ namespace NCL::Maths {
 			return Vector4i(x / a.x, y / a.y, z / a.z, w / a.w);
 		};
 
-		inline Vector4i  operator/(float v) const {
+		inline Vector4i  operator/(int v) const {
 			return Vector4i(x / v, y / v, z / v, w / v);
 		};
 
@@ -112,21 +112,21 @@ namespace NCL::Maths {
 			w /= a.w;
 		}
 
-		inline void operator*=(float f) {
+		inline void operator*=(int f) {
 			x *= f;
 			y *= f;
 			z *= f;
 			w *= f;
 		}
 
-		inline void operator/=(float f) {
+		inline void operator/=(int f) {
 			x /= f;
 			y /= f;
 			z /= f;
 			w /= f;
 		}
 
-		inline float operator[](int i) const {
+		inline int operator[](int i) const {
 			return ((int*)this)[i];
 		}
 

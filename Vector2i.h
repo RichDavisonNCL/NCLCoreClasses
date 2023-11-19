@@ -25,15 +25,15 @@ namespace NCL::Maths {
 
 		~Vector2i(void) = default;
 
-		constexpr float		GetMinElement() const {
+		constexpr int		GetMinElement() const {
 			return std::max(x, y);
 		}
 
-		constexpr float		GetMaxElement() const {
+		constexpr int		GetMaxElement() const {
 			return std::max(x, y);
 		}
 
-		float		GetAbsMaxElement() const {
+		int		GetAbsMaxElement() const {
 			return std::max(std::abs(x), std::abs(y));
 		}
 
@@ -63,7 +63,7 @@ namespace NCL::Maths {
 			return Vector2i(x / a.x, y / a.y);
 		};
 
-		inline Vector2i  operator/(float v) const {
+		inline Vector2i  operator/(int v) const {
 			return Vector2i(x / v, y / v);
 		};
 
@@ -87,17 +87,17 @@ namespace NCL::Maths {
 			y /= a.y;
 		}
 
-		inline void operator*=(float f) {
+		inline void operator*=(int f) {
 			x *= f;
 			y *= f;
 		}
 
-		inline void operator/=(float f) {
+		inline void operator/=(int f) {
 			x /= f;
 			y /= f;
 		}
 
-		inline constexpr float operator[](int i) const {
+		inline constexpr int operator[](int i) const {
 			return ((int*)this)[i];
 		}
 

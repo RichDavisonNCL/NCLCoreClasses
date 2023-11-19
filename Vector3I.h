@@ -74,7 +74,7 @@ namespace NCL::Maths {
 			return Vector3i(x / a.x, y / a.y, z / a.z);
 		};
 
-		inline Vector3i  operator/(float v) const {
+		inline Vector3i  operator/(int v) const {
 			return Vector3i(x / v, y / v, z / v);
 		};
 
@@ -102,13 +102,13 @@ namespace NCL::Maths {
 			z /= a.z;
 		}
 
-		inline void operator*=(float f) {
+		inline void operator*=(int f) {
 			x *= f;
 			y *= f;
 			z *= f;
 		}
 
-		inline void operator/=(float f) {
+		inline void operator/=(int f) {
 			x /= f;
 			y /= f;
 			z /= f;
