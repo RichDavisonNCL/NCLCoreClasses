@@ -23,9 +23,18 @@ namespace NCL::Rendering {
 			return dimensions;
 		}
 
+		uint32_t GetAssetID() const {
+			return assetID;
+		}
+
+		void SetAssetID(uint32_t newID) {
+			assetID = newID;
+		}
+
 	protected:
 		Texture();
 
-		Vector2i dimensions;
+		Vector2i		dimensions;
+		uint32_t		assetID;
 	};
 }

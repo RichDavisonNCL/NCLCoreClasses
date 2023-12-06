@@ -18,6 +18,7 @@ using namespace Maths;
 
 Mesh::Mesh()	{
 	primType = GeometryPrimitive::Triangles;
+	assetID  = 0;
 }
 
 Mesh::~Mesh()	{

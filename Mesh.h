@@ -58,8 +58,6 @@ namespace NCL::Rendering {
 		};
 	};
 
-
-
 	struct SubMesh {
 		int start = 0;
 		int count = 0;
@@ -200,6 +198,14 @@ namespace NCL::Rendering {
 
 		virtual void UploadToGPU(Rendering::RendererBase* renderer = nullptr) = 0;
 
+		uint32_t GetAssetID() const {
+			return assetID;
+		}
+
+		void SetAssetID(uint32_t newID) {
+			assetID = newID;
+		}
+
 	protected:
 		Mesh();
 
@@ -207,6 +213,7 @@ namespace NCL::Rendering {
 
 		GeometryPrimitive::Type		primType;
 		std::string					debugName;
+		uint32_t					assetID;
 
 		std::vector<Vector3>		positions;
 		std::vector<Vector2>		texCoords;

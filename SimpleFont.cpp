@@ -19,7 +19,7 @@ using namespace NCL;
 using namespace Rendering;
 using namespace Maths;
 
-SimpleFont::SimpleFont(const std::string&filename, const std::string&texName, Texture* tex) : texture(tex)	{
+SimpleFont::SimpleFont(const std::string&filename, Texture& tex) : texture(tex)	{
 	startChar	= 0;
 	numChars	= 0;
 	allCharData	= nullptr;
