@@ -7,8 +7,8 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #include "Frustum.h"
-#include "Matrix4.h"
-#include "Vector4.h"
+#include "Vector.h"
+#include "Matrix.h"
 
 using namespace NCL;
 using namespace NCL::Maths;
@@ -20,7 +20,7 @@ Frustum::Frustum(void) {
 Frustum Frustum::FromViewProjMatrix(const Matrix4& viewProj, float ndcNear, float ndcFar) {
 	Frustum f;
 
-	Matrix4 invMatrix		= viewProj.Inverse();
+	Matrix4 invMatrix		= Matrix::Inverse(viewProj);
 
 	//Takes NDC coordinates, transforms them into into clip space using the inverse matrix
 	Vector4 topLeftFar		= invMatrix * Vector4(-1.0f, 1.0f, ndcFar, 1.0f);

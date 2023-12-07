@@ -10,7 +10,7 @@ https://research.ncl.ac.uk/game/
 #include "Keyboard.h"
 #include "Mouse.h"
 
-#include "Vector2i.h"
+#include "Vector.h"
 
 namespace NCL {
 	class GameTimer;

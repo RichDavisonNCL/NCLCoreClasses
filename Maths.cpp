@@ -7,8 +7,7 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #include "Maths.h"
-#include "Vector2.h"
-#include "Vector3.h"
+#include "Vector.h"
 
 namespace NCL {
 	namespace Maths {
@@ -26,15 +25,15 @@ namespace NCL {
 			return (area >> 1);
 		}
 
-		float Areaof2DTri(const Vector3 &a, const Vector3 &b, const Vector3 & c) {
+		float SignedAreaof2DTri(const Vector3 &a, const Vector3 &b, const Vector3 & c) {
 			float area = ((a.x * b.y) + (b.x * c.y) + (c.x * a.y)) -
 				((b.x * a.y) + (c.x * b.y) + (a.x * c.y));
 			return (area * 0.5f);
 		}
 
 		float AreaofTri3D(const Vector3 &a, const Vector3 &b, const Vector3 & c) {
-			Vector3 area = Vector3::Cross(a - b, a - c);
-			return area.Length() * 0.5f;
+			Vector3 area = Vector::Cross(a - b, a - c);
+			return Vector::Length(area) * 0.5f;
 		}
 
 		float RandomValue(float min, float max) {

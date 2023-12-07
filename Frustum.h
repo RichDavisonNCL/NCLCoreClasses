@@ -8,10 +8,9 @@ https://research.ncl.ac.uk/game/
 */
 #pragma once
 #include "Plane.h"
+#include "Matrix.h"
 
 namespace NCL::Maths {
-	class Matrix4;
-
 	class Frustum {
 	public:
 		Frustum(void);

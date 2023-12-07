@@ -11,10 +11,6 @@ https://research.ncl.ac.uk/game/
 #include "TextureLoader.h"
 #include "Assets.h"
 
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
-
 using namespace NCL;
 using namespace Rendering;
 using namespace Maths;

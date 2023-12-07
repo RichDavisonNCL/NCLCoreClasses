@@ -7,15 +7,9 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
-#include "Vector2.h"
-#include "Vector4.h"
+#include "Vector.h"
 
 namespace NCL {
-	namespace Maths {
-		class Vector2;
-		class Vector3;
-		class Vector4;
-	}
 	namespace Rendering {
 		class Texture;
 

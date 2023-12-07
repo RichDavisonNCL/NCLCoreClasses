@@ -18,12 +18,10 @@ Plane::Plane(void) {
 
 Plane::Plane(const Vector3 &normal, float distance, bool normalise) {
 	if(normalise) {
-		float length = normal.Length();
+		float length = Vector::Length(normal);
 
-		this->normal   = normal;
-		this->normal.Normalise();
-
-		this->distance = distance	/ length;
+		this->normal = Vector::Normalise(normal);
+		this->distance = distance / length;
 	}
 	else{
 		this->normal = normal;
@@ -32,14 +30,14 @@ Plane::Plane(const Vector3 &normal, float distance, bool normalise) {
 }
 
 bool Plane::SphereInPlane(const Vector3 &position, float radius) const {
-	if(Vector3::Dot(position,normal)+distance <= -radius) {
+	if (Vector::Dot(position, normal) + distance <= -radius) {
 		return false;
 	}
 	return true;	
 }
 
 bool Plane::PointInPlane(const Vector3 &position) const {
-	if(Vector3::Dot(position,normal)+distance < -0.001f) {
+	if (Vector::Dot(position, normal) + distance < -0.00001f) {
 		return false;
 	}
 
@@ -47,19 +45,18 @@ bool Plane::PointInPlane(const Vector3 &position) const {
 }
 
 Plane Plane::PlaneFromTri(const Vector3 &v0, const Vector3 &v1, const Vector3 &v2) {
-	Vector3 v1v0 = v1-v0;
-	Vector3 v2v0 = v2-v0;
+	Vector3 v1v0 = v1 - v0;
+	Vector3 v2v0 = v2 - v0;
 
-	Vector3 normal = Vector3::Cross(v1v0,v2v0);
+	Vector3 normal = Vector::Cross(v1v0, v2v0);
+	normal = Vector::Normalise(normal);
 
-	
-	normal.Normalise();
-	float d = -Vector3::Dot(v0,normal);
-	return Plane(normal,d,false);
+	float d = -Vector::Dot(v0, normal);
+	return Plane(normal, d, false);
 }
 
 float	Plane::DistanceFromPlane(const Vector3 &in) const{
-	return Vector3::Dot(in,normal)+distance;
+	return Vector::Dot(in,normal)+distance;
 }
 
 Vector3 Plane::ProjectPointOntoPlane(const Vector3 &point) const {

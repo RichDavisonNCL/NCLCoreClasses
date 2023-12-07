@@ -8,15 +8,8 @@ https://research.ncl.ac.uk/game/
 */
 #pragma once
 #include <cstdint>
-
-
-namespace NCL::Maths {
-	class Vector2;
-	class Vector3;
-	class Vector4;
-	class Matrix4;
-	class Vector4i;
-}
+#include "Vector.h"
+#include "Matrix.h"
 
 namespace NCL::Rendering {
 	class RendererBase;

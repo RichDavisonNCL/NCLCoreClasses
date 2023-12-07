@@ -1,14 +1,7 @@
 #include "Mesh.h"
 #include "Assets.h"
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
-
-#include "Vector2i.h"
-#include "Vector3i.h"
-#include "Vector4i.h"
-
-#include "Matrix4.h"
+#include "Vector.h"
+#include "Matrix.h"
 
 #include "Maths.h"
 
@@ -75,8 +68,8 @@ bool Mesh::GetNormalForTri(unsigned int i, Vector3& n) const {
 
 	Vector3 ba = b - a;
 	Vector3 ca = c - a;
-	n = Vector3::Cross(ba, ca);
-	n.Normalise();
+	n = Vector::Cross(ba, ca);
+	n = Vector::Normalise(n);
 	return true;
 }
 
@@ -153,7 +146,7 @@ void Mesh::CalculateInverseBindPose() {
 	inverseBindPose.resize(bindPose.size());
 
 	for (int i = 0; i < bindPose.size(); ++i) {
-		inverseBindPose[i] = bindPose[i].Inverse();
+		inverseBindPose[i] = Matrix::Inverse(bindPose[i]);
 	}
 }
 
