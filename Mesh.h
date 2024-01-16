@@ -90,6 +90,7 @@ namespace NCL::Rendering {
 				case GeometryPrimitive::TriangleFan:	return 0;
 				case GeometryPrimitive::TriangleStrip:	return 0;
 				case GeometryPrimitive::Patches:		return 0;
+				default: return 0;
 			}
 			return 0;
 		}
@@ -101,14 +102,13 @@ namespace NCL::Rendering {
 			size_t entryCount = indexCount ? indexCount : vertCount;
 
 			switch(GetPrimitiveType()) {
-
 				case GeometryPrimitive::Points:			return entryCount;
 				case GeometryPrimitive::Lines:			return entryCount / 2;
 				case GeometryPrimitive::Triangles:		return entryCount / 3;
 				case GeometryPrimitive::TriangleFan:	return 0;
 				case GeometryPrimitive::TriangleStrip:	return 0;
 				case GeometryPrimitive::Patches:		return 0;
-				//case MAX_PRIM:	assert(true);
+				default: return 0;
 			}
 			return 0;
 		}

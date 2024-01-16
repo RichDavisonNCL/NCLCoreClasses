@@ -69,12 +69,23 @@ Quaternion::Quaternion(const Matrix4 &m) {
 Quaternion::Quaternion(const Matrix3& m) {
 	w = sqrt(std::max(0.0f, (1.0f + m.array[0][0] + m.array[1][1] + m.array[2][2]))) * 0.5f;
 
-	float qrFour = 4.0f * w;
-	float qrFourRecip = 1.0f / qrFour;
+	if (abs(w) < 0.0001f) {
+		x = sqrt(std::max(0.0f, (1.0f + m.array[0][0] - m.array[1][1] - m.array[2][2]))) / 2.0f;
+		y = sqrt(std::max(0.0f, (1.0f - m.array[0][0] + m.array[1][1] - m.array[2][2]))) / 2.0f;
+		z = sqrt(std::max(0.0f, (1.0f - m.array[0][0] - m.array[1][1] + m.array[2][2]))) / 2.0f;
 
-	x = (m.array[5] - m.array[7]) * qrFourRecip;
-	y = (m.array[6] - m.array[2]) * qrFourRecip;
-	z = (m.array[1] - m.array[3]) * qrFourRecip;
+		x = (float)copysign(x, m.array[2][1] - m.array[1][2]);
+		y = (float)copysign(y, m.array[0][2] - m.array[2][0]);
+		z = (float)copysign(z, m.array[1][0] - m.array[0][1]);
+	}
+	else {
+		float qrFour = 4.0f * w;
+		float qrFourRecip = 1.0f / qrFour;
+
+		x = (m.array[1][2] - m.array[2][1]) * qrFourRecip;
+		y = (m.array[2][0] - m.array[0][2]) * qrFourRecip;
+		z = (m.array[0][1] - m.array[1][0]) * qrFourRecip;
+	}
 }
 
 float Quaternion::Dot(const Quaternion &a,const Quaternion &b){
@@ -128,7 +139,7 @@ Quaternion Quaternion::Lerp(const Quaternion &from, const Quaternion &to, float 
 }
 //SIGGRAPH Shoemake
 Quaternion Quaternion::Slerp(const Quaternion &from, const Quaternion &to, float by) {
-	float t = by;// / 2.0f;
+	float t = by;
 
 	float dot = std::clamp(Quaternion::Dot(from,to), -1.0f, 1.0f);
 
@@ -144,10 +155,6 @@ Quaternion Quaternion::Slerp(const Quaternion &from, const Quaternion &to, float
 	Quaternion q = (from * aScale) + (to * bScale);
 
 	q *= 1.0f / sin(theta);
-
-	if (q.x != q.x) {
-		bool a = true;
-	}
 
 	q.Normalise();
 	return q;
