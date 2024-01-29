@@ -32,8 +32,12 @@ namespace NCL::Rendering {
 			return frameCount;
 		}
 
+		float GetFrameRate() const {
+			return frameRate;
+		}
+
 		float GetFrameTime() const {
-			return frameTime;
+			return 1.0f / (float)frameRate;
 		}
 
 		const Maths::Matrix4* GetJointData(size_t frame) const;
@@ -41,7 +45,7 @@ namespace NCL::Rendering {
 	protected:
 		size_t		jointCount;
 		size_t		frameCount;
-		float		frameTime;
+		float		frameRate;
 
 		std::vector<Maths::Matrix4>		allJoints;
 	};
