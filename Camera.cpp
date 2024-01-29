@@ -30,13 +30,13 @@ void Camera::UpdateCamera(float dt) {
 
 	float frameSpeed = 100 * dt;
 
-	Matrix4 yawRotation = Matrix4::Rotation(yaw, Vector3(0, 1, 0));
+	Matrix3 yawRotation = Matrix::RotationMatrix3x3(yaw, Vector3(0, 1, 0));
 
 	position += yawRotation * Vector3(0, 0, -activeController->GetNamedAxis("Forward")) * frameSpeed;
 	position += yawRotation * Vector3(activeController->GetNamedAxis("Sidestep"), 0, 0) * frameSpeed;
 
 	position.y += activeController->GetNamedAxis("UpDown") * frameSpeed;
-
+	
 }
 
 /*
@@ -46,15 +46,15 @@ straight to the shader...it's already an 'inverse camera' matrix.
 Matrix4 Camera::BuildViewMatrix() const {
 	//Why do a complicated matrix inversion, when we can just generate the matrix
 	//using the negative values ;). The matrix multiplication order is important!
-	return	Matrix4::Rotation(-pitch, Vector3(1, 0, 0)) *
-		Matrix4::Rotation(-yaw, Vector3(0, 1, 0)) *
-		Matrix4::Translation(-position);
+	return	Matrix::Rotation(-pitch, Vector3(1, 0, 0)) *
+		Matrix::Rotation(-yaw, Vector3(0, 1, 0)) *
+		Matrix::Translation(-position);
 };
 
 Matrix4 PerspectiveCamera::BuildProjectionMatrix(float currentAspect) const {
-	return Matrix4::Perspective(nearPlane, farPlane, currentAspect, fov);
+	return Matrix::Perspective(nearPlane, farPlane, currentAspect, fov);
 }
 
 Matrix4 OrhographicCamera::BuildProjectionMatrix(float currentAspect) const {
-	return Matrix4::Orthographic(left, right, bottom, top, nearPlane, farPlane);
+	return Matrix::Orthographic(left, right, bottom, top, nearPlane, farPlane);
 }

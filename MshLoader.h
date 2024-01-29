@@ -7,20 +7,10 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
+#include "Vector.h"
+#include "Matrix.h"
 
 using std::vector;
-
-namespace NCL::Maths {
-	class Vector2i;
-	class Vector3i;
-	class Vector4i;
-
-	class Vector2;
-	class Vector3;
-	class Vector4;
-
-	class Matrix4;
-};
 
 namespace NCL::Rendering {
 	class Mesh;

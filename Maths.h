@@ -7,11 +7,9 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
+#include "Vector.h"
 
 namespace NCL::Maths {
-	class Vector2;
-	class Vector3;
-
 	//It's pi(ish)...
 	static const float		PI = 3.14159265358979323846f;
 
@@ -33,7 +31,7 @@ namespace NCL::Maths {
 	void ScreenBoxOfTri(const Vector3& v0, const Vector3& v1, const Vector3& v2, Vector2& topLeft, Vector2& bottomRight);
 
 	int ScreenAreaOfTri(const Vector3 &a, const Vector3 &b, const Vector3 & c);
-	float Areaof2DTri(const Vector3 &a, const Vector3 &b, const Vector3 & c);
+	float SignedAreaof2DTri(const Vector3 &a, const Vector3 &b, const Vector3 & c);
 
 	float AreaofTri3D(const Vector3 &a, const Vector3 &b, const Vector3 & c);
 }

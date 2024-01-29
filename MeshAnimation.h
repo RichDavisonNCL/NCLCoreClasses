@@ -7,10 +7,8 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
-
-namespace NCL::Maths {
-	class Matrix4;
-}
+#include "Vector.h"
+#include "Matrix.h"
 
 namespace NCL::Rendering {
 	using UniqueMeshAnim = std::unique_ptr<class MeshAnimation>;
