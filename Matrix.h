@@ -25,7 +25,7 @@ namespace NCL::Maths {
             }
         }
 
-        constexpr NewVector<T, c> GetRow(uint32_t rr) {
+        constexpr NewVector<T, c> GetRow(uint32_t rr) const {
             NewVector<T, c> out;
 
             for (unsigned int cc = 0; cc < c; ++cc) {
@@ -35,7 +35,7 @@ namespace NCL::Maths {
             return out;
         }
 
-        constexpr NewVector<T, r> GetColumn(uint32_t cc) {
+        constexpr NewVector<T, r> GetColumn(uint32_t cc) const {
             NewVector<T, r> out;
 
             for (unsigned int rr = 0; rr < r; ++rr) {
@@ -45,13 +45,13 @@ namespace NCL::Maths {
             return out;
         }
 
-        void SetRow(uint32_t rr, NewVector<T, r>& vec) {
+        void SetRow(uint32_t rr, const NewVector<T, r>& vec) {
             for (unsigned int cc = 0; cc < c; ++cc) {
                 array[cc][rr] = vec[cc];
             }
         }
 
-        void SetColumn(uint32_t cc, NewVector<T, c>& vec) {
+        void SetColumn(uint32_t cc, const NewVector<T, c>& vec) {
             for (unsigned int rr = 0; rr < r; ++rr) {
                 array[cc][rr] = vec[rr];
             }
@@ -163,7 +163,8 @@ namespace NCL::Maths {
 
         template <typename T>
         constexpr NewMatrix<T, 4, 4> Inverse(const NewMatrix<T, 4, 4>& mat) {
-            float det, invDet;
+            float det = 0.0f;
+            float invDet = 0.0f;
 
             // 2x2 sub-determinants required to calculate 4x4 determinant
             float det2_01_01 = mat.array[0][0] * mat.array[1][1] - mat.array[0][1] * mat.array[1][0];
@@ -239,7 +240,7 @@ namespace NCL::Maths {
         }
 
         template <typename T>
-        constexpr NewMatrix<T, 4, 4> Translation(NewVector<T, 3> v) {
+        constexpr NewMatrix<T, 4, 4> Translation(const NewVector<T, 3>& v) {
             NewMatrix<T, 4, 4> mat;
 
             mat.array[3][0] = T(v.x);
@@ -252,6 +253,18 @@ namespace NCL::Maths {
         template <typename T>
         constexpr NewMatrix<T, 4, 4> Scale(const NewVector<T, 3>& v) {
             NewMatrix<T, 4, 4> mat;
+
+            mat.array[0][0] = T(v.x);
+            mat.array[1][1] = T(v.y);
+            mat.array[2][2] = T(v.z);
+
+            return mat;
+        }
+
+
+        template <typename T>
+        constexpr NewMatrix<T, 3, 3> Scale3x3(const NewVector<T, 3>& v) {
+            NewMatrix<T, 3, 3> mat;
 
             mat.array[0][0] = T(v.x);
             mat.array[1][1] = T(v.y);

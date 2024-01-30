@@ -15,7 +15,7 @@ namespace NCL::Maths {
     struct NewVector    {
         T array[n];
 
-        inline T operator[](int i) {
+        inline T operator[](int i) const {
             return ((T*)this)[i];
         }
 
