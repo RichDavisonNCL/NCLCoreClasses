@@ -41,6 +41,8 @@ set(Rendering
     "MeshAnimation.h"
     "Mesh.cpp"
     "Mesh.h"
+
+    "Buffer.h"
 	
 	"MshLoader.cpp"
     "MshLoader.h"

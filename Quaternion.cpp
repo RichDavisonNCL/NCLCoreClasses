@@ -136,7 +136,7 @@ Quaternion Quaternion::Lerp(const Quaternion &from, const Quaternion &to, float 
 }
 //SIGGRAPH Shoemake
 Quaternion Quaternion::Slerp(const Quaternion &from, const Quaternion &to, float by) {
-	float t = by;// / 2.0f;
+	float t = by;
 
 	float dot = std::clamp(Quaternion::Dot(from,to), -1.0f, 1.0f);
 
@@ -152,10 +152,6 @@ Quaternion Quaternion::Slerp(const Quaternion &from, const Quaternion &to, float
 	Quaternion q = (from * aScale) + (to * bScale);
 
 	q *= 1.0f / sin(theta);
-
-	if (q.x != q.x) {
-		bool a = true;
-	}
 
 	q.Normalise();
 	return q;
