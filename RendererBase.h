@@ -38,14 +38,15 @@ namespace NCL::Rendering {
 			return false;
 		}
 
-	protected:
-		virtual void OnWindowResize(int w, int h) = 0;
-		virtual void OnWindowDetach() {}; //Most renderers won't care about this
-			
 		virtual void BeginFrame()	= 0;
 		virtual void RenderFrame()	= 0;
 		virtual void EndFrame()		= 0;
 		virtual void SwapBuffers()	= 0;
+
+	protected:
+		virtual void OnWindowResize(int w, int h) = 0;
+		virtual void OnWindowDetach() {}; //Most renderers won't care about this
+			
 		Window& hostWindow;
 
 		Vector2i windowSize;
