@@ -12,7 +12,7 @@ https://research.ncl.ac.uk/game/
 namespace NCL::Maths {
 
     template <typename T, uint32_t n>
-    struct NewVector    {
+    struct VectorTemplate    {
         T array[n];
 
         inline T operator[](int i) const {
@@ -24,20 +24,20 @@ namespace NCL::Maths {
         }
     };
 
-    using Vector2 = NewVector<float, 2>;
-    using Vector3 = NewVector<float, 3>;
-    using Vector4 = NewVector<float, 4>;
+    using Vector2 = VectorTemplate<float, 2>;
+    using Vector3 = VectorTemplate<float, 3>;
+    using Vector4 = VectorTemplate<float, 4>;
 
-    using Vector2d = NewVector<double, 2>;
-    using Vector3d = NewVector<double, 3>;
-    using Vector4d = NewVector<double, 4>;
+    using Vector2d = VectorTemplate<double, 2>;
+    using Vector3d = VectorTemplate<double, 3>;
+    using Vector4d = VectorTemplate<double, 4>;
 
-    using Vector2i = NewVector<int, 2>;
-    using Vector3i = NewVector<int, 3>;
-    using Vector4i = NewVector<int, 4>;
+    using Vector2i = VectorTemplate<int, 2>;
+    using Vector3i = VectorTemplate<int, 3>;
+    using Vector4i = VectorTemplate<int, 4>;
 
     template <typename T>
-    struct NewVector<T, 2> {
+    struct VectorTemplate<T, 2> {
         union {
             T array[2];
             struct {
@@ -46,13 +46,13 @@ namespace NCL::Maths {
             };
         };
 
-        NewVector<T, 2>() : x(0),y(0) {
+        VectorTemplate<T, 2>() : x(0),y(0) {
         }
 
-        NewVector<T, 2>(T inX, T inY) : x(inX), y(inY) {
+        VectorTemplate<T, 2>(T inX, T inY) : x(inX), y(inY) {
         }
 
-        NewVector<T, 2>(NewVector<T, 3> v) : x(v[0]), y(v[1]) {
+        VectorTemplate<T, 2>(VectorTemplate<T, 3> v) : x(v[0]), y(v[1]) {
         }
 
 
@@ -65,7 +65,7 @@ namespace NCL::Maths {
     };
 
     template <typename T>
-    struct NewVector<T, 3> {
+    struct VectorTemplate<T, 3> {
         union {
             T array[3];
             struct {
@@ -75,16 +75,16 @@ namespace NCL::Maths {
             };
         };
 
-        NewVector<T, 3>() : x(0), y(0), z(0) {
+        VectorTemplate<T, 3>() : x(0), y(0), z(0) {
         }
 
-        NewVector<T, 3>(T inX, T inY, T inZ) : x(inX), y(inY), z(inZ) {
+        VectorTemplate<T, 3>(T inX, T inY, T inZ) : x(inX), y(inY), z(inZ) {
         }
 
-        NewVector<T, 3>(NewVector<T, 2> v, T inZ) : x(v.array[0]), y(v.array[1]), z(inZ) {
+        VectorTemplate<T, 3>(VectorTemplate<T, 2> v, T inZ) : x(v.array[0]), y(v.array[1]), z(inZ) {
         }
 
-        NewVector<T, 3>(NewVector<T, 4> v) : x(v[0]), y(v[1]), z(v[2]) {
+        VectorTemplate<T, 3>(VectorTemplate<T, 4> v) : x(v[0]), y(v[1]), z(v[2]) {
         }
 
         T operator[](int i) const {
@@ -96,7 +96,7 @@ namespace NCL::Maths {
     };
 
     template <typename T>
-    struct NewVector<T, 4> {
+    struct VectorTemplate<T, 4> {
         union {
             T array[4];
             struct {
@@ -107,16 +107,16 @@ namespace NCL::Maths {
             };
         };
 
-        NewVector<T, 4>() : x(0), y(0), z(0), w(0) {
+        VectorTemplate<T, 4>() : x(0), y(0), z(0), w(0) {
         }
 
-        NewVector<T, 4>(T inX, T inY, T inZ, T inW) : x(inX), y(inY), z(inZ), w(inW) {
+        VectorTemplate<T, 4>(T inX, T inY, T inZ, T inW) : x(inX), y(inY), z(inZ), w(inW) {
         }
 
-        NewVector<T, 4>(NewVector<T, 2> v, T inZ, T inW) : x(v.array[0]), y(v.array[1]), z(inZ), w(inW) {
+        VectorTemplate<T, 4>(VectorTemplate<T, 2> v, T inZ, T inW) : x(v.array[0]), y(v.array[1]), z(inZ), w(inW) {
         }
 
-        NewVector<T, 4>(NewVector<T, 3> v, T inW) : x(v.array[0]), y(v.array[1]), z(v.array[2]), w(inW) {
+        VectorTemplate<T, 4>(VectorTemplate<T, 3> v, T inW) : x(v.array[0]), y(v.array[1]), z(v.array[2]), w(inW) {
         }
 
         T operator[](int i) const {
@@ -129,8 +129,8 @@ namespace NCL::Maths {
 
 
     template <typename T, uint32_t n>
-    constexpr NewVector<T, n>  operator+(const NewVector<T, n>& a, const NewVector<T, n>& b) {
-        NewVector<T, n> answer;
+    constexpr VectorTemplate<T, n>  operator+(const VectorTemplate<T, n>& a, const VectorTemplate<T, n>& b) {
+        VectorTemplate<T, n> answer;
         for (int i = 0; i < n; ++i) {
             answer[i] = a[i] + b[i];
         }
@@ -138,8 +138,8 @@ namespace NCL::Maths {
     }
 
     template <typename T, uint32_t n>
-    constexpr NewVector<T, n>  operator-(const NewVector<T, n>& a, const NewVector<T, n>& b) {
-        NewVector<T, n> answer;
+    constexpr VectorTemplate<T, n>  operator-(const VectorTemplate<T, n>& a, const VectorTemplate<T, n>& b) {
+        VectorTemplate<T, n> answer;
         for (int i = 0; i < n; ++i) {
             answer[i] = a[i] - b[i];
         }
@@ -147,8 +147,8 @@ namespace NCL::Maths {
     }
 
     template <typename T, uint32_t n>
-    constexpr NewVector<T, n>  operator-(const NewVector<T, n>& a) {
-        NewVector<T, n> answer;
+    constexpr VectorTemplate<T, n>  operator-(const VectorTemplate<T, n>& a) {
+        VectorTemplate<T, n> answer;
         for (int i = 0; i < n; ++i) {
             answer[i] = -a[i];
         }
@@ -156,8 +156,8 @@ namespace NCL::Maths {
     }
 
     template <typename T, uint32_t n>
-    constexpr NewVector<T, n>  operator*(const NewVector<T, n>& a, const NewVector<T, n>& b) {
-        NewVector<T, n> answer;
+    constexpr VectorTemplate<T, n>  operator*(const VectorTemplate<T, n>& a, const VectorTemplate<T, n>& b) {
+        VectorTemplate<T, n> answer;
         for (int i = 0; i < n; ++i) {
             answer[i] = a[i] * b[i];
         }
@@ -165,8 +165,8 @@ namespace NCL::Maths {
     }
 
     template <typename T, uint32_t n>
-    constexpr NewVector<T, n>  operator/(const NewVector<T, n>& a, const NewVector<T, n>& b) {
-        NewVector<T, n> answer;
+    constexpr VectorTemplate<T, n>  operator/(const VectorTemplate<T, n>& a, const VectorTemplate<T, n>& b) {
+        VectorTemplate<T, n> answer;
         for (int i = 0; i < n; ++i) {
             answer[i] = a[i] / b[i];
         }
@@ -174,8 +174,8 @@ namespace NCL::Maths {
     }
 
     template <typename T, uint32_t n>
-    constexpr NewVector<T, n>  operator*(const NewVector<T, n>& a, const T& b) {
-        NewVector<T, n> answer;
+    constexpr VectorTemplate<T, n>  operator*(const VectorTemplate<T, n>& a, const T& b) {
+        VectorTemplate<T, n> answer;
         for (int i = 0; i < n; ++i) {
             answer[i] = a[i] * b;
         }
@@ -183,8 +183,8 @@ namespace NCL::Maths {
     }
 
     template <typename T, uint32_t n>
-    constexpr NewVector<T, n>  operator/(const NewVector<T, n>& a, const T& b) {
-        NewVector<T, n> answer;
+    constexpr VectorTemplate<T, n>  operator/(const VectorTemplate<T, n>& a, const T& b) {
+        VectorTemplate<T, n> answer;
         for (int i = 0; i < n; ++i) {
             answer[i] = a[i] / b;
         }
@@ -192,7 +192,7 @@ namespace NCL::Maths {
     }
 
     template <typename T, uint32_t n>
-    inline NewVector<T, n>&  operator+=(NewVector<T, n>& a, const NewVector<T, n>& b) {
+    inline VectorTemplate<T, n>&  operator+=(VectorTemplate<T, n>& a, const VectorTemplate<T, n>& b) {
         for (int i = 0; i < n; ++i) {
             a[i] = a[i] + b[i];
         }
@@ -200,7 +200,7 @@ namespace NCL::Maths {
     }
 
     template <typename T, uint32_t n>
-    inline NewVector<T, n>& operator-=(NewVector<T, n>& a, const NewVector<T, n>& b) {
+    inline VectorTemplate<T, n>& operator-=(VectorTemplate<T, n>& a, const VectorTemplate<T, n>& b) {
         for (int i = 0; i < n; ++i) {
             a[i] = a[i] - b[i];
         }
@@ -208,7 +208,7 @@ namespace NCL::Maths {
     }
 
     template <typename T, uint32_t n>
-    inline NewVector<T, n>& operator*=(NewVector<T, n>& a, const NewVector<T, n>& b) {
+    inline VectorTemplate<T, n>& operator*=(VectorTemplate<T, n>& a, const VectorTemplate<T, n>& b) {
         for (int i = 0; i < n; ++i) {
             a[i] = a[i] * b[i];
         }
@@ -216,7 +216,7 @@ namespace NCL::Maths {
     }
 
     template <typename T, uint32_t n>
-    inline NewVector<T, n>& operator/=(NewVector<T, n>& a, const NewVector<T, n>& b) {
+    inline VectorTemplate<T, n>& operator/=(VectorTemplate<T, n>& a, const VectorTemplate<T, n>& b) {
         for (int i = 0; i < n; ++i) {
             a[i] = a[i] / b[i];
         }
@@ -224,7 +224,7 @@ namespace NCL::Maths {
     }
 
     template <typename T, uint32_t n>
-    inline NewVector<T, n>& operator*=(NewVector<T, n>& a, const T& b) {
+    inline VectorTemplate<T, n>& operator*=(VectorTemplate<T, n>& a, const T& b) {
         for (int i = 0; i < n; ++i) {
             a[i] = a[i] * b;
         }
@@ -232,7 +232,7 @@ namespace NCL::Maths {
     }
 
     template <typename T, uint32_t n>
-    inline NewVector<T, n>& operator/=(NewVector<T, n>& a, const T& b) {
+    inline VectorTemplate<T, n>& operator/=(VectorTemplate<T, n>& a, const T& b) {
         for (int i = 0; i < n; ++i) {
             a[i] = a[i] / b;
         }
@@ -243,8 +243,8 @@ namespace NCL::Maths {
 
     namespace Vector {
         template <typename T>
-        NewVector<T, 3> Cross(const NewVector<T, 3>& a, const NewVector<T, 3>& b) {
-            NewVector<T, 3> result;
+        VectorTemplate<T, 3> Cross(const VectorTemplate<T, 3>& a, const VectorTemplate<T, 3>& b) {
+            VectorTemplate<T, 3> result;
             result.x = (a.y * b.z) - (a.z * b.y);
             result.y = (a.z * b.x) - (a.x * b.z);
             result.z = (a.x * b.y) - (a.y * b.x);
@@ -252,7 +252,7 @@ namespace NCL::Maths {
         }
 
         template <typename T, uint32_t n>
-        T Dot(const NewVector<T, n>& a, const NewVector<T, n>& b) {
+        T Dot(const VectorTemplate<T, n>& a, const VectorTemplate<T, n>& b) {
             T result(0);
             for (int i = 0; i < n; ++i) {
                 result += a[i] * b[i];
@@ -261,7 +261,7 @@ namespace NCL::Maths {
         }
 
         template <typename T, uint32_t n>
-        constexpr T LengthSquared(const NewVector<T, n>& a) {
+        constexpr T LengthSquared(const VectorTemplate<T, n>& a) {
             T result(0);
             for (int i = 0; i < n; ++i) {
                 result += a[i] * a[i];
@@ -270,13 +270,13 @@ namespace NCL::Maths {
         }
 
         template <typename T, uint32_t n>
-        T Length(const NewVector<T, n>& a) {
+        T Length(const VectorTemplate<T, n>& a) {
             return std::sqrt(LengthSquared(a));
         }
 
         template <typename T, uint32_t n>
-        constexpr NewVector<T, n> Normalise(const NewVector<T, n>& a) {
-            NewVector<T, n> result;
+        constexpr VectorTemplate<T, n> Normalise(const VectorTemplate<T, n>& a) {
+            VectorTemplate<T, n> result;
             T l = Vector::Length(a);
             if (l > 0.0f) {
                 T r = T(1.0) / l;
@@ -288,7 +288,7 @@ namespace NCL::Maths {
         }
 
         template <typename T, uint32_t n>
-        constexpr T		GetMinElement(const NewVector<T, n>& a) {
+        constexpr T		GetMinElement(const VectorTemplate<T, n>& a) {
             float v = a.array[0];
             for (int i = 1; i < n; ++i) {
                 v = std::min(v, a.array[i]);
@@ -297,7 +297,7 @@ namespace NCL::Maths {
         }
 
         template <typename T, uint32_t n>
-        constexpr T		GetMaxElement(const NewVector<T, n>& a) {
+        constexpr T		GetMaxElement(const VectorTemplate<T, n>& a) {
             float v = a.array[0];
             for (int i = 1; i < n; ++i) {
                 v = std::max(v, a.array[i]);
@@ -306,7 +306,7 @@ namespace NCL::Maths {
         }
 
         template <typename T, uint32_t n>
-        constexpr T		GetAbsMaxElement(const NewVector<T, n>& a) {
+        constexpr T		GetAbsMaxElement(const VectorTemplate<T, n>& a) {
             float v = std::abs(a.array[0]);
             for (int i = 1; i < n; ++i) {
                 v = std::max(v, std::abs(a.array[i]));
@@ -315,8 +315,8 @@ namespace NCL::Maths {
         }
 
         template <typename T, uint32_t n>
-        constexpr NewVector<T, n>		Clamp(NewVector<T, n>& input, NewVector<T, n>& mins, NewVector<T, n>& maxs) {
-            NewVector<T, n> output;
+        constexpr VectorTemplate<T, n>		Clamp(VectorTemplate<T, n>& input, VectorTemplate<T, n>& mins, VectorTemplate<T, n>& maxs) {
+            VectorTemplate<T, n> output;
             for (int i = 1; i < n; ++i) {
                 output.array[i] = std::clamp(input.array[i], mins.array[i], maxs.array[i]);
             }

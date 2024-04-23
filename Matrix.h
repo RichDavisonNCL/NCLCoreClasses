@@ -12,13 +12,13 @@ https://research.ncl.ac.uk/game/
 
 namespace NCL::Maths {
 
-    template <typename T, uint32_t r, uint32_t c>
+    template <typename T, uint32_t rows, uint32_t cols>
     struct MatrixTemplate    {
-        T array[c][r];
+        T array[cols][rows]; //We store matrices in col major format
 
         MatrixTemplate() {
-            for (int i = 0; i < c; ++i) {
-                for (int j = 0; j < r; ++j) {
+            for (int i = 0; i < cols; ++i) {
+                for (int j = 0; j < rows; ++j) {
                     T a = (i == j) ? T(1) : T(0);
                     array[i][j] = a;
                 }
@@ -28,8 +28,8 @@ namespace NCL::Maths {
         constexpr VectorTemplate<T, c> GetRow(uint32_t rr) const {
             VectorTemplate<T, c> out;
 
-            for (unsigned int cc = 0; cc < c; ++cc) {
-                out.array[cc] = (array[rr][cc]);
+            for (unsigned int cc = 0; cc < cols; ++cc) {
+                out.array[cc] = (array[cc][rr]);
             }
 
             return out;
@@ -38,18 +38,20 @@ namespace NCL::Maths {
         constexpr VectorTemplate<T, r> GetColumn(uint32_t cc) const {
             VectorTemplate<T, r> out;
 
-            for (unsigned int rr = 0; rr < r; ++rr) {
-                out.array[rr] = (array[rr][cc]);
+            for (unsigned int rr = 0; rr < rows; ++rr) {
+                out.array[rr] = (array[cc][rr]);
             }
 
             return out;
         }
+
 
         void SetRow(uint32_t rr, const VectorTemplate<T, r>& vec) {
             for (unsigned int cc = 0; cc < c; ++cc) {
                 array[cc][rr] = vec[cc];
             }
         }
+
 
         void SetColumn(uint32_t cc, const VectorTemplate<T, c>& vec) {
             for (unsigned int rr = 0; rr < r; ++rr) {
@@ -65,10 +67,13 @@ namespace NCL::Maths {
     using Matrix2i = MatrixTemplate<int, 2, 2>;
     using Matrix3i = MatrixTemplate<int, 3, 3>;
     using Matrix4i = MatrixTemplate<int, 4, 4>;
+    using Matrix3x4 = MatrixTemplate<float, 3, 4>;
+
 
     using Matrix2d = MatrixTemplate<double, 2, 2>;
     using Matrix3d = MatrixTemplate<double, 3, 3>;
     using Matrix4d = MatrixTemplate<double, 4, 4>;
+
 
     template <typename T, uint32_t r, uint32_t c>
     constexpr MatrixTemplate<T,r,c> operator*(const MatrixTemplate<T, r, c>& a, const MatrixTemplate<T, r, c>& b) {
