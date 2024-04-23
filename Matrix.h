@@ -25,8 +25,8 @@ namespace NCL::Maths {
             }
         }
 
-        constexpr VectorTemplate<T, c> GetRow(uint32_t rr) const {
-            VectorTemplate<T, c> out;
+        constexpr VectorTemplate<T, cols> GetRow(uint32_t rr) const {
+            VectorTemplate<T, cols> out;
 
             for (unsigned int cc = 0; cc < cols; ++cc) {
                 out.array[cc] = (array[cc][rr]);
@@ -35,8 +35,8 @@ namespace NCL::Maths {
             return out;
         }
 
-        constexpr VectorTemplate<T, r> GetColumn(uint32_t cc) const {
-            VectorTemplate<T, r> out;
+        constexpr VectorTemplate<T, rows> GetColumn(uint32_t cc) const {
+            VectorTemplate<T, rows> out;
 
             for (unsigned int rr = 0; rr < rows; ++rr) {
                 out.array[rr] = (array[cc][rr]);
@@ -46,15 +46,15 @@ namespace NCL::Maths {
         }
 
 
-        void SetRow(uint32_t rr, const VectorTemplate<T, r>& vec) {
-            for (unsigned int cc = 0; cc < c; ++cc) {
+        void SetRow(uint32_t rr, const VectorTemplate<T, rows>& vec) {
+            for (unsigned int cc = 0; cc < cols; ++cc) {
                 array[cc][rr] = vec[cc];
             }
         }
 
 
-        void SetColumn(uint32_t cc, const VectorTemplate<T, c>& vec) {
-            for (unsigned int rr = 0; rr < r; ++rr) {
+        void SetColumn(uint32_t cc, const VectorTemplate<T, cols>& vec) {
+            for (unsigned int rr = 0; rr < rows; ++rr) {
                 array[cc][rr] = vec[rr];
             }
         }
