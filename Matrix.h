@@ -13,10 +13,10 @@ https://research.ncl.ac.uk/game/
 namespace NCL::Maths {
 
     template <typename T, uint32_t r, uint32_t c>
-    struct NewMatrix    {
+    struct MatrixTemplate    {
         T array[c][r];
 
-        NewMatrix() {
+        MatrixTemplate() {
             for (int i = 0; i < c; ++i) {
                 for (int j = 0; j < r; ++j) {
                     T a = (i == j) ? T(1) : T(0);
@@ -25,8 +25,8 @@ namespace NCL::Maths {
             }
         }
 
-        constexpr NewVector<T, c> GetRow(uint32_t rr) const {
-            NewVector<T, c> out;
+        constexpr VectorTemplate<T, c> GetRow(uint32_t rr) const {
+            VectorTemplate<T, c> out;
 
             for (unsigned int cc = 0; cc < c; ++cc) {
                 out.array[cc] = (array[rr][cc]);
@@ -35,8 +35,8 @@ namespace NCL::Maths {
             return out;
         }
 
-        constexpr NewVector<T, r> GetColumn(uint32_t cc) const {
-            NewVector<T, r> out;
+        constexpr VectorTemplate<T, r> GetColumn(uint32_t cc) const {
+            VectorTemplate<T, r> out;
 
             for (unsigned int rr = 0; rr < r; ++rr) {
                 out.array[rr] = (array[rr][cc]);
@@ -45,34 +45,34 @@ namespace NCL::Maths {
             return out;
         }
 
-        void SetRow(uint32_t rr, const NewVector<T, r>& vec) {
+        void SetRow(uint32_t rr, const VectorTemplate<T, r>& vec) {
             for (unsigned int cc = 0; cc < c; ++cc) {
                 array[cc][rr] = vec[cc];
             }
         }
 
-        void SetColumn(uint32_t cc, const NewVector<T, c>& vec) {
+        void SetColumn(uint32_t cc, const VectorTemplate<T, c>& vec) {
             for (unsigned int rr = 0; rr < r; ++rr) {
                 array[cc][rr] = vec[rr];
             }
         }
     };
 
-    using Matrix2 = NewMatrix<float, 2, 2>;
-    using Matrix3 = NewMatrix<float, 3, 3>;
-    using Matrix4 = NewMatrix<float, 4, 4>;
+    using Matrix2 = MatrixTemplate<float, 2, 2>;
+    using Matrix3 = MatrixTemplate<float, 3, 3>;
+    using Matrix4 = MatrixTemplate<float, 4, 4>;
 
-    using Matrix2i = NewMatrix<int, 2, 2>;
-    using Matrix3i = NewMatrix<int, 3, 3>;
-    using Matrix4i = NewMatrix<int, 4, 4>;
+    using Matrix2i = MatrixTemplate<int, 2, 2>;
+    using Matrix3i = MatrixTemplate<int, 3, 3>;
+    using Matrix4i = MatrixTemplate<int, 4, 4>;
 
-    using Matrix2d = NewMatrix<double, 2, 2>;
-    using Matrix3d = NewMatrix<double, 3, 3>;
-    using Matrix4d = NewMatrix<double, 4, 4>;
+    using Matrix2d = MatrixTemplate<double, 2, 2>;
+    using Matrix3d = MatrixTemplate<double, 3, 3>;
+    using Matrix4d = MatrixTemplate<double, 4, 4>;
 
     template <typename T, uint32_t r, uint32_t c>
-    constexpr NewMatrix<T,r,c> operator*(const NewMatrix<T, r, c>& a, const NewMatrix<T, r, c>& b) {
-        NewMatrix<T, r, c> out;
+    constexpr MatrixTemplate<T,r,c> operator*(const MatrixTemplate<T, r, c>& a, const MatrixTemplate<T, r, c>& b) {
+        MatrixTemplate<T, r, c> out;
         for (unsigned int cc = 0; cc < c; ++cc) {
             for (unsigned int rr = 0; rr < r; ++rr) {
                 out.array[cc][rr] = T(0);
@@ -85,8 +85,8 @@ namespace NCL::Maths {
     }
 
     template <typename T, uint32_t r, uint32_t c>
-    NewVector<T, c> operator*(const NewMatrix<T, r, c>& mat, const NewVector<T, c>& v) {
-        NewVector<T, c> vec;
+    VectorTemplate<T, c> operator*(const MatrixTemplate<T, r, c>& mat, const VectorTemplate<T, c>& v) {
+        VectorTemplate<T, c> vec;
 
         for (int rr = 0; rr < r; ++rr) {
             for (int cc = 0; cc < c; ++cc) {
@@ -98,8 +98,8 @@ namespace NCL::Maths {
     }
 
     template <typename T>
-    NewVector<T, 3> operator*(const NewMatrix<T, 3, 3>& mat, const NewVector<T, 3>& v) {
-        return  NewVector<T, 3>(
+    VectorTemplate<T, 3> operator*(const MatrixTemplate<T, 3, 3>& mat, const VectorTemplate<T, 3>& v) {
+        return  VectorTemplate<T, 3>(
             v.x * mat.array[0][0] + v.y * mat.array[1][0] + v.z * mat.array[2][0],
             v.x * mat.array[0][1] + v.y * mat.array[1][1] + v.z * mat.array[2][1],
             v.x * mat.array[0][2] + v.y * mat.array[1][2] + v.z * mat.array[2][2]
@@ -107,8 +107,8 @@ namespace NCL::Maths {
     }
 
     template <typename T>
-    NewVector<T, 4> operator*(const NewMatrix<T, 4, 4>& mat, const NewVector<T, 4>&v) {
-    	return  NewVector<T, 4>(
+    VectorTemplate<T, 4> operator*(const MatrixTemplate<T, 4, 4>& mat, const VectorTemplate<T, 4>&v) {
+    	return  VectorTemplate<T, 4>(
     		v.x*mat.array[0][0] + v.y*mat.array[1][0] + v.z*mat.array[2][0]  + v.w * mat.array[3][0] ,
     		v.x*mat.array[0][1] + v.y*mat.array[1][1] + v.z*mat.array[2][1]  + v.w * mat.array[3][1] ,
     		v.x*mat.array[0][2] + v.y*mat.array[1][2] + v.z*mat.array[2][2]  + v.w * mat.array[3][2] ,
@@ -118,8 +118,8 @@ namespace NCL::Maths {
 
     namespace Matrix {
         template <typename T, uint32_t r, uint32_t c>
-        constexpr NewMatrix<T, r, c> Absolute(const NewMatrix<T, r, c>& a) {
-            NewMatrix<T, r, c> out;
+        constexpr MatrixTemplate<T, r, c> Absolute(const MatrixTemplate<T, r, c>& a) {
+            MatrixTemplate<T, r, c> out;
             for (unsigned int cc = 0; cc < c; ++cc) {
                 for (unsigned int rr = 0; rr < r; ++rr) {
                     out.array[cc][rr] = std::abs(a.array[cc][rr]);
@@ -129,8 +129,8 @@ namespace NCL::Maths {
         }
 
         template <typename T, uint32_t r, uint32_t c>
-        constexpr NewMatrix<T, r, c> Transpose(const NewMatrix<T, r, c>& a) {
-            NewMatrix<T, r, c> out;
+        constexpr MatrixTemplate<T, r, c> Transpose(const MatrixTemplate<T, r, c>& a) {
+            MatrixTemplate<T, r, c> out;
             for (unsigned int cc = 0; cc < c; ++cc) {
                 for (unsigned int rr = 0; rr < r; ++rr) {
                     out.array[cc][rr] = (a.array[rr][cc]);
@@ -141,8 +141,8 @@ namespace NCL::Maths {
 
         //Matrix Specialisations
         template <typename T>
-        constexpr NewMatrix<T, 2, 2> Inverse(const NewMatrix<T, 2, 2>& mat) {
-            NewMatrix<T, 2, 2> outMat;
+        constexpr MatrixTemplate<T, 2, 2> Inverse(const MatrixTemplate<T, 2, 2>& mat) {
+            MatrixTemplate<T, 2, 2> outMat;
 
             float determinant = (mat.array[0][0] * mat.array[1][1]) - (mat.array[0][1] * mat.array[1][0]);
             float invDet = 1.0f / determinant; //Turn our divides into multiplies!
@@ -156,13 +156,13 @@ namespace NCL::Maths {
         }
 
         template <typename T>
-        constexpr NewMatrix<T, 3, 3> Inverse(const NewMatrix<T, 3, 3>& mat) {
-            NewMatrix<T, 3, 3> outMat;
+        constexpr MatrixTemplate<T, 3, 3> Inverse(const MatrixTemplate<T, 3, 3>& mat) {
+            MatrixTemplate<T, 3, 3> outMat;
             return outMat;
         }
 
         template <typename T>
-        constexpr NewMatrix<T, 4, 4> Inverse(const NewMatrix<T, 4, 4>& mat) {
+        constexpr MatrixTemplate<T, 4, 4> Inverse(const MatrixTemplate<T, 4, 4>& mat) {
             float det = 0.0f;
             float invDet = 0.0f;
 
@@ -215,7 +215,7 @@ namespace NCL::Maths {
             float det3_301_023 = mat.array[3][0] * det2_01_23 - mat.array[3][2] * det2_01_03 + mat.array[3][3] * det2_01_02;
             float det3_301_123 = mat.array[3][1] * det2_01_23 - mat.array[3][2] * det2_01_13 + mat.array[3][3] * det2_01_12;
 
-            NewMatrix<T, 4, 4> outMat;
+            MatrixTemplate<T, 4, 4> outMat;
             outMat.array[0][0] = -det3_213_123 * invDet;
             outMat.array[1][0] = +det3_213_023 * invDet;
             outMat.array[2][0] = -det3_213_013 * invDet;
@@ -240,8 +240,8 @@ namespace NCL::Maths {
         }
 
         template <typename T>
-        constexpr NewMatrix<T, 4, 4> Translation(const NewVector<T, 3>& v) {
-            NewMatrix<T, 4, 4> mat;
+        constexpr MatrixTemplate<T, 4, 4> Translation(const VectorTemplate<T, 3>& v) {
+            MatrixTemplate<T, 4, 4> mat;
 
             mat.array[3][0] = T(v.x);
             mat.array[3][1] = T(v.y);
@@ -251,8 +251,8 @@ namespace NCL::Maths {
         }
 
         template <typename T>
-        constexpr NewMatrix<T, 4, 4> Scale(const NewVector<T, 3>& v) {
-            NewMatrix<T, 4, 4> mat;
+        constexpr MatrixTemplate<T, 4, 4> Scale(const VectorTemplate<T, 3>& v) {
+            MatrixTemplate<T, 4, 4> mat;
 
             mat.array[0][0] = T(v.x);
             mat.array[1][1] = T(v.y);
@@ -263,8 +263,8 @@ namespace NCL::Maths {
 
 
         template <typename T>
-        constexpr NewMatrix<T, 3, 3> Scale3x3(const NewVector<T, 3>& v) {
-            NewMatrix<T, 3, 3> mat;
+        constexpr MatrixTemplate<T, 3, 3> Scale3x3(const VectorTemplate<T, 3>& v) {
+            MatrixTemplate<T, 3, 3> mat;
 
             mat.array[0][0] = T(v.x);
             mat.array[1][1] = T(v.y);
@@ -275,8 +275,8 @@ namespace NCL::Maths {
 
 
         template <typename T>
-        constexpr NewMatrix<T, 2, 2> Rotation(T degrees) {
-            NewMatrix<T, 2, 2> mat;
+        constexpr MatrixTemplate<T, 2, 2> Rotation(T degrees) {
+            MatrixTemplate<T, 2, 2> mat;
 
             float radians = Maths::DegreesToRadians(degrees);
             float s = sin(radians);
@@ -291,34 +291,10 @@ namespace NCL::Maths {
         }
 
         template <typename T>
-        constexpr NewMatrix<T, 3, 3> RotationMatrix3x3(T degrees, const NewVector<T, 3>& inAxis) {
-            NewMatrix<T, 3, 3> mat;
+        constexpr MatrixTemplate<T, 3, 3> RotationMatrix3x3(T degrees, const VectorTemplate<T, 3>& inAxis) {
+            MatrixTemplate<T, 3, 3> mat;
 
-            const NewVector<T, 3> axis = Vector::Normalise(inAxis);
-
-            float c = cos((float)Maths::DegreesToRadians(degrees));
-            float s = sin((float)Maths::DegreesToRadians(degrees));
-
-            mat.array[0][0] = (axis.x * axis.x) * (1.0f - c) + c;
-            mat.array[0][1] = (axis.y * axis.x) * (1.0f - c) + (axis.z * s);
-            mat.array[0][2] = (axis.z * axis.x) * (1.0f - c) - (axis.y * s);
-
-            mat.array[1][0] = (axis.x * axis.y) * (1.0f - c) - (axis.z * s);
-            mat.array[1][1] = (axis.y * axis.y) * (1.0f - c) + c;
-            mat.array[1][2] = (axis.z * axis.y) * (1.0f - c) + (axis.x * s);
-
-            mat.array[2][0] = (axis.x * axis.z) * (1.0f - c) + (axis.y * s);
-            mat.array[2][1] = (axis.y * axis.z) * (1.0f - c) - (axis.x * s);
-            mat.array[2][2] = (axis.z * axis.z) * (1.0f - c) + c;
-
-            return mat;
-        }
-
-        template <typename T>
-        constexpr NewMatrix<T, 4, 4> Rotation(T degrees, const NewVector<T, 3>& inAxis) {
-            NewMatrix<T, 4, 4> mat;
-
-            const NewVector<T, 3> axis = Vector::Normalise(inAxis);
+            const VectorTemplate<T, 3> axis = Vector::Normalise(inAxis);
 
             float c = cos((float)Maths::DegreesToRadians(degrees));
             float s = sin((float)Maths::DegreesToRadians(degrees));
@@ -339,9 +315,33 @@ namespace NCL::Maths {
         }
 
         template <typename T>
-        constexpr NewMatrix<T, 4, 4> Perspective(T zNear, T zFar, float aspectRatio, float fov, bool ndc01 = false)
+        constexpr MatrixTemplate<T, 4, 4> Rotation(T degrees, const VectorTemplate<T, 3>& inAxis) {
+            MatrixTemplate<T, 4, 4> mat;
+
+            const VectorTemplate<T, 3> axis = Vector::Normalise(inAxis);
+
+            float c = cos((float)Maths::DegreesToRadians(degrees));
+            float s = sin((float)Maths::DegreesToRadians(degrees));
+
+            mat.array[0][0] = (axis.x * axis.x) * (1.0f - c) + c;
+            mat.array[0][1] = (axis.y * axis.x) * (1.0f - c) + (axis.z * s);
+            mat.array[0][2] = (axis.z * axis.x) * (1.0f - c) - (axis.y * s);
+
+            mat.array[1][0] = (axis.x * axis.y) * (1.0f - c) - (axis.z * s);
+            mat.array[1][1] = (axis.y * axis.y) * (1.0f - c) + c;
+            mat.array[1][2] = (axis.z * axis.y) * (1.0f - c) + (axis.x * s);
+
+            mat.array[2][0] = (axis.x * axis.z) * (1.0f - c) + (axis.y * s);
+            mat.array[2][1] = (axis.y * axis.z) * (1.0f - c) - (axis.x * s);
+            mat.array[2][2] = (axis.z * axis.z) * (1.0f - c) + c;
+
+            return mat;
+        }
+
+        template <typename T>
+        constexpr MatrixTemplate<T, 4, 4> Perspective(T zNear, T zFar, float aspectRatio, float fov, bool ndc01 = false)
         {
-            NewMatrix<T, 4, 4> mat;
+            MatrixTemplate<T, 4, 4> mat;
 
             const float h = 1.0f / tan(Maths::DegreesToRadians(fov) / 2.0f);
             float negDepth = zNear - zFar;
@@ -358,9 +358,9 @@ namespace NCL::Maths {
 
         //http://www.opengl.org/sdk/docs/man/xhtml/glOrtho.xml
         template <typename T>
-        constexpr NewMatrix<T, 4, 4> Orthographic(T xMin, T xMax, T yMin, T yMax, T zMin, T zMax, bool ndc01 = false)
+        constexpr MatrixTemplate<T, 4, 4> Orthographic(T xMin, T xMax, T yMin, T yMax, T zMin, T zMax, bool ndc01 = false)
         {
-            NewMatrix<T, 4, 4> mat;
+            MatrixTemplate<T, 4, 4> mat;
 
             mat.array[0][0] = 2.0f / (xMax - xMin);
             mat.array[1][1] = 2.0f / (yMax - yMin);
@@ -375,23 +375,23 @@ namespace NCL::Maths {
         }
 
         template <typename T>
-        constexpr NewMatrix<T, 4, 4> View(
-            const NewVector<T, 3>& cameraPos,
-            const NewVector<T, 3>& lookAtPos,
-            const NewVector<T, 3>& upAxis = NewVector<T, 3>(0, 1, 0)
+        constexpr MatrixTemplate<T, 4, 4> View(
+            const VectorTemplate<T, 3>& cameraPos,
+            const VectorTemplate<T, 3>& lookAtPos,
+            const VectorTemplate<T, 3>& upAxis = VectorTemplate<T, 3>(0, 1, 0)
         )
         {
-            NewMatrix<T, 4, 4> tMat = Translation(-cameraPos);
+            MatrixTemplate<T, 4, 4> tMat = Translation(-cameraPos);
 
-            NewVector<T, 3> zDir = Vector::Normalise(lookAtPos - cameraPos);
+            VectorTemplate<T, 3> zDir = Vector::Normalise(lookAtPos - cameraPos);
 
-            NewVector<T, 3> xDir = Vector::Cross(zDir, upAxis);
+            VectorTemplate<T, 3> xDir = Vector::Cross(zDir, upAxis);
             xDir = Vector::Normalise(xDir);
 
-            NewVector<T, 3> yDir = Vector::Cross(xDir, zDir);
+            VectorTemplate<T, 3> yDir = Vector::Cross(xDir, zDir);
             yDir = Vector::Normalise(yDir);
 
-            NewMatrix<T, 4, 4> rMat;
+            MatrixTemplate<T, 4, 4> rMat;
 
             rMat.array[0][0] = xDir.x;
             rMat.array[1][0] = xDir.y;
