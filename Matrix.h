@@ -12,47 +12,47 @@ https://research.ncl.ac.uk/game/
 
 namespace NCL::Maths {
 
-    template <typename T, uint32_t r, uint32_t c>
+    template <typename T, uint32_t rows, uint32_t cols>
     struct NewMatrix    {
-        T array[c][r];
+        T array[cols][rows]; //We store matrices in col major format
 
         NewMatrix() {
-            for (int i = 0; i < c; ++i) {
-                for (int j = 0; j < r; ++j) {
+            for (int i = 0; i < cols; ++i) {
+                for (int j = 0; j < rows; ++j) {
                     T a = (i == j) ? T(1) : T(0);
                     array[i][j] = a;
                 }
             }
         }
 
-        constexpr NewVector<T, c> GetRow(uint32_t rr) const {
-            NewVector<T, c> out;
+        constexpr NewVector<T, cols> GetRow(uint32_t rr) const {
+            NewVector<T, cols> out;
 
-            for (unsigned int cc = 0; cc < c; ++cc) {
-                out.array[cc] = (array[rr][cc]);
+            for (unsigned int cc = 0; cc < cols; ++cc) {
+                out.array[cc] = (array[cc][rr]);
             }
 
             return out;
         }
 
-        constexpr NewVector<T, r> GetColumn(uint32_t cc) const {
-            NewVector<T, r> out;
+        constexpr NewVector<T, rows> GetColumn(uint32_t cc) const {
+            NewVector<T, rows> out;
 
-            for (unsigned int rr = 0; rr < r; ++rr) {
-                out.array[rr] = (array[rr][cc]);
+            for (unsigned int rr = 0; rr < rows; ++rr) {
+                out.array[rr] = (array[cc][rr]);
             }
 
             return out;
         }
 
-        void SetRow(uint32_t rr, const NewVector<T, r>& vec) {
-            for (unsigned int cc = 0; cc < c; ++cc) {
-                array[cc][rr] = vec[cc];
+        void SetRow(uint32_t rr, const NewVector<T, cols>& vec) {
+            for (unsigned int cc = 0; cc < cols; ++cc) {
+                array[cc][rr] = vec[rr];
             }
         }
 
-        void SetColumn(uint32_t cc, const NewVector<T, c>& vec) {
-            for (unsigned int rr = 0; rr < r; ++rr) {
+        void SetColumn(uint32_t cc, const NewVector<T, rows>& vec) {
+            for (unsigned int rr = 0; rr < cols; ++rr) {
                 array[cc][rr] = vec[rr];
             }
         }
@@ -62,6 +62,8 @@ namespace NCL::Maths {
     using Matrix3 = NewMatrix<float, 3, 3>;
     using Matrix4 = NewMatrix<float, 4, 4>;
 
+    using Matrix3x4 = NewMatrix<float, 3, 4>;
+
     using Matrix2i = NewMatrix<int, 2, 2>;
     using Matrix3i = NewMatrix<int, 3, 3>;
     using Matrix4i = NewMatrix<int, 4, 4>;
@@ -70,13 +72,14 @@ namespace NCL::Maths {
     using Matrix3d = NewMatrix<double, 3, 3>;
     using Matrix4d = NewMatrix<double, 4, 4>;
 
-    template <typename T, uint32_t r, uint32_t c>
-    constexpr NewMatrix<T,r,c> operator*(const NewMatrix<T, r, c>& a, const NewMatrix<T, r, c>& b) {
-        NewMatrix<T, r, c> out;
-        for (unsigned int cc = 0; cc < c; ++cc) {
-            for (unsigned int rr = 0; rr < r; ++rr) {
+    template <typename T, uint32_t ra, uint32_t ca>
+    constexpr NewMatrix<T,ra, ca> operator*(const NewMatrix<T, ra, ca>& a, const NewMatrix<T, ra, ca>& b) {
+        NewMatrix<T, ra, ca> out;
+        //static_assert(ra == ca);
+        for (unsigned int cc = 0; cc < ca; ++cc) {
+            for (unsigned int rr = 0; rr < ra; ++rr) {
                 out.array[cc][rr] = T(0);
-                for (unsigned int i = 0; i < r; ++i) {
+                for (unsigned int i = 0; i < ca; ++i) {
                     out.array[cc][rr] += a.array[i][rr] * b.array[cc][i];
                 }
             }
