@@ -35,7 +35,11 @@ namespace NCL::Rendering {
 		}
 
 		float GetFrameTime() const {
-			return 1.0f / (float)frameRate;
+			return 1.0f / frameRate;
+		}
+
+		float GetAnimationTime() const {
+			return frameCount / (float)frameRate;
 		}
 
 		const Maths::Matrix4* GetJointData(size_t frame) const;
