@@ -12,12 +12,24 @@ https://research.ncl.ac.uk/game/
 
 #include "Vector.h"
 
+#include <functional>
+
 namespace NCL {
 	class GameTimer;
 	namespace Rendering {
 		class RendererBase;
 	};
 	using namespace Rendering;
+
+	enum class WindowEvent {
+		Minimize,
+		Maximize,
+		Resize,
+		Fullscreen,
+		Windowed
+	};
+
+	using WindowEventHandler = std::function<void(WindowEvent e, uint32_t w, uint32_t h)>;
 	
 	class Window {
 	public:
@@ -31,7 +43,6 @@ namespace NCL {
 		bool		IsMinimised() const { return minimised;	 }
 
 		bool		UpdateWindow();
-		void		SetRenderer(RendererBase* r);
 
 		bool		HasInitialised()	const { return init; }
 
@@ -61,6 +72,10 @@ namespace NCL {
 		static const GameTimer&	 GetTimer() { return timer; }
 
 		static Window*	const GetWindow() { return window; }
+
+		void SetWindowEventHandler(WindowEventHandler& e) {
+			eventHandler = e;
+		}
 	protected:
 		Window();
 		virtual ~Window();
@@ -69,9 +84,7 @@ namespace NCL {
 
 		virtual bool InternalUpdate() = 0;
 
-		void ResizeRenderer();
-
-		RendererBase*	renderer;
+		WindowEventHandler eventHandler;
 
 		bool				minimised;
 		bool				init;

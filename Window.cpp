@@ -20,7 +20,6 @@ Mouse*		Window::mouse		= nullptr;
 GameTimer	Window::timer;
 
 Window::Window()	{
-	renderer	= nullptr;
 	window		= this;
 }
 
@@ -42,17 +41,6 @@ Window* Window::CreateGameWindow(std::string title, int sizeX, int sizeY, bool f
 #endif
 }
 
-void	Window::SetRenderer(RendererBase* r) {
-	if (renderer && renderer != r) {
-		renderer->OnWindowDetach();
-	}
-	renderer = r;
-
-	if (r) {
-		renderer->OnWindowResize(size.x, size.y);
-	}
-}
-
 bool	Window::UpdateWindow() {
 	std::this_thread::yield();
 	timer.Tick();
@@ -65,10 +53,4 @@ bool	Window::UpdateWindow() {
 	}
 
 	return InternalUpdate();
-}
-
-void Window::ResizeRenderer() {
-	if (renderer) {
-		renderer->OnWindowResize((int)size.x, (int)size.y);
-	}
 }

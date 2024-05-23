@@ -148,7 +148,9 @@ void	Win32Window::SetFullScreen(bool fullScreen) {
 			std::cout << __FUNCTION__ << " Failed to switch to fullscreen!\n";
 		}
 		else {
-			ResizeRenderer();
+			if (eventHandler) {
+				eventHandler(fullScreen ? NCL::WindowEvent::Fullscreen : NCL::WindowEvent::Windowed, size.x, size.y);
+			}
 		}
 	}
 	else {
@@ -322,7 +324,10 @@ LRESULT CALLBACK Win32Window::WindowProc(HWND hWnd, UINT message, WPARAM wParam,
     }
 
 	if (applyResize) {
-		thisWindow->ResizeRenderer();
+		if (thisWindow->eventHandler) {
+			thisWindow->eventHandler(NCL::WindowEvent::Resize, thisWindow->size.x, thisWindow->size.y);
+		}
+
 		if (thisWindow->init) {
 			thisWindow->winMouse->SetAbsolutePositionBounds(thisWindow->size);
 			thisWindow->LockMouseToWindow(thisWindow->lockMouse);
