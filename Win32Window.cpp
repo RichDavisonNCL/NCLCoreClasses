@@ -9,7 +9,7 @@ using namespace Win32Code;
 
 #define WINDOWCLASS "WindowClass"
 
-Win32Window::Win32Window(const std::string& title, int sizeX, int sizeY, bool fullScreen, int offsetX, int offsetY)	{
+Win32Window::Win32Window(const WindowInitialisation& winInitInfo) {
 	forceQuit		= false;
 	init			= false;
 	mouseLeftWindow	= false;
@@ -17,14 +17,14 @@ Win32Window::Win32Window(const std::string& title, int sizeX, int sizeY, bool fu
 	showMouse		= true;
 	active			= true;
 
-	this->fullScreen = fullScreen;
+	windowTitle = winInitInfo.windowTitle;
+	fullScreen	= winInitInfo.fullScreen;
 
-	size = Vector2i(sizeX, sizeY);
-
+	size = Vector2i(winInitInfo.width, winInitInfo.height);
 	defaultSize = size;
 
-	fullScreen ? position.x = 0.0f : position.x = (float)offsetX;
-	fullScreen ? position.y = 0.0f : position.y = (float)offsetY;
+	position.x = fullScreen ? 0 : winInitInfo.windowPositionX;
+	position.y = fullScreen ? 0 : winInitInfo.windowPositionY;
 
 	windowInstance = GetModuleHandle(NULL);
 
@@ -51,10 +51,10 @@ Win32Window::Win32Window(const std::string& title, int sizeX, int sizeY, bool fu
 		memset(&dmScreenSettings,0,sizeof(dmScreenSettings));	// Makes Sure Memory's Cleared
 
 		dmScreenSettings.dmSize=sizeof(dmScreenSettings);		// Size Of The Devmode Structure
-		dmScreenSettings.dmPelsWidth		= sizeX;			// Selected Screen Width
-		dmScreenSettings.dmPelsHeight		= sizeY;			// Selected Screen Height
+		dmScreenSettings.dmPelsWidth		= winInitInfo.width;// Selected Screen Width
+		dmScreenSettings.dmPelsHeight		= winInitInfo.height;// Selected Screen Height
 		dmScreenSettings.dmBitsPerPel		= 32;				// Selected Bits Per Pixel
-		dmScreenSettings.dmDisplayFrequency = 60;
+		dmScreenSettings.dmDisplayFrequency = winInitInfo.refreshRate;
 		dmScreenSettings.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT | DM_DISPLAYFREQUENCY;
 
 		if(ChangeDisplaySettings(&dmScreenSettings,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL)	{
@@ -64,17 +64,17 @@ Win32Window::Win32Window(const std::string& title, int sizeX, int sizeY, bool fu
 	}
 
 	windowHandle = CreateWindowEx(fullScreen ? WS_EX_TOPMOST : NULL,
-	WINDOWCLASS,    // name of the window class
-	title.c_str(),   // title of the window
-	fullScreen ? WS_POPUP|WS_VISIBLE : WS_OVERLAPPEDWINDOW|WS_POPUP|WS_VISIBLE|WS_SYSMENU|WS_MAXIMIZEBOX|WS_MINIMIZEBOX,    // window style
-						position.x,			// x-position of the window
-                        position.y,			// y-position of the window
-                        size.x,				// width of the window
-                        size.y,				// height of the window
-                        NULL,				// No parent window!
-                        NULL,				// No Menus!
-						windowInstance,		// application handle
-                        NULL);				// No multiple windows!
+		WINDOWCLASS,							// name of the window class
+		winInitInfo.windowTitle.c_str(),		// title of the window
+		fullScreen ? WS_POPUP|WS_VISIBLE : WS_OVERLAPPEDWINDOW|WS_POPUP|WS_VISIBLE|WS_SYSMENU|WS_MAXIMIZEBOX|WS_MINIMIZEBOX,    // window style
+		winInitInfo.windowPositionX,			// x-position of the window
+		winInitInfo.windowPositionY,			// y-position of the window
+		winInitInfo.width,				// width of the window
+		winInitInfo.height,				// height of the window
+        NULL,				// No parent window!
+        NULL,				// No Menus!
+		windowInstance,		// application handle
+        NULL);				// No multiple windows!
 
  	if(!windowHandle) {
 		std::cout << __FUNCTION__ << " Failed to create window!\n";
@@ -94,9 +94,7 @@ Win32Window::Win32Window(const std::string& title, int sizeX, int sizeY, bool fu
 	LockMouseToWindow(lockMouse);
 	ShowOSPointer(showMouse);
 
-	SetConsolePosition(1500, 200);
-
-	windowTitle = title;
+	SetConsolePosition(winInitInfo.consolePositionX, winInitInfo.consolePositionY);
 
 	init		= true;
 	maximised	= false;

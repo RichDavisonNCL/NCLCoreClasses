@@ -29,16 +29,14 @@ Window::~Window()	{
 	window = nullptr;
 }
 
-Window* Window::CreateGameWindow(std::string title, int sizeX, int sizeY, bool fullScreen, int offsetX, int offsetY) {
+Window* Window::CreateGameWindow(const WindowInitialisation& init) {
 	if (window) {
 		return nullptr;
 	}
 #ifdef _WIN32
-	return new Win32Code::Win32Window(title, sizeX, sizeY, fullScreen, offsetX, offsetY);
+	return new Win32Code::Win32Window(init);
 #endif
-#ifdef __ORBIS__
-	return new PS4::PS4Window(title, sizeX, sizeY, fullScreen, offsetX, offsetY);
-#endif
+	return nullptr;
 }
 
 bool	Window::UpdateWindow() {

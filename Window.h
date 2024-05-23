@@ -12,8 +12,6 @@ https://research.ncl.ac.uk/game/
 
 #include "Vector.h"
 
-#include <functional>
-
 namespace NCL {
 	class GameTimer;
 	namespace Rendering {
@@ -29,11 +27,25 @@ namespace NCL {
 		Windowed
 	};
 
+	struct WindowInitialisation {
+		uint32_t width;
+		uint32_t height;
+		bool	 fullScreen			= false;
+		uint32_t refreshRate		= 60;
+
+		std::string windowTitle		= "NCLGL!";
+
+		uint32_t windowPositionX	= 0;
+		uint32_t windowPositionY	= 0;
+		uint32_t consolePositionX	= 0;
+		uint32_t consolePositionY	= 0;
+	};
+
 	using WindowEventHandler = std::function<void(WindowEvent e, uint32_t w, uint32_t h)>;
 	
 	class Window {
 	public:
-		static Window* CreateGameWindow(std::string title = "NCLGL!", int sizeX = 800, int sizeY = 600, bool fullScreen = false, int offsetX = 100, int offsetY = 100);
+		static Window* CreateGameWindow(const WindowInitialisation& init);
 
 		static void DestroyGameWindow() {
 			delete window;
