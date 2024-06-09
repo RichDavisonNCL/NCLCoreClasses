@@ -28,7 +28,7 @@ void Camera::UpdateCamera(float dt) {
 		yaw -= 360.0f;
 	}
 
-	float frameSpeed = 100 * dt;
+	float frameSpeed = speed * dt;
 
 	Matrix3 yawRotation = Matrix::RotationMatrix3x3(yaw, Vector3(0, 1, 0));
 

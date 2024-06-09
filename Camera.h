@@ -21,15 +21,13 @@ namespace NCL {
 
 			nearPlane	= 1.0f;
 			farPlane	= 1000.0f;
+			speed		= 100.0f;
 		};
 
 		Camera(float pitch, float yaw, const Vector3& position) : Camera() {
 			this->pitch		= pitch;
 			this->yaw		= yaw;
 			this->position	= position;
-
-			this->nearPlane = 1.0f;
-			this->farPlane	= 100.0f;
 		}
 
 		~Camera(void) = default;
@@ -71,14 +69,17 @@ namespace NCL {
 		Camera&	SetPosition(const Vector3& val) { position = val;  return *this; }
 
 		//Gets yaw, in degrees
-		float	GetYaw()   const { return yaw; }
+		float	GetYaw()   const	{ return yaw; }
 		//Sets yaw, in degrees
-		Camera&	SetYaw(float y) { yaw = y;  return *this; }
+		Camera&	SetYaw(float y)		{ yaw = y;  return *this; }
 
 		//Gets pitch, in degrees
-		float	GetPitch() const { return pitch; }
+		float	GetPitch() const	{ return pitch; }
 		//Sets pitch, in degrees
-		Camera& SetPitch(float p) { pitch = p; return *this; }
+		Camera& SetPitch(float p)	{ pitch = p; return *this; }
+
+		float	GetSpeed() const	{ return speed; }
+		Camera& SetSpeed(float s)	{ speed = s; return *this; }
 
 	protected:
 		float	nearPlane;
@@ -87,6 +88,7 @@ namespace NCL {
 		float	yaw;
 		float	pitch;
 		Vector3 position;
+		float	speed;
 
 		const Controller* activeController = nullptr;
 	};
