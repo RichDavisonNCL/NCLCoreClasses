@@ -85,7 +85,7 @@ namespace NCL {
 
 		static Window*	const GetWindow() { return window; }
 
-		void SetWindowEventHandler(WindowEventHandler& e) {
+		void SetWindowEventHandler(const WindowEventHandler& e) {
 			eventHandler = e;
 		}
 	protected:
