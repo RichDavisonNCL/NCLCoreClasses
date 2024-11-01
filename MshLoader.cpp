@@ -134,6 +134,131 @@ bool MshLoader::LoadMesh(const std::string& filename, Mesh& destinationMesh) {
 	return true;
 }
 
+bool MshLoader::SaveMesh(const std::string& filename, Mesh& sourceMesh) {
+	std::ofstream file(filename);
+
+
+	static int FORMAT_VERSION = 1;
+
+	file << "MeshGeometry\n";
+	file << FORMAT_VERSION;
+
+	/*
+	int numMeshes = 0; //read
+	int numVertices = 0; //read
+	int numIndices = 0; //read
+	int numChunks = 0; //read
+	*/
+
+	int numChunks = 0;
+
+	if (!sourceMesh.GetPositionData().empty()) {
+		numChunks++;
+	}
+	if (!sourceMesh.GetColourData().empty()) {
+		numChunks++;
+	}
+	if (!sourceMesh.GetNormalData().empty()) {
+		numChunks++;
+	}
+	if (!sourceMesh.GetTangentData().empty()) {
+		numChunks++;
+	}
+	if (!sourceMesh.GetTextureCoordData().empty()) {
+		numChunks++;
+	}
+	if (!sourceMesh.GetIndexData().empty()) {
+		numChunks++;
+	}
+	if (!sourceMesh.GetSkinWeightData().empty()) {
+		numChunks++;
+	}
+	if (!sourceMesh.GetSkinIndexData().empty()) {
+		numChunks++;
+	}
+	if (!sourceMesh.GetJointNames().empty()) {
+		numChunks++;
+	}
+	if (!sourceMesh.GetJointParents().empty()) {
+		numChunks++;
+	}
+	if (!sourceMesh.GetBindPose().empty()) {
+		numChunks++;
+	}
+	if (!sourceMesh.GetInverseBindPose().empty()) {
+		numChunks++;
+	}
+	if (sourceMesh.GetSubMeshCount() >= 1) {
+		numChunks++;
+	}
+	if (!sourceMesh.GetSubMeshNames().empty()) {
+		numChunks++;
+	}
+	
+	file << sourceMesh.GetSubMeshCount();
+	file << sourceMesh.GetVertexCount();
+	file << sourceMesh.GetIndexCount();
+	file << numChunks;
+
+	//And now to save each chunk out!
+
+
+	if (!sourceMesh.GetPositionData().empty()) {
+		file << (int)GeometryChunkTypes::VPositions << "\n";
+		WriteTextFloats(file, sourceMesh.GetPositionData());
+	}
+	if (!sourceMesh.GetColourData().empty()) {
+		file << (int)GeometryChunkTypes::VColors << "\n";
+		WriteTextFloats(file, sourceMesh.GetColourData());
+	}
+	if (!sourceMesh.GetNormalData().empty()) {
+		file << (int)GeometryChunkTypes::VNormals << "\n";
+		WriteTextFloats(file, sourceMesh.GetNormalData());
+	}
+	if (!sourceMesh.GetTangentData().empty()) {
+		file << (int)GeometryChunkTypes::VTangents << "\n";
+		WriteTextFloats(file, sourceMesh.GetTangentData());
+	}
+	if (!sourceMesh.GetTextureCoordData().empty()) {
+		file << (int)GeometryChunkTypes::VTex0 << "\n";
+		WriteTextFloats(file, sourceMesh.GetTextureCoordData());
+	}
+	if (!sourceMesh.GetIndexData().empty()) {
+		file << (int)GeometryChunkTypes::Indices << "\n";
+		WriteIntegers(file, sourceMesh.GetIndexData());
+	}
+	if (!sourceMesh.GetSkinWeightData().empty()) {
+		file << (int)GeometryChunkTypes::VWeightValues << "\n";
+		WriteTextFloats(file, sourceMesh.GetSkinWeightData());
+	}
+	if (!sourceMesh.GetSkinIndexData().empty()) {
+		file << (int)GeometryChunkTypes::VWeightIndices << "\n";
+		WriteIntegers(file, sourceMesh.GetSkinIndexData());
+	}
+	if (!sourceMesh.GetJointNames().empty()) {
+		file << (int)GeometryChunkTypes::JointNames << "\n";
+	}
+	if (!sourceMesh.GetJointParents().empty()) {
+		file << (int)GeometryChunkTypes::JointParents << "\n";
+	}
+	if (!sourceMesh.GetBindPose().empty()) {
+		file << (int)GeometryChunkTypes::BindPose << "\n";
+	}
+	if (!sourceMesh.GetInverseBindPose().empty()) {
+		file << (int)GeometryChunkTypes::BindPoseInv << "\n";
+	}
+	if (sourceMesh.GetSubMeshCount() >= 1) {
+		file << (int)GeometryChunkTypes::SubMeshes << "\n";
+	}
+	if (!sourceMesh.GetSubMeshNames().empty()) {
+		file << (int)GeometryChunkTypes::SubMeshNames << "\n";
+	}
+
+
+
+	return true;
+}
+
 void MshLoader::ReadRigPose(std::ifstream& file, vector<Matrix4>& into) {
 	int matCount = 0;
 	file >> matCount;
@@ -285,5 +410,52 @@ void MshLoader::ReadIntegers(std::ifstream& file, vector<unsigned int>& elements
 		unsigned int temp;
 		file >> temp;
 		elements.emplace_back(temp);
+	}
+}
+
+void MshLoader::WriteTextFloats(std::ofstream& file, const vector<Maths::Vector2>& elements) {
+	for(const auto& v : elements) {
+		file << v.x << " " << v.y << "\n";
+	}
+}
+
+void MshLoader::WriteTextFloats(std::ofstream& file, const vector<Maths::Vector3>& elements) {
+	for (const auto& v : elements) {
+		file << v.x << " " << v.y << " " << v.z << "\n";
+	}
+}
+
+void MshLoader::WriteTextFloats(std::ofstream& file, const vector<Maths::Vector4>& elements) {
+	for (const auto& v : elements) {
+		file << v.x << " " << v.y << " " << v.z << " " << v.w << "\n";
+	}
+}
+
+void MshLoader::WriteIntegers(std::ofstream& file, const vector<unsigned int>& elements) {
+	for (const auto& i : elements) {
+		file << i << "\n";
+	}
+}
+
+void MshLoader::WriteIntegers(std::ofstream& file, const vector<Maths::Vector4i>& elements) {
+	for (const auto& v : elements) {
+		file << v.x << " " << v.y << " " << v.z << " " << v.w << "\n";
+	}
+}
+
+void MshLoader::WriteMatrices(std::ofstream& file, const vector<Matrix4>& elements) {
+	for (const auto& m : elements) {
+		for (int i = 0; i < 4; ++i) {
+			for (int j = 0; j < 4; ++j) {
+				file << m.array[i][j] << " ";
+			}
+		}
+		file << "\n";
+	}
+}
+
+void MshLoader::WriteSubMeshes(std::ofstream& file, const vector<struct SubMesh>& elements) {
+	for (const auto& m : elements) {
+		file << m.start << " " << m.count << "\n";
 	}
 }

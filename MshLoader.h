@@ -45,6 +45,8 @@ namespace NCL::Rendering {
 	public:		
 		static bool LoadMesh(const std::string& filename, Mesh& destinationMesh);
 
+		static bool SaveMesh(const std::string& filename, Mesh& sourceMesh);
+
 	protected:
 		static void* ReadVertexData(GeometryChunkData dataType, GeometryChunkTypes chunkType, int numVertices);
 		static void ReadTextInts(std::ifstream& file, vector<Maths::Vector2i>& element, int numVertices);
@@ -54,6 +56,19 @@ namespace NCL::Rendering {
 		static void ReadTextFloats(std::ifstream& file, vector<Maths::Vector3>& element, int numVertices);
 		static void ReadTextFloats(std::ifstream& file, vector<Maths::Vector4>& element, int numVertices);
 		static void ReadIntegers(std::ifstream& file, vector<unsigned int>& elements, int intCount);
+
+
+		static void WriteTextFloats(std::ofstream& file, const vector<Maths::Vector2>& element);
+		static void WriteTextFloats(std::ofstream& file, const vector<Maths::Vector3>& element);
+		static void WriteTextFloats(std::ofstream& file, const vector<Maths::Vector4>& element);
+
+		static void WriteIntegers(std::ofstream& file, const vector<unsigned int>& elements);
+		static void WriteIntegers(std::ofstream& file, const vector<Maths::Vector4i>& element);
+
+		static void WriteMatrices(std::ofstream& file, const vector<Maths::Matrix4>& elements);
+
+		static void WriteSubMeshes(std::ofstream& file, const vector<struct SubMesh>& elements);
+
 
 		static void ReadRigPose(std::ifstream& file, vector<Maths::Matrix4>& into);
 		static void ReadJointParents(std::ifstream& file, std::vector<int>& parentIDs);
