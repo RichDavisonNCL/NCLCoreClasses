@@ -142,13 +142,13 @@ void SimpleFont::BuildInterleavedVerticesForString(const std::string& text, cons
 		float yHeight = (charHeight * texHeightRecip) * scale;
 		float yOff = ((charHeight + charData.yOff) * texHeightRecip) * scale;
 
-		verts[0].pos = Vector3(startPos.x + xStart, yStart + yOff, 0);
-		verts[1].pos = Vector3(startPos.x + xStart, yStart + yOff - yHeight, 0);
-		verts[2].pos = Vector3(startPos.x + xStart + charWidth, yStart + yOff - yHeight, 0);
+		verts[0].pos = Vector2(startPos.x + xStart, yStart + yOff);
+		verts[1].pos = Vector2(startPos.x + xStart, yStart + yOff - yHeight);
+		verts[2].pos = Vector2(startPos.x + xStart + charWidth, yStart + yOff - yHeight);
 
-		verts[3].pos = (Vector3(startPos.x + xStart + charWidth, yStart + yOff - yHeight, 0));
-		verts[4].pos = Vector3(startPos.x + xStart + charWidth, yStart + yOff, 0);
-		verts[5].pos = Vector3(startPos.x + xStart, yStart + yOff, 0);
+		verts[3].pos = (Vector2(startPos.x + xStart + charWidth, yStart + yOff - yHeight));
+		verts[4].pos = Vector2(startPos.x + xStart + charWidth, yStart + yOff);
+		verts[5].pos = Vector2(startPos.x + xStart, yStart + yOff);
 
 		verts[0].colour = colour;
 		verts[1].colour = colour;

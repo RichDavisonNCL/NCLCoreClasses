@@ -150,7 +150,6 @@ namespace NCL::Rendering {
 		void SetSubMeshes(const std::vector < SubMesh>& meshes);
 		void SetSubMeshNames(const std::vector < std::string>& newnames);
 
-
 		void SetJointNames(const std::vector < std::string > & newnames);
 		void SetJointParents(const std::vector<int>& newParents);
 		void SetBindPose(const std::vector<Matrix4>& newMats);

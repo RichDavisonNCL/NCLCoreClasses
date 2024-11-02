@@ -52,8 +52,8 @@ namespace NCL::Maths {
         VectorTemplate<T, 2>(T inX, T inY) : x(inX), y(inY) {
         }
 
-        VectorTemplate<T, 2>(VectorTemplate<T, 3> v) : x(v[0]), y(v[1]) {
-        }
+        //VectorTemplate<T, 2>(VectorTemplate<T, 3> v) : x(v[0]), y(v[1]) {
+        //}
 
 
         T operator[](int i) const {
