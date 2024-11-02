@@ -19,7 +19,7 @@ namespace NCL::Rendering {
 	public:
 		virtual ~Texture();
 
-		Vector2i GetDimensions() const {
+		Vector2ui GetDimensions() const {
 			return dimensions;
 		}
 
@@ -34,7 +34,7 @@ namespace NCL::Rendering {
 	protected:
 		Texture();
 
-		Vector2i		dimensions;
+		Vector2ui		dimensions;
 		uint32_t		assetID;
 	};
 }

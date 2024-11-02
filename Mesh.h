@@ -173,6 +173,14 @@ namespace NCL::Rendering {
 			return jointParents;
 		}
 
+		const std::vector<std::string>& GetJointNames()	const {
+			return jointNames;
+		}
+
+		const std::vector<std::string>& GetSubMeshNames()	const {
+			return subMeshNames;
+		}
+
 		const std::vector<unsigned int>& GetIndexData()			const { return indices;		}
 
 		void SetVertexPositions(const std::vector<Vector3>& newVerts);

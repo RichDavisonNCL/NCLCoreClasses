@@ -18,7 +18,7 @@ using namespace Rendering;
 
 std::map<std::string, TextureLoadFunction> TextureLoader::fileHandlers;
 
-bool TextureLoader::LoadTexture(const std::string& filename, char*& outData, int& width, int &height, int &channels, int&flags) {
+bool TextureLoader::LoadTexture(const std::string& filename, char*& outData, uint32_t& width, uint32_t& height, uint32_t& channels, int& flags) {
 	if (filename.empty()) {
 		return false;
 	}
@@ -38,9 +38,14 @@ bool TextureLoader::LoadTexture(const std::string& filename, char*& outData, int
 		return it->second(realPath, outData, width, height, channels, flags);
 	}
 	//By default, attempt to use stb image to get this texture
-	stbi_uc *texData = stbi_load(realPath.c_str(), &width, &height, &channels, 4); //4 forces this to always be rgba!
+	int stbiWidth = 0;
+	int stbiHeight = 0;
+	int stbiChannels = 0;
 
-	channels = 4; //it gets forced, we don't care about the 'real' channel size
+	stbi_uc *texData = stbi_load(realPath.c_str(), &stbiWidth, &stbiHeight, &stbiChannels, 4); //4 forces this to always be rgba!
+	width		= stbiWidth;
+	height		= stbiHeight;
+	channels	= 4; //it gets forced, we don't care about the 'real' channel size
 
 	if (texData) {
 		outData = (char*)texData;

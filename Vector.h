@@ -32,9 +32,14 @@ namespace NCL::Maths {
     using Vector3d = VectorTemplate<double, 3>;
     using Vector4d = VectorTemplate<double, 4>;
 
-    using Vector2i = VectorTemplate<int, 2>;
-    using Vector3i = VectorTemplate<int, 3>;
-    using Vector4i = VectorTemplate<int, 4>;
+    using Vector2i = VectorTemplate<int32_t, 2>;
+    using Vector3i = VectorTemplate<int32_t, 3>;
+    using Vector4i = VectorTemplate<int32_t, 4>;
+
+    using Vector2ui = VectorTemplate<uint32_t, 2>;
+    using Vector3ui = VectorTemplate<uint32_t, 3>;
+    using Vector4ui = VectorTemplate<uint32_t, 4>;
+
 
     template <typename T>
     struct VectorTemplate<T, 2> {
