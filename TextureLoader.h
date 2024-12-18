@@ -16,13 +16,13 @@ namespace NCL {
 		class Texture;
 	}
 
-	typedef std::function<bool(const std::string& filename, char*& outData, uint32_t& width, uint32_t& height, uint32_t& channels, int&flags)> TextureLoadFunction;
+	typedef std::function<bool(const std::string& filename, char*& outData, uint32_t& width, uint32_t& height, uint32_t& channels, uint32_t&flags)> TextureLoadFunction;
 
 	typedef std::function<Rendering::Texture*(const std::string& filename)> APILoadFunction;
 
 	class TextureLoader	{
 	public:
-		static bool LoadTexture(const std::string& filename, char*& outData, uint32_t& width, uint32_t& height, uint32_t& channels, int& flags);
+		static bool LoadTexture(const std::string& filename, char*& outData, uint32_t& width, uint32_t& height, uint32_t& channels, uint32_t& flags);
 
 		static void RegisterTextureLoadFunction(TextureLoadFunction f, const std::string&fileExtension);
 

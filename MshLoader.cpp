@@ -237,21 +237,27 @@ bool MshLoader::SaveMesh(const std::string& filename, Mesh& sourceMesh) {
 	}
 	if (!sourceMesh.GetJointNames().empty()) {
 		file << (int)GeometryChunkTypes::JointNames << "\n";
+
 	}
 	if (!sourceMesh.GetJointParents().empty()) {
 		file << (int)GeometryChunkTypes::JointParents << "\n";
+
 	}
 	if (!sourceMesh.GetBindPose().empty()) {
 		file << (int)GeometryChunkTypes::BindPose << "\n";
+		WriteMatrices(file, sourceMesh.GetBindPose());
 	}
 	if (!sourceMesh.GetInverseBindPose().empty()) {
 		file << (int)GeometryChunkTypes::BindPoseInv << "\n";
+		WriteMatrices(file, sourceMesh.GetInverseBindPose());
 	}
 	if (sourceMesh.GetSubMeshCount() >= 1) {
 		file << (int)GeometryChunkTypes::SubMeshes << "\n";
+
 	}
 	if (!sourceMesh.GetSubMeshNames().empty()) {
 		file << (int)GeometryChunkTypes::SubMeshNames << "\n";
+
 	}
 
 

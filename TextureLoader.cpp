@@ -18,7 +18,7 @@ using namespace Rendering;
 
 std::map<std::string, TextureLoadFunction> TextureLoader::fileHandlers;
 
-bool TextureLoader::LoadTexture(const std::string& filename, char*& outData, uint32_t& width, uint32_t& height, uint32_t& channels, int& flags) {
+bool TextureLoader::LoadTexture(const std::string& filename, char*& outData, uint32_t& width, uint32_t& height, uint32_t& channels, uint32_t& flags) {
 	if (filename.empty()) {
 		return false;
 	}
