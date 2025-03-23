@@ -6,11 +6,11 @@ using std::string;
 
 Shader::Shader(const string& vertex, const string& fragment, const string& geometry, const string& domain, const string& hull)
 {
-	shaderFiles[ShaderStages::Vertex]	= vertex;
-	shaderFiles[ShaderStages::Fragment]	= fragment;
-	shaderFiles[ShaderStages::Geometry]	= geometry;
-	shaderFiles[ShaderStages::Domain]	= domain;
-	shaderFiles[ShaderStages::Hull]		= hull;
+	m_shaderFiles[ShaderStages::Vertex]	= vertex;
+	m_shaderFiles[ShaderStages::Fragment]	= fragment;
+	m_shaderFiles[ShaderStages::Geometry]	= geometry;
+	m_shaderFiles[ShaderStages::Domain]	= domain;
+	m_shaderFiles[ShaderStages::Hull]		= hull;
 }
 
 Shader::~Shader()

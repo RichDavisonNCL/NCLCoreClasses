@@ -43,7 +43,7 @@ namespace NCL::Rendering {
 
 		virtual void ReloadShader() = 0;
 	protected:
-		std::string		shaderFiles[ShaderStages::MAX_SIZE];
+		std::string		m_shaderFiles[ShaderStages::MAX_SIZE];
 		uint32_t		assetID;
 	};
 }
