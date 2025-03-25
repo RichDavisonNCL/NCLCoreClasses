@@ -413,4 +413,23 @@ namespace NCL::Maths {
             return rMat * tMat;
         }
     }
+
+    template <typename T, uint32_t rows, uint32_t cols>
+
+    std::ostream& operator << (std::ostream& o, const MatrixTemplate<T, rows, cols>& mat) {
+        o << "Matrix" << rows << "x" << cols << "\n";
+
+        for (int r = 0; r < rows; ++r) {
+            o << "[";
+            for (int c = 0; c < cols; ++c) {
+                o << mat.array[c][r];
+                if (c != cols - 1) {
+                    o << ",";
+                }
+            }
+            o << "]\n";
+        }
+
+        return o;
+    }
 }

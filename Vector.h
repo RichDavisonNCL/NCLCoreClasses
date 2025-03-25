@@ -60,7 +60,6 @@ namespace NCL::Maths {
         //VectorTemplate<T, 2>(VectorTemplate<T, 3> v) : x(v[0]), y(v[1]) {
         //}
 
-
         T operator[](int i) const {
             return ((T*)this)[i];
         }
@@ -244,8 +243,6 @@ namespace NCL::Maths {
         return a;
     }
 
-
-
     namespace Vector {
         template <typename T>
         VectorTemplate<T, 3> Cross(const VectorTemplate<T, 3>& a, const VectorTemplate<T, 3>& b) {
@@ -327,5 +324,21 @@ namespace NCL::Maths {
             }
             return output;
         }
+    }
+
+    template <typename T, uint32_t n>
+    std::ostream& operator << (std::ostream& o, const VectorTemplate<T, n>& vec) {
+        o << "Vector" << n << "[";
+
+        for (int i = 0; i < n; ++i) {
+            o << vec[i];
+            if (i != n - 1) {
+                o << ",";
+            }
+        }
+
+        o << "]";
+
+        return o;
     }
 }
