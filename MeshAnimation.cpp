@@ -12,11 +12,12 @@ MeshAnimation::MeshAnimation() {
 	frameRate	= 0.0f;
 }
 
-MeshAnimation::MeshAnimation(size_t jointCount, size_t frameCount, float frameRate, std::vector<Matrix4>& frames) {
+MeshAnimation::MeshAnimation(size_t jointCount, size_t frameCount, float frameRate, std::vector<Matrix4>& frames, const std::vector<std::string>& jointNames) {
 	this->jointCount = jointCount;
 	this->frameCount = frameCount;
 	this->frameRate  = frameRate;
 	this->allJoints  = frames;
+	this->jointNames = jointNames;
 }
 
 MeshAnimation::MeshAnimation(const std::string& filename) : MeshAnimation() {
