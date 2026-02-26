@@ -340,7 +340,7 @@ LRESULT CALLBACK Win32Window::WindowProc(HWND hWnd, UINT message, WPARAM wParam,
 	}
 
     return DefWindowProc (hWnd, message, wParam, lParam);
-}
+} 
 
 void	Win32Window::LockMouseToWindow(bool lock)	{
 	lockMouse = lock;
