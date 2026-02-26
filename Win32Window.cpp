@@ -314,10 +314,17 @@ LRESULT CALLBACK Win32Window::WindowProc(HWND hWnd, UINT message, WPARAM wParam,
 				applyResize = true;
 			}
 		}break;
-		case(WM_ENTERSIZEMOVE): {
+		//case(WM_ENTERSIZEMOVE): {
+		//	applyResize = true;
+		//	thisWindow->dragged = true;
+		//}break;
+		case(WM_CAPTURECHANGED): {
+			applyResize = true;
+			thisWindow->dragged = true;
 		}break;
 		case(WM_EXITSIZEMOVE): {
 			applyResize = true;
+			thisWindow->dragged = false;
 		}break;
     }
 

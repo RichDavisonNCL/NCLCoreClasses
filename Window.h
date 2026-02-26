@@ -54,6 +54,8 @@ namespace NCL {
 
 		bool		IsMinimised() const { return minimised;	 }
 
+		bool		IsDragged() const { return dragged; }
+
 		bool		UpdateWindow();
 
 		bool		HasInitialised()	const { return init; }
@@ -98,8 +100,9 @@ namespace NCL {
 
 		WindowEventHandler eventHandler;
 
-		bool				minimised;
-		bool				init;
+		bool				dragged		= false;
+		bool				minimised	= false;
+		bool				init		= false;
 		Vector2i			position;
 		Vector2i			size;
 		Vector2i			defaultSize;
