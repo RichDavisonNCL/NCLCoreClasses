@@ -34,4 +34,22 @@ namespace NCL::Maths {
 	float SignedAreaof2DTri(const Vector3 &a, const Vector3 &b, const Vector3 & c);
 
 	float AreaofTri3D(const Vector3 &a, const Vector3 &b, const Vector3 & c);
+
+	template<typename T>
+	T EvaluateCubicBezier(float t, const T& p0, const T& p1, const T& p2, const T& p3) {
+		T p0p1p2 = EvaluateQuadtraticBezier(t, p0, p1, p2);
+		T p1p2p3 = EvaluateQuadtraticBezier(t, p1, p2, p3);
+
+		return T((p0p1p2 * (1.0f - t)) + (p1p2p3 * (t)));
+	}
+
+	template<typename T>
+	T EvaluateQuadraticBezier(float t, const T& p0, const T& p1, const T& p2) {
+		T p0p1 = (p0 * (1.0f - t)) + (p1 * t);
+		T p1p2 = (p1 * (1.0f - t)) + (p2 * t);
+
+		return (p0p1 * (1.0f - t)) + (p1p2 * t);
+	}
+
+
 }

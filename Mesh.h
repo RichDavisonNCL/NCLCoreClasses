@@ -129,6 +129,11 @@ namespace NCL::Rendering {
 			return &subMeshes[i];
 		}
 
+		void AddSubMesh(SubMesh sub, const std::string& newName = "") {
+			subMeshes.push_back(sub);
+			subMeshNames.push_back(newName);
+		}
+
 		void AddSubMesh(int startIndex, int indexCount, int baseVertex, const std::string& newName = "") {
 			SubMesh m;
 			m.base = baseVertex;
