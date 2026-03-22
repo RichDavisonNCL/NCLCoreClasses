@@ -114,6 +114,14 @@ void Mesh::SetVertexSkinIndices(const std::vector<Vector4i>& newSkinIndices) {
 	skinIndices = newSkinIndices;
 }
 
+void Mesh::SetVertexGenericVec4s(const std::vector<Vector4>& newGenericVec4s) {
+	generalVec4s = newGenericVec4s;
+}
+
+void Mesh::SetVertexGenericIntegers(const std::vector<int>& newGenericInts) {
+	generalIntegers = newGenericInts;
+}
+
 void Mesh::SetDebugName(const std::string& newName) {
 	debugName = newName;
 }
@@ -179,6 +187,16 @@ bool Mesh::ValidateMeshData() {
 
 	if (!GetSkinIndexData().empty() && GetSkinIndexData().size() != GetVertexCount()) {
 		std::cout << __FUNCTION__ << " mesh " << debugName << " has an incorrect skin index attribute count!\n";
+		return false;
+	}
+
+	if (!GetGeneralVec4Data().empty() && GetGeneralVec4Data().size() != GetVertexCount()) {
+		std::cout << __FUNCTION__ << " mesh " << debugName << " has an incorrect generic vec4 attribute count!\n";
+		return false;
+	}
+
+	if (!GetGeneralIntegerData().empty() && GetGeneralIntegerData().size() != GetVertexCount()) {
+		std::cout << __FUNCTION__ << " mesh " << debugName << " has an incorrect generic integer attribute count!\n";
 		return false;
 	}
 	return true;

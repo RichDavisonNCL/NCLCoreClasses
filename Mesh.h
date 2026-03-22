@@ -37,6 +37,8 @@ namespace NCL::Rendering {
 			Tangents,
 			JointWeights,
 			JointIndices,
+			General_Vec4,
+			General_Integer,
 			MAX_ATTRIBUTES
 		};	
 		
@@ -47,7 +49,9 @@ namespace NCL::Rendering {
 			std::string("Normals"),
 			std::string("Tangents"),
 			std::string("Joint Weights"),
-			std::string("Joint Indices")
+			std::string("Joint Indices"),
+			std::string("General Vec4"),
+			std::string("General Integer"),
 		};
 	};
 
@@ -174,6 +178,9 @@ namespace NCL::Rendering {
 		const std::vector<Vector4>&		GetSkinWeightData()		const { return skinWeights; }
 		const std::vector<Vector4i>&	GetSkinIndexData()		const { return skinIndices; }
 
+		const std::vector<Vector4>&		GetGeneralVec4Data()	const { return generalVec4s; }
+		const std::vector<int>&			GetGeneralIntegerData()	const { return generalIntegers; }
+
 		const std::vector<int>& GetJointParents()	const {
 			return jointParents;
 		}
@@ -198,6 +205,9 @@ namespace NCL::Rendering {
 
 		void SetVertexSkinWeights(const std::vector<Vector4>& newSkinWeights);
 		void SetVertexSkinIndices(const std::vector<Vector4i>& newSkinIndices);
+
+		void SetVertexGenericVec4s(const std::vector<Vector4>& newGenericVec4s);
+		void SetVertexGenericIntegers(const std::vector<int>& newGenericInts);
 
 		void SetDebugName(const std::string& debugName);
 
@@ -228,6 +238,9 @@ namespace NCL::Rendering {
 		std::vector<unsigned int>	indices;
 		std::vector<SubMesh>		subMeshes;
 		std::vector<std::string>	subMeshNames;
+
+		std::vector<Vector4>		generalVec4s;
+		std::vector<int>			generalIntegers;
 
 		std::vector<Vector4>		skinWeights;	//Allows us to have 4 weight skinning 
 		std::vector<Vector4i>		skinIndices;
