@@ -23,6 +23,7 @@ bool	Assets::ReadBinaryFile(const std::string& filename, char** into, size_t& si
 	std::ifstream file(filename, std::ios::binary);
 
 	if (!file) {
+		std::cout << __FUNCTION__ << ": Failed to read binary file " << filename << "\n";
 		return false;
 	}
 
