@@ -159,6 +159,9 @@ namespace NCL {
 		};
 	};
 
+	using KeyStateCallback = std::function<void(KeyCodes::Type, bool)>;
+
+
 	class Keyboard {
 	public:
 		friend class Window;
@@ -179,6 +182,10 @@ namespace NCL {
 			return (KeyDown(key) && !KeyHeld(key));
 		}
 
+		void AddKeyStateCallback(KeyStateCallback callback) {
+			keyStateCallbacks.emplace_back(callback);
+		}
+
 	protected:
 		Keyboard();
 		virtual ~Keyboard() {}
@@ -191,6 +198,8 @@ namespace NCL {
 		bool isAwake;
 		bool keyStates[KeyCodes::MAXVALUE];		//Is the key down?
 		bool holdStates[KeyCodes::MAXVALUE];		//Has the key been down for multiple updates?
+
+		std::vector< KeyStateCallback> keyStateCallbacks;
 	};
 
 	class DummyKeyboard : public Keyboard {

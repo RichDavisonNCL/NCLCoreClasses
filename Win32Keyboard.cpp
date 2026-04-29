@@ -28,8 +28,14 @@ void Win32Keyboard::UpdateRAW(RAWINPUT* raw)	{
 			return;
 		}
 
+		bool keyDown = !(raw->data.keyboard.Flags & RI_KEY_BREAK);
+
 		//First bit of the flags tag determines whether the key is down or up
-		keyStates[(int)key] = !(raw->data.keyboard.Flags & RI_KEY_BREAK);
+		keyStates[(int)key] = keyDown;
+
+		for (KeyStateCallback& callback : keyStateCallbacks) {
+			callback(KeyCodes::A, keyDown);
+		}
 	}
 }
 

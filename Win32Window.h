@@ -50,8 +50,6 @@ namespace NCL::Win32Code {
 		HINSTANCE	GetInstance()		const { return windowInstance; }
 
 	protected:
-		//Win32Window(const std::string& title, int sizeX, int sizeY, bool fullScreen, int offsetX, int offsetY);
-
 		Win32Window(const WindowInitialisation& init);
 
 		virtual ~Win32Window(void);
