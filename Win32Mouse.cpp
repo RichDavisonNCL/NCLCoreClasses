@@ -63,13 +63,13 @@ void Win32Mouse::UpdateRAW(RAWINPUT* raw)	{
 		Oh, Microsoft...
 		*/
 		static const int BUTTON_COUNT = 5;
-		static int buttonDowns [BUTTON_COUNT] = {	RI_MOUSE_BUTTON_1_DOWN,
-													RI_MOUSE_BUTTON_2_DOWN,
-													RI_MOUSE_BUTTON_3_DOWN,
-													RI_MOUSE_BUTTON_4_DOWN,
-													RI_MOUSE_BUTTON_5_DOWN};
+		static int buttonDowns [BUTTON_COUNT]{	RI_MOUSE_BUTTON_1_DOWN,
+												RI_MOUSE_BUTTON_2_DOWN,
+												RI_MOUSE_BUTTON_3_DOWN,
+												RI_MOUSE_BUTTON_4_DOWN,
+												RI_MOUSE_BUTTON_5_DOWN};
 
-		static int buttonUps [BUTTON_COUNT] = {	RI_MOUSE_BUTTON_1_UP,
+		static int buttonUps [BUTTON_COUNT]{	RI_MOUSE_BUTTON_1_UP,
 												RI_MOUSE_BUTTON_2_UP,
 												RI_MOUSE_BUTTON_3_UP,
 												RI_MOUSE_BUTTON_4_UP,

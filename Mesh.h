@@ -42,7 +42,7 @@ namespace NCL::Rendering {
 			MAX_ATTRIBUTES
 		};	
 		
-		const std::string Names[VertexAttribute::MAX_ATTRIBUTES] = {
+		const std::string Names[VertexAttribute::MAX_ATTRIBUTES]{
 			std::string("Positions"),
 			std::string("Colours"),
 			std::string("Tex Coords"),

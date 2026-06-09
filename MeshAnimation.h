@@ -17,7 +17,7 @@ namespace NCL::Rendering {
 	class MeshAnimation	{
 	public:
 		MeshAnimation();
-		MeshAnimation(size_t jointCount, size_t frameCount, float frameRate, std::vector<Maths::Matrix4>& frames, const std::vector<std::string>& jointNames = {});
+		MeshAnimation(size_t jointCount, size_t frameCount, float frameRate, std::vector<Maths::Matrix4>& frames, const std::vector<std::string>& jointNames ={});
 		MeshAnimation(const std::string& filename);
 
 		virtual ~MeshAnimation();
