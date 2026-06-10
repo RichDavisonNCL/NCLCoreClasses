@@ -7,17 +7,18 @@ using namespace Rendering;
 using namespace Maths;
 
 MeshAnimation::MeshAnimation() {
-	jointCount	= 0;
-	frameCount	= 0;
-	frameRate	= 0.0f;
+	m_jointCount	= 0;
+	m_frameCount	= 0;
+	m_frameRate	= 0.0f;
 }
 
-MeshAnimation::MeshAnimation(size_t jointCount, size_t frameCount, float frameRate, std::vector<Matrix4>& frames, const std::vector<std::string>& jointNames) {
-	this->jointCount = jointCount;
-	this->frameCount = frameCount;
-	this->frameRate  = frameRate;
-	this->allJoints  = frames;
-	this->jointNames = jointNames;
+MeshAnimation::MeshAnimation(size_t jointCount, size_t frameCount, float frameRate, std::vector<Matrix4>& worldJoints, std::vector<Matrix4>& localJoints, const std::vector<std::string>& jointNames) {
+	m_jointCount	= jointCount;
+	m_frameCount	= frameCount;
+	m_frameRate		= frameRate;
+	m_worldJoints	= worldJoints;
+	m_localJoints	= localJoints;
+	m_jointNames	= jointNames;
 }
 
 MeshAnimation::MeshAnimation(const std::string& filename) : MeshAnimation() {
@@ -33,21 +34,21 @@ MeshAnimation::MeshAnimation(const std::string& filename) : MeshAnimation() {
 		return;
 	}
 	file >> fileVersion;
-	file >> frameCount;
-	file >> jointCount;
-	file >> frameRate;
+	file >> m_frameCount;
+	file >> m_jointCount;
+	file >> m_frameRate;
 
-	allJoints.reserve((size_t)frameCount * jointCount);
+	m_worldJoints.reserve((size_t)m_frameCount * m_jointCount);
 
-	for (unsigned int frame = 0; frame < frameCount; ++frame) {
-		for (unsigned int joint = 0; joint < jointCount; ++joint) {
+	for (unsigned int frame = 0; frame < m_frameCount; ++frame) {
+		for (unsigned int joint = 0; joint < m_jointCount; ++joint) {
 			Matrix4 mat;
 			for (int i = 0; i < 4; ++i) {
 				for (int j = 0; j < 4; ++j) {
 					file >> mat.array[i][j];
 				}
 			}
-			allJoints.emplace_back(mat);
+			m_worldJoints.emplace_back(mat);
 		}
 	}
 }
@@ -56,13 +57,24 @@ MeshAnimation::~MeshAnimation() {
 
 }
 
-const Matrix4* MeshAnimation::GetJointData(size_t frame) const {
-	if (frame >= frameCount) {
+const Matrix4* MeshAnimation::GetWorldMatrices(size_t frame) const {
+	if (frame >= m_frameCount) {
 		return nullptr;
 	}
-	int matStart = frame * jointCount;
+	int matStart = frame * m_jointCount;
 
-	Matrix4* dataStart = (Matrix4*)allJoints.data();
+	Matrix4* dataStart = (Matrix4*)m_worldJoints.data();
+
+	return dataStart + matStart;
+}
+
+const Matrix4* MeshAnimation::GetLocalMatrices(size_t frame) const {
+	if (frame >= m_frameCount) {
+		return nullptr;
+	}
+	int matStart = frame * m_jointCount;
+
+	Matrix4* dataStart = (Matrix4*)m_localJoints.data();
 
 	return dataStart + matStart;
 }

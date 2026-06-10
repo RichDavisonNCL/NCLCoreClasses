@@ -252,5 +252,4 @@ namespace NCL::Rendering {
 
 	using UniqueMesh = std::unique_ptr<Mesh>;
 	using SharedMesh = std::shared_ptr<Mesh>;
-
 };

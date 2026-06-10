@@ -17,40 +17,44 @@ namespace NCL::Rendering {
 	class MeshAnimation	{
 	public:
 		MeshAnimation();
-		MeshAnimation(size_t jointCount, size_t frameCount, float frameRate, std::vector<Maths::Matrix4>& frames, const std::vector<std::string>& jointNames = {});
+		MeshAnimation(size_t jointCount, size_t frameCount, float frameRate, std::vector<Maths::Matrix4>& worldFrames, std::vector<Maths::Matrix4>& localFrames, const std::vector<std::string>& jointNames = {});
 		MeshAnimation(const std::string& filename);
 
 		virtual ~MeshAnimation();
 
 		size_t GetJointCount() const {
-			return jointCount;
+			return m_jointCount;
 		}
 
 		size_t GetFrameCount() const {
-			return frameCount;
+			return m_frameCount;
 		}
 
 		float GetFrameRate() const {
-			return frameRate;
+			return m_frameRate;
 		}
 
 		float GetFrameTime() const {
-			return 1.0f / frameRate;
+			return 1.0f / m_frameRate;
 		}
 
 		float GetAnimationTime() const {
-			return frameCount / (float)frameRate;
+			return m_frameCount / (float)m_frameRate;
 		}
 
-		const Maths::Matrix4* GetJointData(size_t frame) const;
+		const Maths::Matrix4* GetWorldMatrices(size_t frame) const;
+		const Maths::Matrix4* GetLocalMatrices(size_t frame) const;
 
 	protected:
-		size_t		jointCount;
-		size_t		frameCount;
-		float		frameRate;
+		size_t		m_jointCount;
+		size_t		m_frameCount;
+		float		m_frameRate;
 
-		std::vector<Maths::Matrix4>		allJoints;
-		std::vector<std::string>		jointNames;
+		std::vector<Maths::Matrix4>		m_worldJoints;
+		std::vector<Maths::Matrix4>		m_localJoints;
+
+		std::vector<std::string>		m_jointNames;
+		std::vector<int>				m_jointParents;
 	};
 }
 
