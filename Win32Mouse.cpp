@@ -55,31 +55,28 @@ void Win32Mouse::UpdateRAW(RAWINPUT* raw)	{
 		TODO: How framerate independent is this?
 		*/
 		if(raw->data.mouse.usButtonFlags & RI_MOUSE_WHEEL)	{		
-			if(raw->data.mouse.usButtonData == 120) {
-				frameWheel = 1;
-			}
-			else {
-				frameWheel = -1;
-			}
+			short delta = (short)raw->data.mouse.usButtonData;
+			frameWheel += delta / WHEEL_DELTA;
 		}
 
 		/*
 		Oh, Microsoft...
 		*/
-		static int buttondowns [5] = {	RI_MOUSE_BUTTON_1_DOWN,
-										RI_MOUSE_BUTTON_2_DOWN,
-										RI_MOUSE_BUTTON_3_DOWN,
-										RI_MOUSE_BUTTON_4_DOWN,
-										RI_MOUSE_BUTTON_5_DOWN};
+		static const int BUTTON_COUNT = 5;
+		static int buttonDowns [BUTTON_COUNT]{	RI_MOUSE_BUTTON_1_DOWN,
+												RI_MOUSE_BUTTON_2_DOWN,
+												RI_MOUSE_BUTTON_3_DOWN,
+												RI_MOUSE_BUTTON_4_DOWN,
+												RI_MOUSE_BUTTON_5_DOWN};
 
-		static int buttonps [5] = {		RI_MOUSE_BUTTON_1_UP,
-										RI_MOUSE_BUTTON_2_UP,
-										RI_MOUSE_BUTTON_3_UP,
-										RI_MOUSE_BUTTON_4_UP,
-										RI_MOUSE_BUTTON_5_UP};
+		static int buttonUps [BUTTON_COUNT]{	RI_MOUSE_BUTTON_1_UP,
+												RI_MOUSE_BUTTON_2_UP,
+												RI_MOUSE_BUTTON_3_UP,
+												RI_MOUSE_BUTTON_4_UP,
+												RI_MOUSE_BUTTON_5_UP};
 		
-		for(int i = 0; i < 5; ++i) {
-			if(raw->data.mouse.usButtonFlags & buttondowns[i])	{
+		for(int i = 0; i < BUTTON_COUNT; ++i) {
+			if(raw->data.mouse.usButtonFlags & buttonDowns[i])	{
 				//The button was pressed!
 				buttons[i] = true;
 
@@ -95,7 +92,7 @@ void Win32Mouse::UpdateRAW(RAWINPUT* raw)	{
 				*/
 				lastClickTime[i] = clickLimit;
 			}
-			else if(raw->data.mouse.usButtonFlags & buttonps[i])	{
+			else if(raw->data.mouse.usButtonFlags & buttonUps[i])	{
 				//The button has been released!
 				buttons[i]		= false;
 				holdButtons[i]	= false;
