@@ -22,25 +22,21 @@ bool Assets::ReadTextFile(const std::string &filepath, std::string& result) {
 bool	Assets::ReadBinaryFile(const std::string& filename, char** into, size_t& size) {
 	std::ifstream file(filename, std::ios::binary);
 
-	if (!file) {
+	std::filesystem::path inputFilePath{ filename };
+	uintmax_t length = std::filesystem::file_size(inputFilePath);
+
+	if (length == 0) {
 		std::cout << __FUNCTION__ << ": Failed to read binary file " << filename << "\n";
 		return false;
 	}
+	char* data = new char[length];
 
-	file.seekg(0, std::ios_base::end);
-
-	std::streamoff filesize = file.tellg();
-
-	file.seekg(0, std::ios_base::beg);
-
-	char* data = new char[(unsigned int)filesize];
-
-	file.read(data, filesize);
+	file.read(data, length);
 
 	file.close();
 
-	*into = data;
-	size = filesize;
+	*into	= data;
+	size	= length;
 
 	return data != NULL ? true : false;
 }
