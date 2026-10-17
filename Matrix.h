@@ -9,6 +9,7 @@ https://research.ncl.ac.uk/game/
 #pragma once
 #include "Maths.h"
 #include "Vector.h"
+#include <type_traits>
 
 namespace NCL::Maths {
 
@@ -21,6 +22,18 @@ namespace NCL::Maths {
                 for (int j = 0; j < rows; ++j) {
                     T a = (i == j) ? T(1) : T(0);
                     array[i][j] = a;
+                }
+            }
+        }
+
+        // Construct any smaller matrix from a larger one by copying the top-left sub-block.
+        template <typename T, uint32_t srcRows, uint32_t srcCols,
+            typename = std::enable_if_t<(rows <= srcRows && cols <= srcCols) && (rows < srcRows || cols < srcCols)>
+        >
+        constexpr MatrixTemplate(const ::NCL::Maths::MatrixTemplate<T, srcRows, srcCols>& other) {
+            for (unsigned int c = 0; c < cols; ++c) {
+                for (unsigned int r = 0; r < rows; ++r) {
+                    array[c][r] = static_cast<T>(other.array[c][r]);
                 }
             }
         }
@@ -244,6 +257,19 @@ namespace NCL::Maths {
             return outMat;
         }
 
+
+        template <typename T>
+        constexpr MatrixTemplate<T, 4, 4> Translation(T x, T y, T z) {
+            MatrixTemplate<T, 4, 4> mat;
+
+            mat.array[3][0] = T(x);
+            mat.array[3][1] = T(y);
+            mat.array[3][2] = T(z);
+
+            return mat;
+        }
+
+
         template <typename T>
         constexpr MatrixTemplate<T, 4, 4> Translation(const VectorTemplate<T, 3>& v) {
             MatrixTemplate<T, 4, 4> mat;
@@ -251,6 +277,17 @@ namespace NCL::Maths {
             mat.array[3][0] = T(v.x);
             mat.array[3][1] = T(v.y);
             mat.array[3][2] = T(v.z);
+
+            return mat;
+        }
+
+        template <typename T>
+        constexpr MatrixTemplate<T, 4, 4> Scale(T x, T y, T z) {
+            MatrixTemplate<T, 4, 4> mat;
+
+            mat.array[0][0] = x;
+            mat.array[1][1] = y;
+            mat.array[2][2] = z;
 
             return mat;
         }
@@ -266,19 +303,6 @@ namespace NCL::Maths {
             return mat;
         }
 
-
-        template <typename T>
-        constexpr MatrixTemplate<T, 3, 3> Scale3x3(const VectorTemplate<T, 3>& v) {
-            MatrixTemplate<T, 3, 3> mat;
-
-            mat.array[0][0] = T(v.x);
-            mat.array[1][1] = T(v.y);
-            mat.array[2][2] = T(v.z);
-
-            return mat;
-        }
-
-
         template <typename T>
         constexpr MatrixTemplate<T, 2, 2> Rotation(T degrees) {
             MatrixTemplate<T, 2, 2> mat;
@@ -291,30 +315,6 @@ namespace NCL::Maths {
             mat.array[0][1] = s;
             mat.array[1][0] = -s;
             mat.array[1][1] = c;
-
-            return mat;
-        }
-
-        template <typename T>
-        constexpr MatrixTemplate<T, 3, 3> RotationMatrix3x3(T degrees, const VectorTemplate<T, 3>& inAxis) {
-            MatrixTemplate<T, 3, 3> mat;
-
-            const VectorTemplate<T, 3> axis = Vector::Normalise(inAxis);
-
-            float c = cos((float)Maths::DegreesToRadians(degrees));
-            float s = sin((float)Maths::DegreesToRadians(degrees));
-
-            mat.array[0][0] = (axis.x * axis.x) * (1.0f - c) + c;
-            mat.array[0][1] = (axis.y * axis.x) * (1.0f - c) + (axis.z * s);
-            mat.array[0][2] = (axis.z * axis.x) * (1.0f - c) - (axis.y * s);
-
-            mat.array[1][0] = (axis.x * axis.y) * (1.0f - c) - (axis.z * s);
-            mat.array[1][1] = (axis.y * axis.y) * (1.0f - c) + c;
-            mat.array[1][2] = (axis.z * axis.y) * (1.0f - c) + (axis.x * s);
-
-            mat.array[2][0] = (axis.x * axis.z) * (1.0f - c) + (axis.y * s);
-            mat.array[2][1] = (axis.y * axis.z) * (1.0f - c) - (axis.x * s);
-            mat.array[2][2] = (axis.z * axis.z) * (1.0f - c) + c;
 
             return mat;
         }
