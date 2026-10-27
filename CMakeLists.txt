@@ -119,6 +119,7 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE
     <iosfwd>
     <set>
     <map> 
+    <span>
     <chrono>
     <thread>
     <filesystem>

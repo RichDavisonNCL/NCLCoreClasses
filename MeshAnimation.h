@@ -42,8 +42,8 @@ namespace NCL::Rendering {
 			return m_frameCount / (float)m_frameRate;
 		}
 
-		const Maths::Matrix4* GetWorldMatrices(size_t frame) const;
-		const Maths::Matrix4* GetLocalMatrices(size_t frame) const;
+		std::span<const Maths::Matrix4> GetWorldMatrices(size_t frame) const;
+		std::span<const Maths::Matrix4> GetLocalMatrices(size_t frame) const;
 
 	protected:
 		size_t		m_jointCount;
