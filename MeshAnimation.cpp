@@ -57,24 +57,24 @@ MeshAnimation::~MeshAnimation() {
 
 }
 
-const Matrix4* MeshAnimation::GetWorldMatrices(size_t frame) const {
+std::span<const Maths::Matrix4> MeshAnimation::GetWorldMatrices(size_t frame) const {
 	if (frame >= m_frameCount) {
-		return nullptr;
+		return {};
 	}
 	int matStart = frame * m_jointCount;
 
 	Matrix4* dataStart = (Matrix4*)m_worldJoints.data();
 
-	return dataStart + matStart;
+	return std::span<const Maths::Matrix4>(dataStart + matStart, m_jointCount);
 }
 
-const Matrix4* MeshAnimation::GetLocalMatrices(size_t frame) const {
+std::span<const Maths::Matrix4> MeshAnimation::GetLocalMatrices(size_t frame) const {
 	if (frame >= m_frameCount) {
-		return nullptr;
+		return {};
 	}
 	int matStart = frame * m_jointCount;
 
 	Matrix4* dataStart = (Matrix4*)m_localJoints.data();
 
-	return dataStart + matStart;
+	return std::span<const Maths::Matrix4>(dataStart + matStart, m_jointCount);
 }

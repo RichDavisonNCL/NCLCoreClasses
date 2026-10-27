@@ -257,10 +257,7 @@ bool MshLoader::SaveMesh(const std::string& filename, Mesh& sourceMesh) {
 	}
 	if (!sourceMesh.GetSubMeshNames().empty()) {
 		file << (int)GeometryChunkTypes::SubMeshNames << "\n";
-
 	}
-
-
 
 	return true;
 }
