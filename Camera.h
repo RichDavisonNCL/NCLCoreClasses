@@ -9,7 +9,8 @@ https://research.ncl.ac.uk/game/
 #pragma once
 #include "Vector.h"
 #include "Matrix.h"
-#include "Controller.h"
+
+class Controller;
 
 namespace NCL {
 	using namespace NCL::Maths;

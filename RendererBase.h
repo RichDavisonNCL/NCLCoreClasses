@@ -7,9 +7,12 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
-#include "Window.h"
+#include "Vector.h"
 
-namespace NCL::Rendering {
+namespace NCL {
+	class Window;
+
+	namespace Rendering {
 	enum class VerticalSyncState {
 		VSync_ON,
 		VSync_OFF,
@@ -49,6 +52,7 @@ namespace NCL::Rendering {
 	protected:	
 		Window& hostWindow;
 
-		Vector2i windowSize;
+		Maths::Vector2i windowSize;
 	};
+	}
 }
