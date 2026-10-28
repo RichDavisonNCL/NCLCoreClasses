@@ -8,6 +8,8 @@ https://research.ncl.ac.uk/game/
 */
 #pragma once
 #include <algorithm>
+#include <iostream>
+#include <cmath>
 
 namespace NCL::Maths {
 

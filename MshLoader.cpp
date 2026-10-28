@@ -8,6 +8,8 @@
 
 #include "Mesh.h"
 
+#include <fstream>
+
 using namespace NCL;
 using namespace Rendering;
 using namespace Maths;
@@ -49,45 +51,45 @@ bool MshLoader::LoadMesh(const std::string& filename, Mesh& destinationMesh) {
 
 		switch ((GeometryChunkTypes)chunkType) {
 		case GeometryChunkTypes::VPositions: {
-			vector<Vector3> positions;
+			std::vector<Vector3> positions;
 			ReadTextFloats(file, positions, numVertices);
 			destinationMesh.SetVertexPositions(positions);
 		}break;
 		case GeometryChunkTypes::VColors: {
-			vector<Vector4> colours;
+			std::vector<Vector4> colours;
 			ReadTextFloats(file, colours, numVertices);
 			destinationMesh.SetVertexColours(colours);
 		}break;
 		case GeometryChunkTypes::VNormals: {
-			vector<Vector3> normals;
+			std::vector<Vector3> normals;
 			ReadTextFloats(file, normals, numVertices);
 			destinationMesh.SetVertexNormals(normals);
 		}break;
 		case GeometryChunkTypes::VTangents: {
-			vector<Vector4> tangents;
+			std::vector<Vector4> tangents;
 			ReadTextFloats(file, tangents, numVertices);
 			destinationMesh.SetVertexTangents(tangents);
 
 		}break;
 		case GeometryChunkTypes::VTex0: {
-			vector<Vector2> texCoords;
+			std::vector<Vector2> texCoords;
 			ReadTextFloats(file, texCoords, numVertices);
 			destinationMesh.SetVertexTextureCoords(texCoords);
 
 		}break;
 		case GeometryChunkTypes::Indices: {
-			vector<unsigned int> indices;
+			std::vector<unsigned int> indices;
 			ReadIntegers(file, indices, numIndices);
 			destinationMesh.SetVertexIndices(indices);
 		}break;
 
 		case GeometryChunkTypes::VWeightValues: {
-			vector<Vector4> skinWeights;
+			std::vector<Vector4> skinWeights;
 			ReadTextFloats(file, skinWeights, numVertices);
 			destinationMesh.SetVertexSkinWeights(skinWeights);
 		}break;
 		case GeometryChunkTypes::VWeightIndices: {
-			vector<Vector4i> skinIndices;
+			std::vector<Vector4i> skinIndices;
 			ReadTextInts(file, skinIndices, numVertices);
 			destinationMesh.SetVertexSkinIndices(skinIndices);
 		}break;
@@ -97,22 +99,22 @@ bool MshLoader::LoadMesh(const std::string& filename, Mesh& destinationMesh) {
 			destinationMesh.SetJointNames(jointNames);
 		}break;
 		case GeometryChunkTypes::JointParents: {
-			vector<int> parents;
+			std::vector<int> parents;
 			ReadJointParents(file, parents);
 			destinationMesh.SetJointParents(parents);
 		}break;
 		case GeometryChunkTypes::BindPose: {
-			vector<Matrix4> bindPose;
+			std::vector<Matrix4> bindPose;
 			ReadRigPose(file, bindPose);
 			destinationMesh.SetBindPose(bindPose);
 		}break;
 		case GeometryChunkTypes::BindPoseInv: {
-			vector<Matrix4> inverseBindPose;
+			std::vector<Matrix4> inverseBindPose;
 			ReadRigPose(file, inverseBindPose);
 			destinationMesh.SetInverseBindPose(inverseBindPose);
 		}break;
 		case GeometryChunkTypes::SubMeshes: {
-			vector<SubMesh> subMeshes;
+			std::vector<SubMesh> subMeshes;
 			ReadSubMeshes(file, numMeshes, subMeshes);
 
 			destinationMesh.SetSubMeshes(subMeshes);
@@ -262,7 +264,7 @@ bool MshLoader::SaveMesh(const std::string& filename, Mesh& sourceMesh) {
 	return true;
 }
 
-void MshLoader::ReadRigPose(std::ifstream& file, vector<Matrix4>& into) {
+void MshLoader::ReadRigPose(std::ifstream& file, std::vector<Matrix4>& into) {
 	int matCount = 0;
 	file >> matCount;
 
@@ -348,7 +350,7 @@ void* MshLoader::ReadVertexData(GeometryChunkData dataType, GeometryChunkTypes c
 	return data;
 }
 
-void MshLoader::ReadTextInts(std::ifstream& file, vector<Vector2i>& element, int numVertices) {
+void MshLoader::ReadTextInts(std::ifstream& file, std::vector<Vector2i>& element, int numVertices) {
 	for (int i = 0; i < numVertices; ++i) {
 		Vector2i temp;
 		file >> temp[0];
@@ -357,7 +359,7 @@ void MshLoader::ReadTextInts(std::ifstream& file, vector<Vector2i>& element, int
 	}
 }
 
-void MshLoader::ReadTeReadTextIntsxtFloats(std::ifstream& file, vector<Vector3i>& element, int numVertices) {
+void MshLoader::ReadTeReadTextIntsxtFloats(std::ifstream& file, std::vector<Vector3i>& element, int numVertices) {
 	for (int i = 0; i < numVertices; ++i) {
 		Vector3i temp;
 		file >> temp[0];
@@ -367,7 +369,7 @@ void MshLoader::ReadTeReadTextIntsxtFloats(std::ifstream& file, vector<Vector3i>
 	}
 }
 
-void MshLoader::ReadTextInts(std::ifstream& file, vector<Vector4i>& element, int numVertices) {
+void MshLoader::ReadTextInts(std::ifstream& file, std::vector<Vector4i>& element, int numVertices) {
 	for (int i = 0; i < numVertices; ++i) {
 		Vector4i temp;
 		file >> temp[0];
@@ -378,7 +380,7 @@ void MshLoader::ReadTextInts(std::ifstream& file, vector<Vector4i>& element, int
 	}
 }
 
-void MshLoader::ReadTextFloats(std::ifstream& file, vector<Vector2>& element, int numVertices) {
+void MshLoader::ReadTextFloats(std::ifstream& file, std::vector<Vector2>& element, int numVertices) {
 	for (int i = 0; i < numVertices; ++i) {
 		Vector2 temp;
 		file >> temp.x;
@@ -387,7 +389,7 @@ void MshLoader::ReadTextFloats(std::ifstream& file, vector<Vector2>& element, in
 	}
 }
 
-void MshLoader::ReadTextFloats(std::ifstream& file, vector<Vector3>& element, int numVertices) {
+void MshLoader::ReadTextFloats(std::ifstream& file, std::vector<Vector3>& element, int numVertices) {
 	for (int i = 0; i < numVertices; ++i) {
 		Vector3 temp;
 		file >> temp.x;
@@ -397,7 +399,7 @@ void MshLoader::ReadTextFloats(std::ifstream& file, vector<Vector3>& element, in
 	}
 }
 
-void MshLoader::ReadTextFloats(std::ifstream& file, vector<Vector4>& element, int numVertices) {
+void MshLoader::ReadTextFloats(std::ifstream& file, std::vector<Vector4>& element, int numVertices) {
 	for (int i = 0; i < numVertices; ++i) {
 		Vector4 temp;
 		file >> temp.x;
@@ -408,7 +410,7 @@ void MshLoader::ReadTextFloats(std::ifstream& file, vector<Vector4>& element, in
 	}
 }
 
-void MshLoader::ReadIntegers(std::ifstream& file, vector<unsigned int>& elements, int intCount) {
+void MshLoader::ReadIntegers(std::ifstream& file, std::vector<unsigned int>& elements, int intCount) {
 	for (int i = 0; i < intCount; ++i) {
 		unsigned int temp;
 		file >> temp;
@@ -416,37 +418,37 @@ void MshLoader::ReadIntegers(std::ifstream& file, vector<unsigned int>& elements
 	}
 }
 
-void MshLoader::WriteTextFloats(std::ofstream& file, const vector<Maths::Vector2>& elements) {
+void MshLoader::WriteTextFloats(std::ofstream& file, const std::vector<Maths::Vector2>& elements) {
 	for(const auto& v : elements) {
 		file << v.x << " " << v.y << "\n";
 	}
 }
 
-void MshLoader::WriteTextFloats(std::ofstream& file, const vector<Maths::Vector3>& elements) {
+void MshLoader::WriteTextFloats(std::ofstream& file, const std::vector<Maths::Vector3>& elements) {
 	for (const auto& v : elements) {
 		file << v.x << " " << v.y << " " << v.z << "\n";
 	}
 }
 
-void MshLoader::WriteTextFloats(std::ofstream& file, const vector<Maths::Vector4>& elements) {
+void MshLoader::WriteTextFloats(std::ofstream& file, const std::vector<Maths::Vector4>& elements) {
 	for (const auto& v : elements) {
 		file << v.x << " " << v.y << " " << v.z << " " << v.w << "\n";
 	}
 }
 
-void MshLoader::WriteIntegers(std::ofstream& file, const vector<unsigned int>& elements) {
+void MshLoader::WriteIntegers(std::ofstream& file, const std::vector<unsigned int>& elements) {
 	for (const auto& i : elements) {
 		file << i << "\n";
 	}
 }
 
-void MshLoader::WriteIntegers(std::ofstream& file, const vector<Maths::Vector4i>& elements) {
+void MshLoader::WriteIntegers(std::ofstream& file, const std::vector<Maths::Vector4i>& elements) {
 	for (const auto& v : elements) {
 		file << v.x << " " << v.y << " " << v.z << " " << v.w << "\n";
 	}
 }
 
-void MshLoader::WriteMatrices(std::ofstream& file, const vector<Matrix4>& elements) {
+void MshLoader::WriteMatrices(std::ofstream& file, const std::vector<Matrix4>& elements) {
 	for (const auto& m : elements) {
 		for (int i = 0; i < 4; ++i) {
 			for (int j = 0; j < 4; ++j) {
@@ -457,7 +459,7 @@ void MshLoader::WriteMatrices(std::ofstream& file, const vector<Matrix4>& elemen
 	}
 }
 
-void MshLoader::WriteSubMeshes(std::ofstream& file, const vector<struct SubMesh>& elements) {
+void MshLoader::WriteSubMeshes(std::ofstream& file, const std::vector<struct SubMesh>& elements) {
 	for (const auto& m : elements) {
 		file << m.start << " " << m.count << "\n";
 	}

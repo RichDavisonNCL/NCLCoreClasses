@@ -7,6 +7,9 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
+#include <cstdint>
+#include <map>
+#include <string>
 
 class Controller	{
 public:

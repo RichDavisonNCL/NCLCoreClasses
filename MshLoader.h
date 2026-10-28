@@ -10,7 +10,7 @@ https://research.ncl.ac.uk/game/
 #include "Vector.h"
 #include "Matrix.h"
 
-using std::vector;
+#include <vector>
 
 namespace NCL::Rendering {
 	class Mesh;
@@ -49,28 +49,28 @@ namespace NCL::Rendering {
 
 	protected:
 		static void* ReadVertexData(GeometryChunkData dataType, GeometryChunkTypes chunkType, int numVertices);
-		static void ReadTextInts(std::ifstream& file, vector<Maths::Vector2i>& element, int numVertices);
-		static void ReadTeReadTextIntsxtFloats(std::ifstream& file, vector<Maths::Vector3i>& element, int numVertices);
-		static void ReadTextInts(std::ifstream& file, vector<Maths::Vector4i>& element, int numVertices);
-		static void ReadTextFloats(std::ifstream& file, vector<Maths::Vector2>& element, int numVertices);
-		static void ReadTextFloats(std::ifstream& file, vector<Maths::Vector3>& element, int numVertices);
-		static void ReadTextFloats(std::ifstream& file, vector<Maths::Vector4>& element, int numVertices);
-		static void ReadIntegers(std::ifstream& file, vector<unsigned int>& elements, int intCount);
+		static void ReadTextInts(std::ifstream& file, std::vector<Maths::Vector2i>& element, int numVertices);
+		static void ReadTeReadTextIntsxtFloats(std::ifstream& file, std::vector<Maths::Vector3i>& element, int numVertices);
+		static void ReadTextInts(std::ifstream& file, std::vector<Maths::Vector4i>& element, int numVertices);
+		static void ReadTextFloats(std::ifstream& file, std::vector<Maths::Vector2>& element, int numVertices);
+		static void ReadTextFloats(std::ifstream& file, std::vector<Maths::Vector3>& element, int numVertices);
+		static void ReadTextFloats(std::ifstream& file, std::vector<Maths::Vector4>& element, int numVertices);
+		static void ReadIntegers(std::ifstream& file, std::vector<unsigned int>& elements, int intCount);
 
 
-		static void WriteTextFloats(std::ofstream& file, const vector<Maths::Vector2>& element);
-		static void WriteTextFloats(std::ofstream& file, const vector<Maths::Vector3>& element);
-		static void WriteTextFloats(std::ofstream& file, const vector<Maths::Vector4>& element);
+		static void WriteTextFloats(std::ofstream& file, const std::vector<Maths::Vector2>& element);
+		static void WriteTextFloats(std::ofstream& file, const std::vector<Maths::Vector3>& element);
+		static void WriteTextFloats(std::ofstream& file, const std::vector<Maths::Vector4>& element);
 
-		static void WriteIntegers(std::ofstream& file, const vector<unsigned int>& elements);
-		static void WriteIntegers(std::ofstream& file, const vector<Maths::Vector4i>& element);
+		static void WriteIntegers(std::ofstream& file, const std::vector<unsigned int>& elements);
+		static void WriteIntegers(std::ofstream& file, const std::vector<Maths::Vector4i>& element);
 
-		static void WriteMatrices(std::ofstream& file, const vector<Maths::Matrix4>& elements);
+		static void WriteMatrices(std::ofstream& file, const std::vector<Maths::Matrix4>& elements);
 
-		static void WriteSubMeshes(std::ofstream& file, const vector<struct SubMesh>& elements);
+		static void WriteSubMeshes(std::ofstream& file, const std::vector<struct SubMesh>& elements);
 
 
-		static void ReadRigPose(std::ifstream& file, vector<Maths::Matrix4>& into);
+		static void ReadRigPose(std::ifstream& file, std::vector<Maths::Matrix4>& into);
 		static void ReadJointParents(std::ifstream& file, std::vector<int>& parentIDs);
 		static void ReadJointNames(std::ifstream& file, std::vector<std::string>& names);
 		static void ReadSubMeshes(std::ifstream& file, int count, std::vector<struct SubMesh>& subMeshes);

@@ -8,9 +8,9 @@ https://research.ncl.ac.uk/game/
 */
 #pragma once
 
-using std::string;
-using std::vector;
-using std::map;
+#include <string>
+#include <vector>
+#include <map>
 
 namespace NCL {
 	namespace Rendering {
@@ -19,7 +19,7 @@ namespace NCL {
 	class MeshMaterialEntry {
 		friend class MeshMaterial;
 	public:
-		bool GetEntry(const string& name, const string** output) const {
+		bool GetEntry(const std::string& name, const std::string** output) const {
 			auto i = entries.find(name);
 			if (i == entries.end()) {
 				return false;
@@ -27,7 +27,7 @@ namespace NCL {
 			*output = &i->second.first;
 			return true;
 		}
-		Rendering::Texture* GetEntry(const string& name) const {
+		Rendering::Texture* GetEntry(const std::string& name) const {
 			auto i = entries.find(name);
 			if (i == entries.end()) {
 				return nullptr;
@@ -37,7 +37,7 @@ namespace NCL {
 		void LoadTextures();
 
 	protected:
-		std::map<string, std::pair<string, Rendering::Texture*>> entries;
+		std::map<std::string, std::pair<std::string, Rendering::Texture*>> entries;
 	};
 
 	class MeshMaterial	{

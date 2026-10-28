@@ -1,15 +1,17 @@
 #include "MeshMaterial.h"
 #include "Assets.h"
-#include "TextureLoader.h"
 
 using namespace NCL;
 using namespace NCL::Rendering;
-using std::ifstream;
+
+#include <fstream>
+#include <iostream>
+#include <string>
 
 MeshMaterial::MeshMaterial(const std::string& filename) {
-	ifstream file(Assets::MESHDIR + filename);
+	std::ifstream file(Assets::MESHDIR + filename);
 
-	string dataType;
+	std::string dataType;
 	file >> dataType;
 
 	if (dataType != "MeshMat") {
@@ -32,16 +34,16 @@ MeshMaterial::MeshMaterial(const std::string& filename) {
 	materialLayers.resize(matCount);
 
 	for (int i = 0; i < matCount; ++i) {
-		string name;
+		std::string name;
 		int count;
 		file >> name;
 		file >> count;
 
 		for (int j = 0; j < count; ++j) {
-			string entryData;
+			std::string entryData;
 			file >> entryData;
-			string channel;
-			string file;
+			std::string channel;
+			std::string file;
 			size_t split = entryData.find_first_of(':');
 			channel = entryData.substr(0, split);
 			file = entryData.substr(split + 1);
@@ -72,7 +74,7 @@ void MeshMaterial::LoadTextures() {
 
 void MeshMaterialEntry::LoadTextures() {
 	for (auto& i : entries) {
-		string filename = Assets::TEXTUREDIR + i.second.first;
+		std::string filename = Assets::TEXTUREDIR + i.second.first;
 
 		//Texture* t = TextureLoader::LoadAPITexture(filename);
 

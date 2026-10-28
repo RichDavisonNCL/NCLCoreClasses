@@ -7,11 +7,14 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #include "TextureLoader.h"
-#define STB_IMAGE_IMPLEMENTATION
+#include "Assets.h"
 
+#define STB_IMAGE_IMPLEMENTATION
 #include "./stb/stb_image.h"
 
-#include "Assets.h"
+#include <filesystem>
+
+
 
 using namespace NCL;
 using namespace Rendering;

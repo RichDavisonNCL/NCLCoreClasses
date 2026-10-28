@@ -11,6 +11,8 @@
 #include "RendererBase.h"
 #include "GameTimer.h"
 
+#include <thread>
+
 using namespace NCL;
 using namespace Rendering;
 

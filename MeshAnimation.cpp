@@ -2,6 +2,9 @@
 #include "Matrix.h"
 #include "Assets.h"
 
+#include <fstream>
+#include <filesystem>
+
 using namespace NCL;
 using namespace Rendering;
 using namespace Maths;

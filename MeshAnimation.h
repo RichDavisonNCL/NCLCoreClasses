@@ -10,6 +10,10 @@ https://research.ncl.ac.uk/game/
 #include "Vector.h"
 #include "Matrix.h"
 
+#include <string>
+#include <vector>
+#include <span>
+
 namespace NCL::Rendering {
 	using UniqueMeshAnim = std::unique_ptr<class MeshAnimation>;
 	using SharedMeshAnim = std::shared_ptr<class MeshAnimation>;

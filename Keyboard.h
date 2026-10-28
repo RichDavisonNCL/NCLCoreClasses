@@ -7,6 +7,9 @@ Comments and queries to: richard-gordon.davison AT ncl.ac.uk
 https://research.ncl.ac.uk/game/
 */
 #pragma once
+#include <cstdint>
+#include <vector>
+#include <functional>
 
 namespace NCL {
 	//http://msdn.microsoft.com/en-us/library/ms645540(VS.85).aspx

@@ -8,6 +8,9 @@ https://research.ncl.ac.uk/game/
 */
 #pragma once
 
+#include <cstdint>
+#include <string>
+
 namespace NCL::Rendering {
 	namespace ShaderStages {
 		enum Type : uint32_t {

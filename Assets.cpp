@@ -1,5 +1,9 @@
 #include "Assets.h"
 
+#include <iostream>
+#include <fstream>
+#include <filesystem>
+
 using namespace NCL;
 
 bool Assets::ReadTextFile(const std::string &filepath, std::string& result) {

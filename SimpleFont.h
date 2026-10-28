@@ -9,6 +9,9 @@ https://research.ncl.ac.uk/game/
 #pragma once
 #include "Vector.h"
 
+#include <vector>
+#include <string>
+
 namespace NCL {
 	namespace Rendering {
 		class Texture;
