@@ -35,6 +35,6 @@ namespace NCL::Rendering {
 		Texture();
 
 		Vector2ui		dimensions;
-		uint32_t		assetID;
+		uint32_t		assetID = 0;
 	};
 }
